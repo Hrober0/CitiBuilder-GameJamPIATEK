@@ -1,14 +1,21 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace WordGrid
 {
     public class WorldGrid : MonoBehaviour
     {
+        public RectInt GridSize => new RectInt(Vector2Int.zero, new Vector2Int(_gridX, _gridY));
+
+        public int GridX => _gridX;
+        public int GridY => _gridY;
+
         [SerializeField, Min(1)] private int _gridX = 10;
         [SerializeField, Min(1)] private int _gridY = 10;
 
+        // DO NOT CHANGE UNLESS YOU WANT TO BREAK EVERYTHING
         public readonly Vector3 _gridStart = Vector3.zero;
 
         private GCell[,] _cells;
@@ -17,12 +24,7 @@ namespace WordGrid
 
         private void Awake()
         {
-            if (Instance != null)
-            {
-                Debug.LogError($"Mulitple instances {nameof(WorldGrid)}");
-                return;
-            }
-
+            Assert.IsNull(Instance, $"Mulitple instances {nameof(WorldGrid)}");
             Instance = this;
 
             _cells = new GCell[_gridX, _gridY];
