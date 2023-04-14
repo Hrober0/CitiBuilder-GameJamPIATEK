@@ -13,7 +13,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a817a38666d6c8243b89f47bad97033f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 3.0006
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a817a38666d6c8243b89f47bad97033f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -21,7 +21,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a817a38666d6c8243b89f47bad97033f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 8.0016
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: a817a38666d6c8243b89f47bad97033f, type: 3}
       propertyPath: m_LocalRotation.w
@@ -65,7 +65,7 @@ PrefabInstance:
       objectReference: {fileID: 2100000, guid: 0ceba7e4d92c81541a01ef2090731b55, type: 2}
     - target: {fileID: 919132149155446097, guid: a817a38666d6c8243b89f47bad97033f, type: 3}
       propertyPath: m_Name
-      value: road_crossroadPath Variant
+      value: R_4way
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: a817a38666d6c8243b89f47bad97033f, type: 3}

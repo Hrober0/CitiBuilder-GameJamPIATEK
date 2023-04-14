@@ -99,7 +99,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Albedo_Tiling: 4
+    - _Albedo_Tiling: 8
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -115,8 +115,8 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_Scale: 4
-    - _Noise_Strength: 1.2
+    - _Noise_Scale: 6
+    - _Noise_Strength: 3
     - _Normal_Strength: 0.27
     - _Normal_Tiling: 3
     - _OcclusionStrength: 1
