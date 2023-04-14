@@ -105,7 +105,7 @@ public class HeatManager : MonoBehaviour
                 Mathf.Cos(grid.GetCell(pos).Heat) / 2f + 0.5f
                 );
             Gizmos.color = color;
-            Gizmos.DrawCube(new Vector3(pos.x, 0, pos.y), Vector3.one);
+            Gizmos.DrawCube(new Vector3(pos.x + 0.5f, 0, pos.y + 0.5f), Vector3.one * 0.9f);
         }
         Gizmos.color = c;
     }
