@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridObjects;
 using Grids;
+using System;
 
 namespace InputControll
 {
@@ -27,6 +28,9 @@ namespace InputControll
         private readonly List<GameObject> _unactivePlaces = new();
 
 
+        public Action<GridObject> OnGridObjectSelected;
+
+
         public void SetObject(GridObject selectedObject)
         {
             if (_objectVisualization != null)
@@ -46,6 +50,8 @@ namespace InputControll
                 if (_constructionUpdater == null)
                     _constructionUpdater = StartCoroutine(ConstructionUpdate());
             }
+
+            OnGridObjectSelected?.Invoke(selectedObject);
         }
         public void BuildObject(Vector2Int gridPos, GridObject objPattern, bool chack=true)
         {
@@ -73,13 +79,13 @@ namespace InputControll
                 if (cell.GridObject != null)
                     return false;
 
-                if (!HasAtLestOneBuild(gridPos, obj.ReqiredObjects))
+                if (!HasAtLeastOneBuild(gridPos, obj.ReqiredObjects))
                     return false;
             }
 
             return true;
         }
-        private bool HasAtLestOneBuild(Vector2Int gridPos, IReadOnlyList<GridObjectTypeSO> types)
+        private bool HasAtLeastOneBuild(Vector2Int gridPos, IReadOnlyList<GridObjectTypeSO> types)
         {
             if (types.Count == 0)
                 return true;
