@@ -676,6 +676,8 @@ MonoBehaviour:
     m_Bits: 3072
   _objectsParent: {fileID: 2066752096}
   _objectVisualizationParent: {fileID: 321461131}
+  _placesParent: {fileID: 976923423}
+  _placePattern: {fileID: 3456074548179108065, guid: 0d9309bb463fe6d428470e03b7891cbd, type: 3}
 --- !u!4 &2096391593
 Transform:
   m_ObjectHideFlags: 0
