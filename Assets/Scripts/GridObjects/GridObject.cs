@@ -12,7 +12,7 @@ namespace GridObjects
             get
             {
                 //TODO change to support multicell
-                return new GCell[] { WorldGrid.Instance.GetCell(transform.position) };
+                return new GCell[] { WorldGrid.Instance.GetCell(new Vector2(transform.position.x, transform.position.z)) };
             }
         }
         [SerializeField] private string _name = "default";

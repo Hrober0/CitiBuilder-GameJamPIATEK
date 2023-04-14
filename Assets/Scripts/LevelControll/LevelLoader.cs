@@ -17,7 +17,7 @@ namespace LevelControll
 
         private void Start()
         {
-            _constructionController.BuildObject(_roadPosition, _roadToSpawn);
+            _constructionController.BuildObject(_roadPosition, Instantiate(_roadToSpawn, new Vector3(_roadPosition.x, 0, _roadPosition.y), Quaternion.identity));
 
             //_constructionController.SetObject()
         }

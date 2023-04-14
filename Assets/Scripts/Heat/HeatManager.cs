@@ -21,7 +21,7 @@ public class HeatManager : MonoBehaviour
         {
             foreach (var tile in generator.GridObject.OccupiedTiles)
             {
-                tile.Heat = Mathf.Max(tile.Heat + generator.HeatGeneration);
+                tile.Heat = Mathf.Max(tile.Heat + generator.HeatGeneration, 0);
             }
         }
     }
@@ -55,41 +55,13 @@ public class HeatManager : MonoBehaviour
 
         while (true)
         {
-            yield return new WaitForSeconds(2.5f);
+            yield return new WaitForSeconds(1f/8f);
             PropagateHeat();
-            yield return new WaitForSeconds(2.5f);
             GenerateHeat();
         }
     }
 
-    private void SetupKernel()
-    {
-        var k = kernel;
-        int k2 = k.Length - 1;
-        kernel = new float[2 * k2 + 1];
-        float sum = 0;
-        for (int i=0; i < k2 + 1; i++)
-        {
-            sum += kernel[k2 + i] = k[i];
-            sum += kernel[k2 - i] = k[i];
-        }
-
-        sum -= k[0];
-
-        Debug.Log(sum);
-        
-        float sum2 = 0;
-
-        for (int i = 0; i < kernel.Length; i++) 
-        {
-            kernel[i] /= sum;
-            sum2 += kernel[i];
-        }
-
-        Debug.Log(sum2);
-    }
-
-    private void OnDrawGizmosSelected()
+    private void OnDrawGizmos()
     {
         var grid = WorldGrid.Instance;
         if(grid == null)
@@ -99,15 +71,44 @@ public class HeatManager : MonoBehaviour
         var c = Gizmos.color;
         foreach (var pos in grid.GridSize.allPositionsWithin)
         {
+            var h = grid.GetCell(pos).Heat;
+            //h *= h;
             var color = new Color(
-                Mathf.Sin(grid.GetCell(pos).Heat) / 2f + 0.5f,
+                -Mathf.Cos(h) / 2f + 0.5f,
                 0f,
-                Mathf.Cos(grid.GetCell(pos).Heat) / 2f + 0.5f
+                Mathf.Sin(h) / 2f + 0.5f
                 );
             Gizmos.color = color;
             Gizmos.DrawCube(new Vector3(pos.x + 0.5f, 0, pos.y + 0.5f), Vector3.one * 0.9f);
         }
         Gizmos.color = c;
+    }
+
+    private void SetupKernel()
+    {
+        var k = kernel;
+        int k2 = k.Length - 1;
+        kernel = new float[2 * k2 + 1];
+        float sum = 0;
+        for (int i = 0; i < k2 + 1; i++)
+        {
+            sum += kernel[k2 + i] = k[i];
+            sum += kernel[k2 - i] = k[i];
+        }
+
+        sum -= k[0];
+
+        Debug.Log(sum);
+
+        float sum2 = 0;
+
+        for (int i = 0; i < kernel.Length; i++)
+        {
+            kernel[i] /= sum;
+            sum2 += kernel[i];
+        }
+
+        Debug.Log(sum2);
     }
 
     private float GetHeatAt(int x, int y)
@@ -132,7 +133,8 @@ public class HeatManager : MonoBehaviour
             {
                 for (int i = 0; i < kernel.Length; i++)
                 {
-                    newHeat[x, y] += kernel[i] * heatGetter(x, y, i);
+                    var v = heatGetter(x, y, i - k2);
+                    newHeat[x, y] += kernel[i] * v;
                 }
             }
 
@@ -140,7 +142,6 @@ public class HeatManager : MonoBehaviour
             for (int y = 0; y < grid.GridY; y++)
             {
                 grid.GetCell(x, y).Heat = newHeat[x, y];
-                newHeat[x, y] = 0;
             }
     }
 }
