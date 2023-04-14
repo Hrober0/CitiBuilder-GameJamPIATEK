@@ -19,7 +19,7 @@ namespace LevelControll
         {
             _constructionController.BuildObject(_roadPosition, _roadToSpawn);
 
-            //_constructionController.SetObject()
+            _constructionController.SetObject(_roadToSpawn);
         }
     }
 
