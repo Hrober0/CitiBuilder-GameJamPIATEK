@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using GridObjects;
-using WordGrid;
+using Grids;
 
 namespace InputControll
 {
@@ -11,13 +11,20 @@ namespace InputControll
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _colisionLayers;
 
-        [Header("transforms")]
+        [Header("construction")]
         [SerializeField] private Transform _objectsParent;
         [SerializeField] private Transform _objectVisualizationParent;
+
+        [Header("places")]
+        [SerializeField] private Transform _placesParent;
+        [SerializeField] private GameObject _placePattern;
 
 
         private GridObject _objectVisualization = null;
         private Coroutine _constructionUpdater = null;
+
+        private readonly List<GameObject> _activePlaces = new();
+        private readonly List<GameObject> _unactivePlaces = new();
 
 
         public void SetObject(GridObject selectedObject)
@@ -28,20 +35,21 @@ namespace InputControll
                 _objectVisualization = null;
             }
 
+            SetAvailableToBuildPlaces(selectedObject);
+
             if (selectedObject != null)
             {
                 _objectVisualization = Instantiate(selectedObject, _objectVisualizationParent);
                 _objectVisualization.name = $"{selectedObject}-visualization";
-                _objectVisualization.transform.position = Vector3.one * -10;
+                _objectVisualization.gameObject.SetActive(false);
 
                 if (_constructionUpdater == null)
                     _constructionUpdater = StartCoroutine(ConstructionUpdate());
             }
         }
-
-        public void BuildObject(Vector2Int gridPos, GridObject objPattern)
+        public void BuildObject(Vector2Int gridPos, GridObject objPattern, bool chack=true)
         {
-            if (!CanBuildObjectAt(gridPos, objPattern))
+            if (chack && !CanBuildObjectAt(gridPos, objPattern))
             {
                 Debug.LogError($"Attempted to build {objPattern.name} object at {gridPos}");
                 return;
@@ -54,7 +62,7 @@ namespace InputControll
             foreach (var field in newObj.Fields)
                 WorldGrid.Instance.GetCell(field + gridPos).GridObject = newObj;
         }
-
+        
         public bool CanBuildObjectAt(Vector2Int gridPos, GridObject obj)
         {
             foreach (var field in obj.Fields)
@@ -64,9 +72,65 @@ namespace InputControll
 
                 if (cell.GridObject != null)
                     return false;
+
+                if (!HasAtLestOneBuild(gridPos, obj.ReqiredObjects))
+                    return false;
             }
 
             return true;
+        }
+        private bool HasAtLestOneBuild(Vector2Int gridPos, IReadOnlyList<GridObjectTypeSO> types)
+        {
+            if (types.Count == 0)
+                return true;
+
+            var offsets = new[] { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
+            var typesList = new List<GridObjectTypeSO>(types);
+            foreach (var offset in offsets)
+                if (WorldGrid.Instance.TryGetCell(gridPos + offset, out var cell)
+                    && cell.GridObject != null
+                    && typesList.Contains(cell.GridObject.Type))
+                    return true;
+
+            return false;
+        }
+
+
+        private void SetAvailableToBuildPlaces(GridObject obj)
+        {
+            foreach (var place in _activePlaces)
+                place.SetActive(false);
+
+            _unactivePlaces.AddRange(_activePlaces);
+            _activePlaces.Clear();
+
+            if (obj == null)
+                return;
+
+            foreach (var field in WorldGrid.Instance.GridSize.allPositionsWithin)
+            {
+                if (CanBuildObjectAt(field, obj))
+                {
+                    var place = GetUnusedPlace();
+                    place.transform.position = WorldGrid.GetWorldPos(field) + new Vector3(WorldGrid.CELL_SIZE / 2f, 0, WorldGrid.CELL_SIZE / 2f);
+                    place.SetActive(true);
+                    _activePlaces.Add(place);
+                }
+            }
+
+            GameObject GetUnusedPlace()
+            {
+                GameObject place;
+                if (_unactivePlaces.Count > 0)
+                {
+                    place = _unactivePlaces[0];
+                    _unactivePlaces.RemoveAt(0);
+                    return place;
+                }
+
+                place = Instantiate(_placePattern, _placesParent);
+                return place;
+            }
         }
 
 
@@ -79,7 +143,14 @@ namespace InputControll
 
                 // update visualizatio position
                 if (IsInGrid(gridPos))
+                {
                     _objectVisualization.transform.position = WorldGrid.GetWorldPos(gridPos);
+                    _objectVisualization.gameObject.SetActive(true);
+                }
+                else
+                {
+                    _objectVisualization.gameObject.SetActive(false);
+                }
                 
                 // handle build
                 if (Input.GetMouseButtonUp(0))

@@ -2,7 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-namespace WordGrid
+namespace Grids
 {
     public class WorldGrid : MonoBehaviour
     {
@@ -15,8 +15,12 @@ namespace WordGrid
         private GCell[,] _cells;
 
 
+        #region static callculation
+
         public static Vector3 GetWorldPos(Vector2Int gridPos) => GRID_START + new Vector3(gridPos.x * CELL_SIZE, 0, gridPos.y * CELL_SIZE);
         public static Vector2Int GetGridPos(Vector3 worldPos) => new Vector2Int(Mathf.FloorToInt(worldPos.x / CELL_SIZE), Mathf.FloorToInt(worldPos.z / CELL_SIZE));
+
+        #endregion
 
         public static WorldGrid Instance { get; private set; }
 
@@ -35,6 +39,8 @@ namespace WordGrid
                 for (int x = 0; x < _gridX; x++)
                     _cells[x, y] = new();
         }
+
+        #region grid calculation
 
         public bool BelognsToGrid(int x, int y) => x >= 0 && x < _gridX && y >= 0 && y < _gridY;
         public bool BelognsToGrid(Vector2Int gridPos) => BelognsToGrid(gridPos.x, gridPos.y);
@@ -65,6 +71,13 @@ namespace WordGrid
         }
         public bool TryGetCell(Vector2Int gridPos, out GCell cell) => TryGetCell(gridPos.x, gridPos.y, out cell);
         public bool TryGetCell(Vector3 gridPos, out GCell cell) => TryGetCell(GetGridPos(gridPos), out cell);
+
+        #endregion
+
+
+        public int GridX => _gridX;
+        public int GridY => _gridY;
+        public RectInt GridSize => new RectInt(Vector2Int.zero, new Vector2Int(_gridX, _gridY));
 
 
 #if UNITY_EDITOR

@@ -1,7 +1,7 @@
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
-using WordGrid;
+using Grids;
 
 namespace GridObjects
 {
@@ -17,6 +17,10 @@ namespace GridObjects
 
         [SerializeField] private Vector2Int[] _fields = new Vector2Int[] { Vector2Int.zero };
         public IReadOnlyList<Vector2Int> Fields => _fields;
+
+
+        [SerializeField] private GridObjectTypeSO[] _reqiredObjects = new GridObjectTypeSO[0];
+        public IReadOnlyList<GridObjectTypeSO> ReqiredObjects => _reqiredObjects;
 
 
 #if UNITY_EDITOR

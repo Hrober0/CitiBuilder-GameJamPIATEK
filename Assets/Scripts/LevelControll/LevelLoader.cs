@@ -17,7 +17,7 @@ namespace LevelControll
 
         private void Start()
         {
-            _constructionController.BuildObject(_roadPosition, _roadToSpawn);
+            _constructionController.BuildObject(_roadPosition, _roadToSpawn, false);
 
             _constructionController.SetObject(_roadToSpawn);
         }

@@ -48,3 +48,5 @@ MonoBehaviour:
   _type: {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
   _fields:
   - {x: 0, y: 0}
+  _reqiredObjects:
+  - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
