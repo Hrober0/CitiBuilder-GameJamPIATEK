@@ -38,7 +38,7 @@ RenderSettings:
   m_ReflectionIntensity: 1
   m_CustomReflection: {fileID: 0}
   m_Sun: {fileID: 705507994}
-  m_IndirectSpecularColor: {r: 0.18028352, g: 0.22571376, b: 0.30692244, a: 1}
+  m_IndirectSpecularColor: {r: 0.18028334, g: 0.22571328, b: 0.3069217, a: 1}
   m_UseRadianceAmbientProbe: 0
 --- !u!157 &3
 LightmapSettings:
@@ -415,5 +415,41 @@ PrefabInstance:
       propertyPath: m_LocalEulerAnglesHint.z
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.size
+      value: 7
+      objectReference: {fileID: 0}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.data[0]
+      value: 
+      objectReference: {fileID: 684152050985132647, guid: fbace61987dcad849ae60f2c253f9196, type: 3}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.data[1]
+      value: 
+      objectReference: {fileID: 1807560982360872111, guid: fb3db06d4ef9d3e4ba665d6e92e35506, type: 3}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.data[2]
+      value: 
+      objectReference: {fileID: 2435770758953084635, guid: b71b92d6baa100049a153babd85c5a2e, type: 3}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.data[3]
+      value: 
+      objectReference: {fileID: 8240502245038311659, guid: 197df1ac516bd35469f7938571b7ae0a, type: 3}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.data[4]
+      value: 
+      objectReference: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.data[5]
+      value: 
+      objectReference: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: objectsRandomiser.defaultBucket.Array.data[6]
+      value: 
+      objectReference: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - target: {fileID: 3589272266230721848, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
+      propertyPath: _roadToSpawn
+      value: 
+      objectReference: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
