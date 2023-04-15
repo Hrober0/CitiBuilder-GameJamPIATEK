@@ -27,21 +27,18 @@ namespace GameSystems
         public override void InitSystem()
         {
             TurnCost.Init(this, Grids.WorldGrid.Instance);
-            constructionController.OnGridObjectSelected += OnConstructionObjectChanged;
+            constructionController.OnBuildingBuild += OnBuildingBuild;
 
             NextTurn();
         }
         public override void DeinitSystem()
         {
-            constructionController.OnGridObjectSelected -= OnConstructionObjectChanged;
+            constructionController.OnBuildingBuild -= OnBuildingBuild;
         }
 
-        private void OnConstructionObjectChanged(GridObject obj)
+        private void OnBuildingBuild(GridObject obj)
         {
-            if (obj == null)
-            {
-                NextTurn();
-            }
+            NextTurn();
         }
         public void NextTurn()
         {

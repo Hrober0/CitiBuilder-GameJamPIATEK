@@ -29,7 +29,8 @@ namespace InputControll
         private readonly List<GameObject> _unactivePlaces = new();
 
 
-        public event Action<GridObject> OnGridObjectSelected;
+        public event Action<GridObject> OnBuildingBuild;
+        public event Action<GridObject> OnBuildingSelected;
 
         public override void InitSystem() { }
         public override void DeinitSystem() { }
@@ -50,7 +51,7 @@ namespace InputControll
             if (selectedObject != null)
             {
                 _objectVisualization = Instantiate(selectedObject, _objectVisualizationParent);
-                _objectVisualization.name = $"{selectedObject}-visualization";
+                _objectVisualization.name = selectedObject.name;
                 _objectVisualization.gameObject.SetActive(false);
 
                 if (_constructionUpdater == null)
@@ -59,7 +60,7 @@ namespace InputControll
                 InputManager.PrimaryAction.Ended += TryBuild;
             }
 
-            OnGridObjectSelected?.Invoke(selectedObject);
+            OnBuildingSelected?.Invoke(selectedObject);
         }
 
         public void BuildObject(Vector2Int gridPos, GridObject objPattern, bool chack=true)
@@ -78,6 +79,8 @@ namespace InputControll
                 WorldGrid.Instance.GetCell(field + gridPos).GridObject = newObj;
 
             newObj.Place();
+
+            OnBuildingBuild?.Invoke(newObj);
         }
         
         public bool CanBuildObjectAt(Vector2Int gridPos, GridObject obj)
@@ -156,8 +159,9 @@ namespace InputControll
             var gridPos = GetMouseGridPosition();
             if (CanBuildObjectAt(gridPos, _objectVisualization))
             {
-                BuildObject(gridPos, _objectVisualization);
+                var buildgToBuild = _objectVisualization;
                 SetObject(null);
+                BuildObject(gridPos, buildgToBuild);
             }
             else
             {
