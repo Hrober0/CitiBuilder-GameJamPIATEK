@@ -107,7 +107,7 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Albedo_Tiling: 150
+    - _Albedo_Tiling: 200
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -123,7 +123,7 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_Scale: 6
+    - _Noise_Scale: 100.8
     - _Noise_Strength: 3
     - _Normal_Strength: 0.27
     - _Normal_Tiling: 3
@@ -132,12 +132,12 @@ Material:
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _SS_Noise_Scale: 15
-    - _SS_Noise_Strength: 1
-    - _S_Albedo_Tiling: 16
+    - _SS_Noise_Scale: 0
+    - _SS_Noise_Strength: 1.7
+    - _S_Albedo_Tiling: 250
     - _S_Height_Multiply: -1.1
     - _S_Noise_Offset: 0
-    - _S_Noise_Scale: 4
+    - _S_Noise_Scale: 250
     - _S_Noise_Strength: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
