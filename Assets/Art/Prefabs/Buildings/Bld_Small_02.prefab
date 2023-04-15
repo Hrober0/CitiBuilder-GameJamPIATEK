@@ -100,6 +100,26 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 1
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: e70b099113bc21e46a208d1f7ea5e53b, type: 3}
+      propertyPath: m_Materials.Array.data[0]
+      value: 
+      objectReference: {fileID: 2100000, guid: 075069cdd49ca2549beb76e2c72d5615, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e70b099113bc21e46a208d1f7ea5e53b, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: f8efa47ce94dbfc498b682289b4c9988, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e70b099113bc21e46a208d1f7ea5e53b, type: 3}
+      propertyPath: m_Materials.Array.data[2]
+      value: 
+      objectReference: {fileID: 2100000, guid: bd4e904c36e34d147adcb78dd3bc514c, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e70b099113bc21e46a208d1f7ea5e53b, type: 3}
+      propertyPath: m_Materials.Array.data[3]
+      value: 
+      objectReference: {fileID: 2100000, guid: acca698b7a1a78e428dc1a8c313e769f, type: 2}
+    - target: {fileID: -7511558181221131132, guid: e70b099113bc21e46a208d1f7ea5e53b, type: 3}
+      propertyPath: m_Materials.Array.data[4]
+      value: 
+      objectReference: {fileID: 2100000, guid: d90acda20d1a709409c9bd9d6b61f0c7, type: 2}
     - target: {fileID: 919132149155446097, guid: e70b099113bc21e46a208d1f7ea5e53b, type: 3}
       propertyPath: m_Name
       value: large_buildingB
