@@ -622,6 +622,14 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurnCost:
     DefaultTurnCost: 0
+  constructionController: {fileID: 2096391592}
+  objectsRandomiser:
+    defaultBucket:
+    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
+    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
+    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
+    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
+    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
 --- !u!1 &1911359154
 GameObject:
   m_ObjectHideFlags: 0

@@ -3,6 +3,7 @@ using UnityEngine;
 
 namespace Util
 {
+    [Serializable]
     public class TimeMachine
     {
         public double Time => time;

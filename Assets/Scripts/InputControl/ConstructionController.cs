@@ -28,8 +28,7 @@ namespace InputControll
         private readonly List<GameObject> _unactivePlaces = new();
 
 
-        public Action<GridObject> OnGridObjectSelected;
-
+        public event Action<GridObject> OnGridObjectSelected;
 
         public void SetObject(GridObject selectedObject)
         {
