@@ -115,7 +115,6 @@ namespace InputControll
             {
                 _objectVisualization = Instantiate(selectedObject, _objectVisualizationParent);
                 _objectVisualization.name = selectedObject.name;
-                _objectVisualization.gameObject.SetActive(false);
 
                 _lastUpdatePos = null;
 
@@ -247,16 +246,7 @@ namespace InputControll
             {
                 var gridPos = GetMouseGridPosition();
 
-                // update visualizatio position
-                if (IsInGrid(gridPos))
-                {
-                    _objectVisualization.transform.position = WorldGrid.GetWorldPos(gridPos);
-                    _objectVisualization.gameObject.SetActive(true);
-                }
-                else
-                {
-                    _objectVisualization.gameObject.SetActive(false);
-                }
+                _objectVisualization.transform.position = WorldGrid.GetWorldPos(gridPos);
 
                 UpdateAvailableToBuildPlaces(_objectVisualization, gridPos);
 

@@ -80,16 +80,16 @@ namespace Grids
         public RectInt GridSize => new RectInt(Vector2Int.zero, new Vector2Int(_gridX, _gridY));
 
 
-        #if UNITY_EDITOR
-                private void OnDrawGizmos()
-                {
-                    Gizmos.DrawLine(GRID_START, GRID_START + Vector3.right * _gridX);
-                    Gizmos.DrawLine(GRID_START, GRID_START + Vector3.forward * _gridY);
-                    for (int y = 1; y <= _gridY; y++)
-                        Gizmos.DrawLine(GRID_START + new Vector3(0, 0, y * CELL_SIZE), GRID_START + new Vector3(_gridX, 0, y * CELL_SIZE));
-                    for (int x = 1; x <= _gridX; x++)
-                        Gizmos.DrawLine(GRID_START + new Vector3(x * CELL_SIZE, 0, 0), GRID_START + new Vector3(x * CELL_SIZE, 0, _gridY));
-                }
-            }
-        #endif
+#if UNITY_EDITOR
+        private void OnDrawGizmos()
+        {
+            Gizmos.DrawLine(GRID_START, GRID_START + Vector3.right * _gridX);
+            Gizmos.DrawLine(GRID_START, GRID_START + Vector3.forward * _gridY);
+            for (int y = 1; y <= _gridY; y++)
+                Gizmos.DrawLine(GRID_START + new Vector3(0, 0, y * CELL_SIZE), GRID_START + new Vector3(_gridX, 0, y * CELL_SIZE));
+            for (int x = 1; x <= _gridX; x++)
+                Gizmos.DrawLine(GRID_START + new Vector3(x * CELL_SIZE, 0, 0), GRID_START + new Vector3(x * CELL_SIZE, 0, _gridY));
+        }
+#endif
+    }
 }
