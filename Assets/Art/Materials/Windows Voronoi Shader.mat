@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5353872999520026850
+--- !u!114 &-2101674062088898734
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground Shader
-  m_Shader: {fileID: -6465566751694194690, guid: b9a268bc0b38e5445addfcb8e5e7f352, type: 3}
+  m_Name: Windows Voronoi Shader
+  m_Shader: {fileID: -6465566751694194690, guid: 97a79db6912310044bf655dcd787db30, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -33,10 +33,6 @@ Material:
   m_SavedProperties:
     serializedVersion: 3
     m_TexEnvs:
-    - _Albedo_Map:
-        m_Texture: {fileID: 2800000, guid: c8fb40e83e79c7b45bba3418fd776827, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _BaseMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -69,10 +65,6 @@ Material:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
         m_Offset: {x: 0, y: 0}
-    - _Normal_Map:
-        m_Texture: {fileID: 2800000, guid: 97d6035da38675e46bcde59c684f446e, type: 3}
-        m_Scale: {x: 1, y: 1}
-        m_Offset: {x: 0, y: 0}
     - _OcclusionMap:
         m_Texture: {fileID: 0}
         m_Scale: {x: 1, y: 1}
@@ -99,7 +91,6 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Albedo_Tiling: 16
     - _AlphaClip: 0
     - _Blend: 0
     - _BumpScale: 1
@@ -114,29 +105,45 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
-    - _Metallic: 0
-    - _Noise_Scale: 6
-    - _Noise_Strength: 3
-    - _Normal_Strength: 0.27
-    - _Normal_Tiling: 3
+    - _Metallic: 0.5
+    - _Multiply: 1
+    - _Normal_Noise_Scale: 1
+    - _Normal_Noise_Tiling: 1
     - _OcclusionStrength: 1
     - _Parallax: 0.005
+    - _Power: 3
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
+    - _Roughness: 0.8
+    - _Roughness_Noise_Scale: 1
+    - _Roughness_Noise_Tiling: 1
     - _Smoothness: 0.5
     - _SmoothnessTextureChannel: 0
+    - _Smoothness_1: 0.88
+    - _Smoothness_Clamp_Max: 0.88
+    - _Smoothness_Clamp_Min: 0.54
+    - _Smoothness_Noise_Multiply: 1
+    - _Smoothness_Noise_Scale: -1.29
+    - _Smoothness_Tiling: 1
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _Voronoi_Clamp_Max: 0.69
+    - _Voronoi_Clamp_Min: 0
+    - _Window_Voronoi_Angle_Offset: 0
+    - _Windows_Voronoi_Contrast: 0.5
+    - _Windows_Voronoi_Density: 4
+    - _Windows_Voronoi_Normal_Strength: 0.03
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
-    - _Albedo_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
-    - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color: {r: 0.7242346, g: 0.8433309, b: 0.8773585, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Noise_Offset: {r: 0, g: 0, b: 0, a: 0}
-    - _Normal_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Normal_Blend: {r: 1, g: 0, b: 1, a: 0}
+    - _Smoothness_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
+    - _Window_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Window_Tiling: {r: 0.1, g: 0.07, b: 0, a: 0}
   m_BuildTextureStacks: []
