@@ -3,11 +3,15 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Grids;
+using UnityEngine.Assertions;
+using System;
 
 namespace GridObjects
 {
     public class GridObject : MonoBehaviour
     {
+        public event Action OnPlaced;
+
         public IEnumerable<Vector2Int> OccupiedTiles 
         {
             get
@@ -55,12 +59,30 @@ namespace GridObjects
         [SerializeField] private GridObjectTypeSO[] _reqiredObjects = new GridObjectTypeSO[0];
         public IReadOnlyList<GridObjectTypeSO> ReqiredObjects => _reqiredObjects;
 
+
         public bool IsPlaced { get; private set; }
+
 
         public void Place()
         {
+            Assert.IsFalse(IsPlaced, $"{nameof(GridObject)}was already places");
+
             IsPlaced = true;
+
+            foreach (var module in GetComponents<GridObjectModule>())
+                module.OnBuildingConstructed();
+
+            OnPlaced?.Invoke();
         }
+        private void OnDestroy()
+        {
+            if (IsPlaced)
+            {
+                foreach (var module in GetComponents<GridObjectModule>())
+                    module.OnBuildingDestroyed();
+            }
+        }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()

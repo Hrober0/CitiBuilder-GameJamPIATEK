@@ -1,10 +1,12 @@
+using GameSystems;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace Grids
 {
-    public class WorldGrid : MonoBehaviour
+    public class WorldGrid : GameSystem
     {
         [SerializeField, Min(1)] private int _gridX = 10;
         [SerializeField, Min(1)] private int _gridY = 10;
@@ -24,13 +26,9 @@ namespace Grids
 
         public static WorldGrid Instance { get; private set; }
 
-        private void Awake()
+        protected override void InitSystem()
         {
-            if (Instance != null)
-            {
-                Debug.LogError($"Mulitple instances {nameof(WorldGrid)}");
-                return;
-            }
+            Assert.IsNull(Instance, $"Mulitple instances {nameof(WorldGrid)}");
 
             Instance = this;
 
@@ -39,6 +37,8 @@ namespace Grids
                 for (int x = 0; x < _gridX; x++)
                     _cells[x, y] = new();
         }
+        protected override void DeinitSystem() { }
+
 
         #region grid calculation
 

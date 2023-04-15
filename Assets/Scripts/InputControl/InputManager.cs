@@ -1,3 +1,4 @@
+using GameSystems;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -5,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
-public class InputManager : MonoBehaviour
+public class InputManager : GameSystem
 {
     public static Vector2 MousePosition => instance.input.General.MousePos.ReadValue<Vector2>();
 
@@ -16,32 +17,30 @@ public class InputManager : MonoBehaviour
 
     private PlayerInput input;
 
-    void Awake()
+    protected override void InitSystem()
     {
         Assert.IsNull(instance, $"Duplicate {nameof(InputManager)} on {this}");
+
         instance = this;
         input = new PlayerInput();
 
         PrimaryAction = new ButtonAction(input.General.Primary);
         SecondaryAction = new ButtonAction(input.General.Secondary);
-    }
 
-    private void OnEnable()
-    {
         input.Enable();
     }
-
-    private void OnDisable()
+    protected override void DeinitSystem()
     {
-        input.Disable(); 
+        input.Disable();
     }
+
 
     public class ButtonAction
     {
-        public static event Action Started;
-        public static event Action Performed;
-        public static event Action Ended;
-        public static event Action<State> Combo;
+        public event Action Started;
+        public event Action Performed;
+        public event Action Ended;
+        public event Action<State> Combo;
 
         public ButtonAction(InputAction action)
         {

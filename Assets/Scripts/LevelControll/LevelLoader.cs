@@ -3,24 +3,26 @@ using System.Collections.Generic;
 using UnityEngine;
 using InputControll;
 using GridObjects;
+using GameSystems;
 
 namespace LevelControll
 {
-    public class LevelLoader : MonoBehaviour
+    public class LevelLoader : GameSystem
     {
-        [SerializeField] private ConstructionController _constructionController;
-
         [Header("Level start")]
         [SerializeField] private Vector2Int _roadPosition;
         [SerializeField] private GridObject _roadToSpawn;
 
 
-        private void Start()
-        {
-            _constructionController.BuildObject(_roadPosition, _roadToSpawn, false);
+        private ConstructionController _constructionController;
 
-            _constructionController.SetObject(_roadToSpawn);
+
+        protected override void InitSystem()
+        {
+            _constructionController = _systems.Get<ConstructionController>();
+            _constructionController.BuildObject(_roadPosition, _roadToSpawn, false);
         }
+        protected override void DeinitSystem() { }
     }
 
 }
