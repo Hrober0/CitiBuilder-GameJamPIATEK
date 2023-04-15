@@ -203,7 +203,6 @@ namespace InputControll
             if (!Physics.Raycast(ray, out RaycastHit hitData, 1000, _colisionLayers))
                 return -Vector2Int.one;
             var worldPos = hitData.point;
-            Debug.Log(worldPos);
             return WorldGrid.GetGridPos(worldPos);
         }
     }
