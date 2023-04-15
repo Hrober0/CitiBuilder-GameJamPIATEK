@@ -53,6 +53,7 @@ namespace InputControll
 
             OnGridObjectSelected?.Invoke(selectedObject);
         }
+
         public void BuildObject(Vector2Int gridPos, GridObject objPattern, bool chack=true)
         {
             if (chack && !CanBuildObjectAt(gridPos, objPattern))
@@ -188,7 +189,7 @@ namespace InputControll
 
         private Vector2Int GetMouseGridPosition()
         {
-            Ray ray = Camera.main.ScreenPointToRay(Input.mousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(InputManager.MousePosition);
             if (!Physics.Raycast(ray, out RaycastHit hitData, 1000, _colisionLayers))
                 return -Vector2Int.one;
             var worldPos = hitData.point;

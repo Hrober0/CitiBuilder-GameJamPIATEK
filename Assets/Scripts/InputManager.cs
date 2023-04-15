@@ -3,13 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
+using UnityEngine.InputSystem;
 
 public class InputManager : MonoBehaviour
 {
     public static Vector2 MousePosition => instance.input.General.MousePos.ReadValue<Vector2>();
 
-    public static event Action PrimaryAction;
-    public static event Action SecondaryAction;
+    public static ButtonAction PrimaryAction { get; private set; }
+    public static ButtonAction SecondaryAction { get; private set; }
 
     private static InputManager instance;
 
@@ -21,8 +22,8 @@ public class InputManager : MonoBehaviour
         instance = this;
         input = new PlayerInput();
 
-        input.General.Primary.started += (_) => PrimaryAction?.Invoke();
-        input.General.Secondary.started += (_) => SecondaryAction?.Invoke();
+        PrimaryAction = new ButtonAction(input.General.Primary);
+        SecondaryAction = new ButtonAction(input.General.Secondary);
     }
 
     private void OnEnable()
@@ -41,6 +42,13 @@ public class InputManager : MonoBehaviour
         public static event Action Performed;
         public static event Action Ended;
         public static event Action<State> Combo;
+
+        public ButtonAction(InputAction action)
+        {
+            action.started += (_) => { Started?.Invoke(); Combo?.Invoke(State.Started); };
+            action.performed += (_) => { Performed?.Invoke(); Combo?.Invoke(State.Performed); };
+            action.canceled += (_) => { Ended?.Invoke(); Combo?.Invoke(State.Ended); };
+        }
 
         public enum State
         {
