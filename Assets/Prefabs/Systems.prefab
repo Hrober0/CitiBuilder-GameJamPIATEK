@@ -239,9 +239,28 @@ MonoBehaviour:
     DefaultTurnCost: 0
   objectsRandomiser:
     defaultBucket:
-    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
-    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
-    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
+    - {fileID: 684152050985132647, guid: fbace61987dcad849ae60f2c253f9196, type: 3}
+    - {fileID: 1807560982360872111, guid: fb3db06d4ef9d3e4ba665d6e92e35506, type: 3}
+    - {fileID: 4269889978222410559, guid: 0f1c8ee9b7495b14d8ce2c5f8dbfab96, type: 3}
+    - {fileID: 816857507936487823, guid: 508fe5e99cae75048b2467dc794774a9, type: 3}
+    - {fileID: 1797957487476641598, guid: 8125e7739a4ffad4985409cf465a4862, type: 3}
+    - {fileID: 2435770758953084635, guid: b71b92d6baa100049a153babd85c5a2e, type: 3}
+    - {fileID: 6548742378277534348, guid: 1aff87916814d4d4f8dedede4c673857, type: 3}
+    - {fileID: 5864353809080776886, guid: 43b629b4d803e684b86c0a64dd887f7f, type: 3}
+    - {fileID: 4677385813222340934, guid: 5b5cb7f9440fbf74c900847a346bc9fb, type: 3}
+    - {fileID: 8240502245038311659, guid: 197df1ac516bd35469f7938571b7ae0a, type: 3}
+    - {fileID: 8010582875429379420, guid: 94d18d64ee70111418b93dcae967a5a9, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
 --- !u!1 &3589272265266278662
 GameObject:
   m_ObjectHideFlags: 0
@@ -539,4 +558,4 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _roadPosition: {x: 5, y: 5}
-  _roadToSpawn: {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
+  _roadToSpawn: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
