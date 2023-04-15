@@ -6,35 +6,47 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Util;
+using GameSystems;
 
-public class TurnManager : MonoBehaviour
+namespace GameSystems
 {
-    public event Action TurnPasses;
-
-    [SerializeField]
-    public TurnCostManager TurnCost;
-
-    [SerializeField]
-    private ConstructionController constructionController;
-
-    [SerializeField]
-    private BucketRandom<GridObject> objectsRandomiser;
-
-    public void EndTurn()
+    public class TurnManager : GameSystem
     {
-        TurnPasses?.Invoke();
-        constructionController.SetObject(objectsRandomiser.GetRandom());
-    }
+        public event Action TurnPasses;
 
-    private void Start()
-    {
-        TurnCost.Init(this, Grids.WorldGrid.Instance);
-        constructionController.OnGridObjectSelected += (obj) =>
+        [SerializeField]
+        public TurnCostManager TurnCost;
+
+        [SerializeField]
+        private ConstructionController constructionController;
+
+        [SerializeField]
+        private BucketRandom<GridObject> objectsRandomiser;
+
+
+        public override void InitSystem()
+        {
+            TurnCost.Init(this, Grids.WorldGrid.Instance);
+            constructionController.OnGridObjectSelected += OnConstructionObjectChanged;
+
+            NextTurn();
+        }
+        public override void DeinitSystem()
+        {
+            constructionController.OnGridObjectSelected -= OnConstructionObjectChanged;
+        }
+
+        private void OnConstructionObjectChanged(GridObject obj)
         {
             if (obj == null)
             {
-                EndTurn();
+                NextTurn();
             }
-        };
+        }
+        public void NextTurn()
+        {
+            TurnPasses?.Invoke();
+            constructionController.SetObject(objectsRandomiser.GetRandom());
+        }
     }
 }

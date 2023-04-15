@@ -19,8 +19,6 @@ namespace LevelControll
         public override void InitSystem()
         {
             _constructionController.BuildObject(_roadPosition, _roadToSpawn, false);
-
-            _constructionController.SetObject(_roadToSpawn);
         }
         public override void DeinitSystem() { }
     }
