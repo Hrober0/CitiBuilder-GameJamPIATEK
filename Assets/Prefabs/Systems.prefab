@@ -55,6 +55,7 @@ MonoBehaviour:
   _objectVisualizationParent: {fileID: 3589272265919299987}
   _placesParent: {fileID: 3589272265266278663}
   _placePattern: {fileID: 3456074548179108065, guid: 0d9309bb463fe6d428470e03b7891cbd, type: 3}
+  _placeIncorrectPattern: {fileID: 3456074548179108065, guid: 5d43696e25972db42beeff0db69afa9f, type: 3}
 --- !u!1 &3589272264175073351
 GameObject:
   m_ObjectHideFlags: 0
@@ -236,7 +237,6 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurnCost:
     DefaultTurnCost: 0
-  constructionController: {fileID: 3589272264162770864}
   objectsRandomiser:
     defaultBucket:
     - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
@@ -538,6 +538,5 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775ea79e71146314aabcb53edd09c891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _constructionController: {fileID: 3589272264162770864}
   _roadPosition: {x: 5, y: 5}
   _roadToSpawn: {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}

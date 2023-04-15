@@ -59,7 +59,9 @@ namespace GridObjects
         [SerializeField] private GridObjectTypeSO[] _reqiredObjects = new GridObjectTypeSO[0];
         public IReadOnlyList<GridObjectTypeSO> ReqiredObjects => _reqiredObjects;
 
+
         public bool IsPlaced { get; private set; }
+
 
         public void Place()
         {
@@ -80,6 +82,7 @@ namespace GridObjects
                     module.OnBuildingDestroyed();
             }
         }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
