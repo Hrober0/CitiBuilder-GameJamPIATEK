@@ -4,11 +4,14 @@ using System.Collections.Generic;
 using UnityEngine;
 using Grids;
 using UnityEngine.Assertions;
+using System;
 
 namespace GridObjects
 {
     public class GridObject : MonoBehaviour
     {
+        public event Action OnPlaced;
+
         public IEnumerable<Vector2Int> OccupiedTiles 
         {
             get
@@ -66,6 +69,8 @@ namespace GridObjects
 
             foreach (var module in GetComponents<GridObjectModule>())
                 module.OnBuildingConstructed();
+
+            OnPlaced?.Invoke();
         }
         private void OnDestroy()
         {

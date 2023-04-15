@@ -573,6 +573,7 @@ GameObject:
   m_Component:
   - component: {fileID: 1085706546}
   - component: {fileID: 1085706547}
+  - component: {fileID: 1085706548}
   m_Layer: 0
   m_Name: Systems
   m_TagString: Untagged
@@ -607,6 +608,28 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 8a247bc36c820534789fc7a89ca2b9e9, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
+--- !u!114 &1085706548
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 1085706544}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: f849abfe024997c468c5236839266136, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  TurnCost:
+    DefaultTurnCost: 0
+  constructionController: {fileID: 2096391592}
+  objectsRandomiser:
+    defaultBucket:
+    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
+    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
+    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
+    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
+    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
 --- !u!1 &1911359154
 GameObject:
   m_ObjectHideFlags: 0
