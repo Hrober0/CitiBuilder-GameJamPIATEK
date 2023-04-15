@@ -3,28 +3,30 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-
-public class HeatGenerator : GridObjectModule
+namespace HeatSimulation
 {
-   public float HeatGeneration => heatGeneration;
-    
-    
-
-    [SerializeField]
-    private float heatGeneration;
-
-
-    public override void OnBuildingConstructed()
+    public class HeatGenerator : GridObjectModule
     {
-        base.OnBuildingConstructed();
+        public float HeatGeneration => heatGeneration;
 
-        HeatManager.Instance.RegisterGenerator(this);
-    }
 
-    public override void OnBuildingDestroyed()
-    {
-        base.OnBuildingDestroyed();
 
-        HeatManager.Instance.RemoveGenerator(this);
+        [SerializeField]
+        private float heatGeneration;
+
+
+        public override void OnBuildingConstructed()
+        {
+            base.OnBuildingConstructed();
+
+            HeatManager.Instance.RegisterGenerator(this);
+        }
+
+        public override void OnBuildingDestroyed()
+        {
+            base.OnBuildingDestroyed();
+
+            HeatManager.Instance.RemoveGenerator(this);
+        }
     }
 }
