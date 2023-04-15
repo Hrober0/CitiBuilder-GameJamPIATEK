@@ -4,10 +4,11 @@ using UnityEngine;
 using GridObjects;
 using Grids;
 using System;
+using GameSystems;
 
 namespace InputControll
 {
-    public class ConstructionController : MonoBehaviour
+    public class ConstructionController : GameSystem
     {
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _colisionLayers;
@@ -31,12 +32,18 @@ namespace InputControll
         public Action<GridObject> OnGridObjectSelected;
 
 
+        public override void InitSystem() { }
+        public override void DeinitSystem() { }
+
+
         public void SetObject(GridObject selectedObject)
         {
             if (_objectVisualization != null)
             {
                 Destroy(_objectVisualization.gameObject);
                 _objectVisualization = null;
+
+                InputManager.PrimaryAction.Ended -= TryBuild;
             }
 
             SetAvailableToBuildPlaces(selectedObject);
@@ -48,7 +55,9 @@ namespace InputControll
                 _objectVisualization.gameObject.SetActive(false);
 
                 if (_constructionUpdater == null)
-                    _constructionUpdater = StartCoroutine(ConstructionUpdate());
+                    _constructionUpdater = StartCoroutine(ConstructionVisualizationUpdate());
+
+                InputManager.PrimaryAction.Ended += TryBuild;
             }
 
             OnGridObjectSelected?.Invoke(selectedObject);
@@ -142,8 +151,22 @@ namespace InputControll
             }
         }
 
-        //Dafuq is this?
-        private IEnumerator ConstructionUpdate()
+
+        private void TryBuild()
+        {
+            var gridPos = GetMouseGridPosition();
+            if (CanBuildObjectAt(gridPos, _objectVisualization))
+            {
+                BuildObject(gridPos, _objectVisualization);
+                SetObject(null);
+            }
+            else
+            {
+                Debug.Log("Nope");
+            }
+        }
+
+        private IEnumerator ConstructionVisualizationUpdate()
         {
             WorldGrid grid = WorldGrid.Instance;
             while (_objectVisualization != null)
@@ -159,20 +182,6 @@ namespace InputControll
                 else
                 {
                     _objectVisualization.gameObject.SetActive(false);
-                }
-                
-                // handle build
-                if (Input.GetMouseButtonUp(0))
-                {
-                    if (CanBuildObjectAt(gridPos, _objectVisualization))
-                    {
-                        BuildObject(gridPos, _objectVisualization);
-                        SetObject(null);
-                    }
-                    else
-                    {
-                        Debug.Log("Nope");
-                    }
                 }
 
                 yield return null;
@@ -195,6 +204,7 @@ namespace InputControll
             if (!Physics.Raycast(ray, out RaycastHit hitData, 1000, _colisionLayers))
                 return -Vector2Int.one;
             var worldPos = hitData.point;
+            Debug.Log(worldPos);
             return WorldGrid.GetGridPos(worldPos);
         }
     }

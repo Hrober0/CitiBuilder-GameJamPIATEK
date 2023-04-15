@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Grids;
+using UnityEngine.Assertions;
 
 namespace GridObjects
 {
@@ -59,7 +60,20 @@ namespace GridObjects
 
         public void Place()
         {
+            Assert.IsFalse(IsPlaced, $"{nameof(GridObject)}was already places");
+
             IsPlaced = true;
+
+            foreach (var module in GetComponents<GridObjectModule>())
+                module.OnBuildingConstructed();
+        }
+        private void OnDestroy()
+        {
+            if (IsPlaced)
+            {
+                foreach (var module in GetComponents<GridObjectModule>())
+                    module.OnBuildingDestroyed();
+            }
         }
 
 #if UNITY_EDITOR

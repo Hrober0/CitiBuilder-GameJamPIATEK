@@ -5,8 +5,9 @@ using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
 using Grids;
+using GameSystems;
 
-public class HeatManager : MonoBehaviour
+public class HeatManager : GameSystem
 {
     public static HeatManager Instance { get; private set; }
 
@@ -14,6 +15,21 @@ public class HeatManager : MonoBehaviour
 
     [SerializeField]
     private float[] kernel;
+
+
+    public override void InitSystem()
+    {
+        Assert.IsNull(Instance, $"Mulitple instances {nameof(HeatManager)}");
+        Instance = this;
+
+        heatGenerators = new HashSet<HeatGenerator>();
+
+        SetupKernel();
+
+        StartCoroutine(_HeatPropagatr());
+    }
+    public override void DeinitSystem() { }
+
 
     public void GenerateHeat()
     {
@@ -42,15 +58,8 @@ public class HeatManager : MonoBehaviour
         heatGenerators.Remove(generator);
     }
 
-    private IEnumerator Start()
+    private IEnumerator _HeatPropagatr()
     {
-        Assert.IsNull(Instance, $"Mulitple instances {nameof(HeatManager)}");
-
-        heatGenerators = new HashSet<HeatGenerator>();
-
-        SetupKernel();
-
-        Instance = this;
         GenerateHeat();
 
         while (true)
@@ -61,28 +70,6 @@ public class HeatManager : MonoBehaviour
         }
     }
 
-    private void OnDrawGizmos()
-    {
-        var grid = WorldGrid.Instance;
-        if(grid == null)
-        {
-            return;
-        }
-        var c = Gizmos.color;
-        foreach (var pos in grid.GridSize.allPositionsWithin)
-        {
-            var h = grid.GetCell(pos).Heat;
-            //h *= h;
-            var color = new Color(
-                -Mathf.Cos(h) / 2f + 0.5f,
-                0f,
-                Mathf.Sin(h) / 2f + 0.5f
-                );
-            Gizmos.color = color;
-            Gizmos.DrawCube(new Vector3(pos.x + 0.5f, 0, pos.y + 0.5f), Vector3.one * 0.9f);
-        }
-        Gizmos.color = c;
-    }
 
     private void SetupKernel()
     {
@@ -144,4 +131,30 @@ public class HeatManager : MonoBehaviour
                 grid.GetCell(x, y).Heat = newHeat[x, y];
             }
     }
+
+
+#if UNITY_EDITOR
+    private void OnDrawGizmos()
+    {
+        var grid = WorldGrid.Instance;
+        if(grid == null)
+        {
+            return;
+        }
+        var c = Gizmos.color;
+        foreach (var pos in grid.GridSize.allPositionsWithin)
+        {
+            var h = grid.GetCell(pos).Heat;
+            //h *= h;
+            var color = new Color(
+                -Mathf.Cos(h) / 2f + 0.5f,
+                0f,
+                Mathf.Sin(h) / 2f + 0.5f
+                );
+            Gizmos.color = color;
+            Gizmos.DrawCube(new Vector3(pos.x + 0.5f, 0, pos.y + 0.5f), Vector3.one * 0.9f);
+        }
+        Gizmos.color = c;
+    }
+#endif
 }

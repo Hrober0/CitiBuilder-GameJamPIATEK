@@ -3,24 +3,28 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 
-[RequireComponent(typeof(GridObject))]
-public class HeatGenerator : MonoBehaviour
+
+public class HeatGenerator : GridObjectModule
 {
-    public float HeatGeneration => heatGeneration;
+   public float HeatGeneration => heatGeneration;
     
-    public GridObject GridObject { get; private set; }
+    
 
     [SerializeField]
     private float heatGeneration;
 
-    private void Start()
+
+    public override void OnBuildingConstructed()
     {
-        GridObject = GetComponent<GridObject>();
+        base.OnBuildingConstructed();
+
         HeatManager.Instance.RegisterGenerator(this);
     }
 
-    private void OnDestroy()
+    public override void OnBuildingDestroyed()
     {
+        base.OnBuildingDestroyed();
+
         HeatManager.Instance.RemoveGenerator(this);
     }
 }

@@ -3,10 +3,11 @@ using System.Collections.Generic;
 using UnityEngine;
 using InputControll;
 using GridObjects;
+using GameSystems;
 
 namespace LevelControll
 {
-    public class LevelLoader : MonoBehaviour
+    public class LevelLoader : GameSystem
     {
         [SerializeField] private ConstructionController _constructionController;
 
@@ -15,12 +16,13 @@ namespace LevelControll
         [SerializeField] private GridObject _roadToSpawn;
 
 
-        private void Start()
+        public override void InitSystem()
         {
             _constructionController.BuildObject(_roadPosition, _roadToSpawn, false);
 
             _constructionController.SetObject(_roadToSpawn);
         }
+        public override void DeinitSystem() { }
     }
 
 }
