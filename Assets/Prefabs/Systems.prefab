@@ -33,7 +33,7 @@ Transform:
   - {fileID: 3589272265266278663}
   - {fileID: 3589272264175073400}
   m_Father: {fileID: 3589272264369417007}
-  m_RootOrder: 4
+  m_RootOrder: 3
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3589272264162770864
 MonoBehaviour:
@@ -164,10 +164,10 @@ Transform:
   m_Children:
   - {fileID: 3589272264346705068}
   - {fileID: 3589272266074700323}
-  - {fileID: 3589272265000936330}
   - {fileID: 3589272265542314715}
   - {fileID: 3589272264162770865}
   - {fileID: 3589272266230721849}
+  - {fileID: 3589272265000936330}
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
@@ -189,6 +189,7 @@ MonoBehaviour:
   - {fileID: 3589272265542314714}
   - {fileID: 3589272264162770864}
   - {fileID: 3589272266230721848}
+  - {fileID: 3589272265000936331}
 --- !u!1 &3589272265000936329
 GameObject:
   m_ObjectHideFlags: 0
@@ -219,7 +220,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3589272264369417007}
-  m_RootOrder: 2
+  m_RootOrder: 5
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3589272265000936331
 MonoBehaviour:
@@ -235,9 +236,12 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   TurnCost:
     DefaultTurnCost: 0
-  constructionController: {fileID: 0}
+  constructionController: {fileID: 3589272264162770864}
   objectsRandomiser:
-    defaultBucket: []
+    defaultBucket:
+    - {fileID: -8378903440038912331, guid: 4980ae7784363db4d911e4fb8a9cc0c0, type: 3}
+    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
+    - {fileID: -8378903440038912331, guid: 11fff03871eb8474b9d61b5077772292, type: 3}
 --- !u!1 &3589272265266278662
 GameObject:
   m_ObjectHideFlags: 0
@@ -397,7 +401,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3589272264369417007}
-  m_RootOrder: 3
+  m_RootOrder: 2
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3589272265542314714
 MonoBehaviour:
@@ -520,7 +524,7 @@ Transform:
   m_ConstrainProportionsScale: 0
   m_Children: []
   m_Father: {fileID: 3589272264369417007}
-  m_RootOrder: 5
+  m_RootOrder: 4
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
 --- !u!114 &3589272266230721848
 MonoBehaviour:
