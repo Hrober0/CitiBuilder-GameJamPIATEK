@@ -18,22 +18,23 @@ namespace GameSystems
         public TurnCostManager TurnCost;
 
         [SerializeField]
-        private ConstructionController constructionController;
-
-        [SerializeField]
         private BucketRandom<GridObject> objectsRandomiser;
 
 
-        public override void InitSystem()
+        private ConstructionController _constructionController;
+
+        protected override void InitSystem()
         {
             TurnCost.Init(this, Grids.WorldGrid.Instance);
-            constructionController.OnBuildingBuild += OnBuildingBuild;
+
+            _constructionController = _systems.Get<ConstructionController>();
+            _constructionController.OnBuildingBuild += OnBuildingBuild;
 
             NextTurn();
         }
-        public override void DeinitSystem()
+        protected override void DeinitSystem()
         {
-            constructionController.OnBuildingBuild -= OnBuildingBuild;
+            _constructionController.OnBuildingBuild -= OnBuildingBuild;
         }
 
         private void OnBuildingBuild(GridObject obj)
@@ -43,7 +44,7 @@ namespace GameSystems
         public void NextTurn()
         {
             TurnPasses?.Invoke();
-            constructionController.SetObject(objectsRandomiser.GetRandom());
+            _constructionController.SetObject(objectsRandomiser.GetRandom());
         }
     }
 }

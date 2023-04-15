@@ -32,8 +32,8 @@ namespace InputControll
         public event Action<GridObject> OnBuildingBuild;
         public event Action<GridObject> OnBuildingSelected;
 
-        public override void InitSystem() { }
-        public override void DeinitSystem() { }
+        protected override void InitSystem() { }
+        protected override void DeinitSystem() { }
 
 
         public void SetObject(GridObject selectedObject)

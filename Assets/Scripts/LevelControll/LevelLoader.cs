@@ -9,18 +9,20 @@ namespace LevelControll
 {
     public class LevelLoader : GameSystem
     {
-        [SerializeField] private ConstructionController _constructionController;
-
         [Header("Level start")]
         [SerializeField] private Vector2Int _roadPosition;
         [SerializeField] private GridObject _roadToSpawn;
 
 
-        public override void InitSystem()
+        private ConstructionController _constructionController;
+
+
+        protected override void InitSystem()
         {
+            _constructionController = _systems.Get<ConstructionController>();
             _constructionController.BuildObject(_roadPosition, _roadToSpawn, false);
         }
-        public override void DeinitSystem() { }
+        protected override void DeinitSystem() { }
     }
 
 }

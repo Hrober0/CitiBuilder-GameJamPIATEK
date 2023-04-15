@@ -17,7 +17,7 @@ public class InputManager : GameSystem
 
     private PlayerInput input;
 
-    public override void InitSystem()
+    protected override void InitSystem()
     {
         Assert.IsNull(instance, $"Duplicate {nameof(InputManager)} on {this}");
 
@@ -29,7 +29,7 @@ public class InputManager : GameSystem
 
         input.Enable();
     }
-    public override void DeinitSystem()
+    protected override void DeinitSystem()
     {
         input.Disable();
     }

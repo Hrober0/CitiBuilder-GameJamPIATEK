@@ -26,7 +26,7 @@ namespace Grids
 
         public static WorldGrid Instance { get; private set; }
 
-        public override void InitSystem()
+        protected override void InitSystem()
         {
             Assert.IsNull(Instance, $"Mulitple instances {nameof(WorldGrid)}");
 
@@ -37,7 +37,7 @@ namespace Grids
                 for (int x = 0; x < _gridX; x++)
                     _cells[x, y] = new();
         }
-        public override void DeinitSystem() { }
+        protected override void DeinitSystem() { }
 
 
         #region grid calculation

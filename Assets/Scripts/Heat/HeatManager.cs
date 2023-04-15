@@ -20,7 +20,7 @@ namespace HeatSimulation
         private float[] kernel;
 
 
-        public override void InitSystem()
+        protected override void InitSystem()
         {
             Assert.IsNull(Instance, $"Mulitple instances {nameof(HeatManager)}");
             Instance = this;
@@ -31,7 +31,7 @@ namespace HeatSimulation
 
             StartCoroutine(_HeatPropagatr());
         }
-        public override void DeinitSystem() { }
+        protected override void DeinitSystem() { }
 
 
         public void GenerateHeat()
