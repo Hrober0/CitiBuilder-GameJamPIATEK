@@ -119,7 +119,7 @@ PrefabInstance:
     - target: {fileID: -7511558181221131132, guid: 77df73b495bfb0f44bb11bed641c53c8, type: 3}
       propertyPath: m_Materials.Array.data[4]
       value: 
-      objectReference: {fileID: 2100000, guid: bd4e904c36e34d147adcb78dd3bc514c, type: 2}
+      objectReference: {fileID: 2100000, guid: 577c2b529498dce46a308eeef5da780d, type: 2}
     - target: {fileID: 919132149155446097, guid: 77df73b495bfb0f44bb11bed641c53c8, type: 3}
       propertyPath: m_Name
       value: skyscraperB
