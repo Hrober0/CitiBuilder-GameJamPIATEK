@@ -3,11 +3,14 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using Grids;
+using System;
 
 namespace GridObjects
 {
     public class GridObject : MonoBehaviour
     {
+        public event Action OnPlaced;
+
         public IEnumerable<Vector2Int> OccupiedTiles 
         {
             get
@@ -60,6 +63,7 @@ namespace GridObjects
         public void Place()
         {
             IsPlaced = true;
+            OnPlaced?.Invoke();
         }
 
 #if UNITY_EDITOR
