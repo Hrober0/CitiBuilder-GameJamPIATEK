@@ -9,6 +9,8 @@ GameObject:
   serializedVersion: 6
   m_Component:
   - component: {fileID: 2226550083869638959}
+  - component: {fileID: 8010582875429379420}
+  - component: {fileID: 3150057825841825481}
   m_Layer: 0
   m_Name: Bld_Tall_03
   m_TagString: Untagged
@@ -33,6 +35,36 @@ Transform:
   m_Father: {fileID: 0}
   m_RootOrder: 0
   m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &8010582875429379420
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255793784808380379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: ec16347c7588fe043916246b26ce83bb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  _name: Tri Skyscraper
+  _type: {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
+  _fields:
+  - {x: 0, y: 0}
+  _reqiredObjects: []
+--- !u!114 &3150057825841825481
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 255793784808380379}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatGeneration: 3
 --- !u!1001 &3212114884526026319
 PrefabInstance:
   m_ObjectHideFlags: 0
@@ -46,7 +78,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4246932336682425544, guid: 1925bbac398902140be65663e0493821, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4246932336682425544, guid: 1925bbac398902140be65663e0493821, type: 3}
       propertyPath: m_LocalPosition.y
@@ -54,7 +86,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 4246932336682425544, guid: 1925bbac398902140be65663e0493821, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: 4246932336682425544, guid: 1925bbac398902140be65663e0493821, type: 3}
       propertyPath: m_LocalRotation.w
@@ -120,7 +152,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b128bae8ed4b0a641be9959bdf74ba1f, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b128bae8ed4b0a641be9959bdf74ba1f, type: 3}
       propertyPath: m_LocalPosition.y
@@ -128,7 +160,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b128bae8ed4b0a641be9959bdf74ba1f, type: 3}
       propertyPath: m_LocalPosition.z
-      value: 0
+      value: 0.5
       objectReference: {fileID: 0}
     - target: {fileID: -8679921383154817045, guid: b128bae8ed4b0a641be9959bdf74ba1f, type: 3}
       propertyPath: m_LocalRotation.w
