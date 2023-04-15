@@ -4,7 +4,7 @@ using UnityEngine;
 
 namespace GridObjects
 {
-    [CreateAssetMenu(fileName ="NewGridObject", menuName ="Scriptables/GridObject")]
+    [CreateAssetMenu(fileName ="NewGridObjectType", menuName ="Scriptables/GridObjectType")]
     public class GridObjectTypeSO : ScriptableObject
     {
         [SerializeField] private string _name = "default";

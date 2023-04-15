@@ -3,7 +3,7 @@ using System.Collections.Generic;
 using UnityEngine;
 using GridObjects;
 
-namespace WordGrid
+namespace Grids
 {
     public class GCell
     {
