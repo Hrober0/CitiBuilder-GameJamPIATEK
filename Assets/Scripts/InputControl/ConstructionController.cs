@@ -35,7 +35,7 @@ namespace InputControll
         {
             if (_objectVisualization != null)
             {
-                Destroy(_objectVisualization);
+                Destroy(_objectVisualization.gameObject);
                 _objectVisualization = null;
             }
 
@@ -68,6 +68,8 @@ namespace InputControll
 
             foreach (var field in newObj.Fields)
                 WorldGrid.Instance.GetCell(field + gridPos).GridObject = newObj;
+
+            newObj.Place();
         }
         
         public bool CanBuildObjectAt(Vector2Int gridPos, GridObject obj)
@@ -140,7 +142,7 @@ namespace InputControll
             }
         }
 
-
+        //Dafuq is this?
         private IEnumerator ConstructionUpdate()
         {
             WorldGrid grid = WorldGrid.Instance;

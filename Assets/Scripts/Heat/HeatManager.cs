@@ -4,7 +4,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.Assertions;
-using WordGrid;
+using Grids;
 
 public class HeatManager : MonoBehaviour
 {
@@ -19,7 +19,7 @@ public class HeatManager : MonoBehaviour
     {
         foreach (var generator in heatGenerators)
         {
-            foreach (var tile in generator.GridObject.OccupiedTiles)
+            foreach (var tile in generator.GridObject.OccupiedCells)
             {
                 tile.Heat = Mathf.Max(tile.Heat + generator.HeatGeneration, 0);
             }

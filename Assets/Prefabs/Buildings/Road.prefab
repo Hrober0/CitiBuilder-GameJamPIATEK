@@ -10,8 +10,9 @@ GameObject:
   m_Component:
   - component: {fileID: 5778432017696302714}
   - component: {fileID: -8378903440038912331}
+  - component: {fileID: 814937934060322271}
   m_Layer: 11
-  m_Name: Building01
+  m_Name: Road
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
@@ -44,9 +45,22 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec16347c7588fe043916246b26ce83bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Building01
-  _type: {fileID: 11400000, guid: 24089ea12550ccd438418d1ac94f3dc9, type: 2}
+  _name: Road
+  _type: {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
   _fields:
   - {x: 0, y: 0}
-  - {x: 0, y: 1}
-  - {x: 1, y: 1}
+  _reqiredObjects:
+  - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
+--- !u!114 &814937934060322271
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4012842711090576137}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  heatGeneration: 1
