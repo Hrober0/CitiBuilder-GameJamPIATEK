@@ -46,7 +46,11 @@ namespace GridObjects
 
         [SerializeField] private string _name = "default";
         public string DisplayedName => _name;
-        
+
+
+        [SerializeField] private Sprite _icon;
+        public Sprite Icon => _icon;
+
 
         [SerializeField] private GridObjectTypeSO _type;
         public GridObjectTypeSO Type => _type;
@@ -62,7 +66,6 @@ namespace GridObjects
 
         private int _deltaHot = 1;
         public int DeltaHot => _deltaHot;
-        public Sprite Icon => null;
 
 
         public bool IsPlaced { get; private set; }

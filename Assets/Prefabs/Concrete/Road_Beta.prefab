@@ -47,6 +47,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Road
+  _icon: {fileID: 21300000, guid: 59b8e1b2fe1128b44b2982b10bf9c0ca, type: 3}
   _type: {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
   _fields:
   - {x: 0, y: 0}

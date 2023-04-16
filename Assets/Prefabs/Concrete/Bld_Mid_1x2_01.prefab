@@ -49,6 +49,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Double Shops
+  _icon: {fileID: 21300000, guid: 8af86d6e905d0ba45ad23f803649ceaf, type: 3}
   _type: {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
   _fields:
   - {x: 0, y: 0}

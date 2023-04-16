@@ -51,6 +51,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Commerce Center
+  _icon: {fileID: 21300000, guid: be0b3f3f023492f42a66454f057f5365, type: 3}
   _type: {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
   _fields:
   - {x: 0, y: 0}
