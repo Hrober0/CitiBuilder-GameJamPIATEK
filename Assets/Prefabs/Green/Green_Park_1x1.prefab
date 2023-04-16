@@ -154,6 +154,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   _reqiredObjects:
   - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
+  _deltaHot: -2
 --- !u!114 &-4977597587096474695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -166,7 +167,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: 0
+  heatGeneration: -0.2
 --- !u!1001 &1250234907302818449
 PrefabInstance:
   m_ObjectHideFlags: 0

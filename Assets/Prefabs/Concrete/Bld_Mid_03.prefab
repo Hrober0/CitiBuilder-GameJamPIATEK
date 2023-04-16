@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 6416322348973165400}
   - component: {fileID: 816857507936487823}
   - component: {fileID: 818232974343579754}
+  - component: {fileID: -3163598028885335864}
+  - component: {fileID: 5688444175685510286}
   m_Layer: 0
   m_Name: Bld_Mid_03
   m_TagString: Untagged
@@ -55,6 +57,7 @@ MonoBehaviour:
   - {x: 0, y: 0}
   _reqiredObjects:
   - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
+  _deltaHot: 2
 --- !u!114 &818232974343579754
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -67,7 +70,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: 0.05
+  heatGeneration: 0.175
+--- !u!114 &-3163598028885335864
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6642097114012626310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f603b7c65def164dad41ced59cb6af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 684152050985132647, guid: fbace61987dcad849ae60f2c253f9196, type: 3}
+  heatFunction: 2
+--- !u!114 &5688444175685510286
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6642097114012626310}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce3ad0a204241b47b5f253ba24eaae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  min: 0
+  coef: 1.1
+  offset: 0.3
+  power: 2.2
+  obj: {fileID: -8998639351867308955, guid: fbace61987dcad849ae60f2c253f9196, type: 3}
 --- !u!1001 &3058602621485687405
 PrefabInstance:
   m_ObjectHideFlags: 0

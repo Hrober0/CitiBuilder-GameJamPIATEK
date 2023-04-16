@@ -64,6 +64,7 @@ namespace GridObjects
         public IReadOnlyList<GridObjectTypeSO> ReqiredObjects => _reqiredObjects;
 
 
+        [SerializeField]
         private int _deltaHot = 1;
         public int DeltaHot => _deltaHot;
 
