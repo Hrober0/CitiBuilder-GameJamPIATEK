@@ -518,10 +518,6 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 6.17
       objectReference: {fileID: 0}
-    - target: {fileID: 3589272265000936331, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
-      propertyPath: _objectsRandomiser.defaultBucket.Array.data[39]
-      value: 
-      objectReference: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     - target: {fileID: 3589272265353033730, guid: 42144b6b16f8a30409f5d56e6453fffd, type: 3}
       propertyPath: m_LocalPosition.x
       value: 19.34
