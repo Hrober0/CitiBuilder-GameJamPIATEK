@@ -1,5 +1,6 @@
 using System.Collections;
 using System.Collections.Generic;
+using System.Linq;
 using UnityEngine;
 
 namespace GameSystems
@@ -16,7 +17,7 @@ namespace GameSystems
 
         private void OnDestroy()
         {
-            foreach (var system in systems)
+            foreach (var system in systems.Reverse())
                 system.Deinit();
         }
 

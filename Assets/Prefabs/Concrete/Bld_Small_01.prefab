@@ -65,7 +65,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: 1
+  heatGeneration: -0.02
 --- !u!1001 &6876404703420696422
 PrefabInstance:
   m_ObjectHideFlags: 0
