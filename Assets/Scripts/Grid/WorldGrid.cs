@@ -90,6 +90,6 @@ namespace Grids
             for (int x = 1; x <= _gridX; x++)
                 Gizmos.DrawLine(GRID_START + new Vector3(x * CELL_SIZE, 0, 0), GRID_START + new Vector3(x * CELL_SIZE, 0, _gridY));
         }
-    }
 #endif
+    }
 }
