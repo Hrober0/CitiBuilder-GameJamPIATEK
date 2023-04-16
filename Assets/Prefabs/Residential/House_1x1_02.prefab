@@ -53,6 +53,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Modern House
+  _icon: {fileID: 21300000, guid: 0256060dfd65cc14da385b7a91bb1739, type: 3}
   _type: {fileID: 11400000, guid: 93a9321a818d8fe4e9a7cc3b33ee63d8, type: 2}
   _fields:
   - {x: 0, y: 0}

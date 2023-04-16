@@ -52,6 +52,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Big House
+  _icon: {fileID: 21300000, guid: 9ed08aade99e6e7489d6edfd411a08ec, type: 3}
   _type: {fileID: 0}
   _fields:
   - {x: 0, y: 0}
