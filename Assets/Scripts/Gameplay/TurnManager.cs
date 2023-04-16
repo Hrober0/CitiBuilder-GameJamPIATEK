@@ -29,8 +29,10 @@ namespace GameSystems
         }
 
 
+        public event Action TurnEndBuild;
         public event Action TurnPasses;
         public event Action TurnEndSmimulationEnd;
+        public event Action TurnReachSkippPoint;
 
 
         [SerializeField] private TurnCostManager _turnCost;
@@ -123,15 +125,28 @@ namespace GameSystems
                 }
             }
 
+            if (_handCards.Count <= 3)
+                TurnReachSkippPoint?.Invoke();
+
             _points += value.pattern.PointsForPlaced;
 
             if (_handCards.Count == 0)
-                StartCoroutine(ShowPropagation());
+                EndTour();
+        }
+
+        public void EndTour()
+        {
+            StartCoroutine(ShowPropagation());
         }
 
 
         private IEnumerator ShowPropagation()
         {
+            TurnEndBuild?.Invoke();
+
+            _handCards.Clear();
+            OnHandChanged?.Invoke();
+
             _overlay.SetOvelayActive(true);
             yield return new WaitForSeconds(1);
 

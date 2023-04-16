@@ -215,8 +215,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 9277815a9016b3541bb5d37662c8bb9a, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _gridX: 11
-  _gridY: 11
+  _gridX: 40
+  _gridY: 20
 --- !u!1 &3589272264369417006
 GameObject:
   m_ObjectHideFlags: 0
@@ -348,7 +348,6 @@ MonoBehaviour:
     - {fileID: 8452364465652455264, guid: 88721eea7f4a24d4496407f07f598d2b, type: 3}
     - {fileID: 8667001322035012869, guid: 39b53dae3a3013749b97f9b1f107d36f, type: 3}
     - {fileID: 2093391173788867447, guid: 12e04dcbef264f146b3dc1c7b6104925, type: 3}
-    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
@@ -667,7 +666,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 775ea79e71146314aabcb53edd09c891, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _roadPosition: {x: 5, y: 5}
+  _roadPosition: {x: 19, y: 9}
   _roadToSpawn: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
   _uiScene: UIHUD
 --- !u!1 &4426562970253090149
