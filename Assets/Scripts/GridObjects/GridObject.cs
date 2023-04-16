@@ -64,11 +64,16 @@ namespace GridObjects
         public IReadOnlyList<GridObjectTypeSO> ReqiredObjects => _reqiredObjects;
 
 
+        [SerializeField]
         private int _deltaHot = 1;
         public int DeltaHot => _deltaHot;
 
-
+        [field: SerializeField]
         public bool IsPlaced { get; private set; }
+
+
+        [SerializeField] private float _pointsForPlaced = 0.5f;
+        public float PointsForPlaced => _pointsForPlaced;
 
 
         public void Place()

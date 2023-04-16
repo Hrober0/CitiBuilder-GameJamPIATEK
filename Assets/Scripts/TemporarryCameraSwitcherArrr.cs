@@ -1,4 +1,5 @@
 using Cinemachine;
+using System;
 using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
@@ -10,10 +11,23 @@ public class TemporarryCameraSwitcherArrr : MonoBehaviour
     public Transform TopPos;
     public Transform SidePos;
 
+    public bool IsOverlayActive => VC.Follow == TopPos;
+
+    public event Action OnOverlayChanged;
+
     private IEnumerator Start()
     {
         yield return null;
         InputManager.SecondaryAction.Started += SwitchPerSperspective;
+    }
+
+    public void SetOvelayActive(bool active)
+    {
+        if (IsOverlayActive != active)
+        {
+            SwitchPerSperspective();
+            OnOverlayChanged?.Invoke();
+        }
     }
 
     private void SwitchPerSperspective()
@@ -26,5 +40,7 @@ public class TemporarryCameraSwitcherArrr : MonoBehaviour
         {
             VC.Follow = TopPos;
         }
+
+        OnOverlayChanged?.Invoke();
     }
 }

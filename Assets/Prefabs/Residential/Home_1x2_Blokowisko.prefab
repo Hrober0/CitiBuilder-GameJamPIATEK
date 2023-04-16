@@ -11,6 +11,8 @@ GameObject:
   - component: {fileID: 2618902684050733550}
   - component: {fileID: 3467402740352466135}
   - component: {fileID: 6672785431525400402}
+  - component: {fileID: -2211222690302643659}
+  - component: {fileID: -8370239784114220836}
   m_Layer: 0
   m_Name: Home_1x2_Blokowisko
   m_TagString: Untagged
@@ -76,7 +78,38 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: 0
+  heatGeneration: 0.05
+--- !u!114 &-2211222690302643659
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618902684050733329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 2f603b7c65def164dad41ced59cb6af3, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  obj: {fileID: 3467402740352466135}
+  heatFunction: 2
+--- !u!114 &-8370239784114220836
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 2618902684050733329}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 3ce3ad0a204241b47b5f253ba24eaae7, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  min: 0
+  coef: 1.25
+  offset: 0.05
+  power: 1
+  obj: {fileID: -2211222690302643659}
 --- !u!1001 &33942350180066390
 PrefabInstance:
   m_ObjectHideFlags: 0

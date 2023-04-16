@@ -29,15 +29,24 @@ namespace GameSystems
         {
             var cost = DefaultTurnCost;
 
+            HashSet<GridObjects.GridObject> calculated = new HashSet<GridObjects.GridObject>();
+
             foreach (var cellPos in grid.GridSize.allPositionsWithin)
             {
                 var cell = grid.GetCell(cellPos);
 
                 if (cell.GridObject != null)
                 {
+                    if (calculated.Contains(cell.GridObject))
+                    {
+                        continue;
+                    }
+                    calculated.Add(cell.GridObject);
                     foreach (var costProvider in cell.GridObject.GetComponents<ICostProvider>())
                     {
-                        cost += costProvider.CurrentCost;
+                        var c = costProvider.CurrentCost;
+                        Debug.Log(c);
+                        cost += c;
                     }
                 }
             }
@@ -47,6 +56,7 @@ namespace GameSystems
         public void HandlePointConsumption(WorldGrid grid)
         {
             var cost = NextTurnCost(grid);
+            Debug.Log(cost);
             if (!points.TryRetrieve(cost))
             {
                 //TODO Handle game end

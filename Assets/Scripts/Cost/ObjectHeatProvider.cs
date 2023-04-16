@@ -1,4 +1,5 @@
 using GridObjects;
+using System;
 using System.Linq;
 using UnityEngine;
 
@@ -16,13 +17,22 @@ public class ObjectHeatProvider : MonoBehaviour
                 heats[i] = fields[i].Heat;
             }
 
-            return heatFunction switch
+            //Jam code
+            try
             {
-                HeatValueFunction.Min => Mathf.Min(heats),
-                HeatValueFunction.Max => Mathf.Max(heats),
-                HeatValueFunction.Mean => heats.Average(),
-                _ => 0f
-            };
+                return heatFunction switch
+                {
+                    HeatValueFunction.Min => Mathf.Min(heats),
+                    HeatValueFunction.Max => Mathf.Max(heats),
+                    HeatValueFunction.Mean => heats.Average(),
+                    _ => 0f
+                };
+            }
+            catch (InvalidOperationException e)
+            {
+                Debug.Log(e.Message);
+                return 0;
+            }
         }
     }
 
