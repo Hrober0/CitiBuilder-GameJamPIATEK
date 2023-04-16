@@ -201,7 +201,7 @@ MonoBehaviour:
   _reqiredObjects:
   - {fileID: 11400000, guid: 93a9321a818d8fe4e9a7cc3b33ee63d8, type: 2}
   - {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
-  _deltaHot: 1
+  _deltaHot: -1
   <IsPlaced>k__BackingField: 0
   _pointsForPlaced: -7
 --- !u!114 &5741881845187767803
