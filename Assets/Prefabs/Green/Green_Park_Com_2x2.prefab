@@ -280,6 +280,9 @@ MonoBehaviour:
   _reqiredObjects:
   - {fileID: 11400000, guid: 93a9321a818d8fe4e9a7cc3b33ee63d8, type: 2}
   - {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
+  _deltaHot: 1
+  <IsPlaced>k__BackingField: 0
+  _pointsForPlaced: 0.5
 --- !u!114 &-4977597587096474695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -292,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: 0
+  heatGeneration: -2
 --- !u!1 &5170676937225942996
 GameObject:
   m_ObjectHideFlags: 0
