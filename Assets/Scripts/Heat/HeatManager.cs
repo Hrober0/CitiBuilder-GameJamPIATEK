@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Grids;
 using GameSystems;
-
+using UnityEditor.Overlays;
 
 namespace HeatSimulation
 {
@@ -17,8 +17,18 @@ namespace HeatSimulation
         private HashSet<HeatGenerator> heatGenerators;
 
         [SerializeField]
+        private MeshFilter overlay;
+
+        [SerializeField]
         private float[] kernel;
 
+        [SerializeField]
+        private int _heatUpdateIterations;
+        
+        [SerializeField]
+        private float _heatIterationInterval;
+
+        private Action _turnEndLambda;
 
         protected override void InitSystem()
         {
@@ -27,28 +37,18 @@ namespace HeatSimulation
 
             heatGenerators = new HashSet<HeatGenerator>();
 
+            _turnEndLambda = () => StartCoroutine(UpdateHeat());
+            _systems.Get<TurnManager>().TurnPasses += _turnEndLambda;
+
             SetupKernel();
 
-            StartCoroutine(_HeatPropagatr());
+            GenerateOverlay();
+            
+            //StartCoroutine(_HeatPropagatr());
         }
-        protected override void DeinitSystem() { }
-
-
-        public void GenerateHeat()
+        protected override void DeinitSystem() 
         {
-            foreach (var generator in heatGenerators)
-            {
-                foreach (var tile in generator.GridObject.OccupiedCells)
-                {
-                    tile.Heat = Mathf.Max(tile.Heat + generator.HeatGeneration, 0);
-                }
-            }
-        }
-
-        public void PropagateHeat()
-        {
-            ApplyKernel((x, y, i) => GetHeatAt(x + i, y));
-            ApplyKernel((x, y, i) => GetHeatAt(x, y + i));
+            _systems.Get<TurnManager>().TurnPasses -= _turnEndLambda;
         }
 
         public void RegisterGenerator(HeatGenerator generator)
@@ -61,18 +61,92 @@ namespace HeatSimulation
             heatGenerators.Remove(generator);
         }
 
-        private IEnumerator _HeatPropagatr()
+        private IEnumerator UpdateHeat()
         {
-            GenerateHeat();
-
-            while (true)
+            for (int i = 0; i < _heatUpdateIterations; i++) 
             {
-                yield return new WaitForSeconds(1f / 8f);
-                PropagateHeat();
                 GenerateHeat();
+                PropagateHeat();
+                GenerateOverlay();
+                yield return new WaitForSeconds(_heatIterationInterval);
             }
         }
 
+        private void GenerateHeat()
+        {
+            foreach (var generator in heatGenerators)
+            {
+                foreach (var tile in generator.GridObject.OccupiedCells)
+                {
+                    tile.Heat = Mathf.Max(tile.Heat + generator.HeatGeneration, 0);
+                }
+            }
+        }
+
+        private void PropagateHeat()
+        {
+            ApplyKernel((x, y, i) => GetHeatAt(x + i, y));
+            ApplyKernel((x, y, i) => GetHeatAt(x, y + i));
+        }
+
+        private void GenerateOverlay()
+        {
+            var grid = WorldGrid.Instance;
+
+            var sizeX = grid.GridX + 1;
+            var sizeY = grid.GridX + 1;
+
+            Mesh mesh = new Mesh();
+
+            var verts = new Vector3[sizeX * sizeY * 4];
+            var tris = new int[sizeX * sizeY * 6];
+            var uv0 = new Vector4[sizeX * sizeY * 4];
+            var uv1 = new Vector4[sizeX * sizeY * 4];
+
+            for (int x = 0; x < sizeX; x++)
+                for (int y = 0; y < sizeX; y++)
+                {
+                    int i = sizeX * y + x;
+                    int v = i * 4;
+                    int t = i * 6;
+                    verts[v + 0] = new Vector3(x - 0.5f, 0f, y - 0.5f);
+                    verts[v + 1] = new Vector3(x + 0.5f, 0f, y - 0.5f);
+                    verts[v + 2] = new Vector3(x + 0.5f, 0f, y + 0.5f);
+                    verts[v + 3] = new Vector3(x - 0.5f, 0f, y + 0.5f);
+
+                    uv0[v + 0] = new Vector2(0, 0);
+                    uv0[v + 1] = new Vector2(1, 0);
+                    uv0[v + 2] = new Vector2(1, 1);
+                    uv0[v + 3] = new Vector2(0, 1);
+
+                    var weights = new Vector4(
+                        GetHeatAt(x, y),
+                        GetHeatAt(x, y - 1),
+                        GetHeatAt(x - 1, y - 1),
+                        GetHeatAt(x - 1, y)
+                        );
+
+                    uv1[v + 0] = weights;
+                    uv1[v + 1] = weights;
+                    uv1[v + 2] = weights;
+                    uv1[v + 3] = weights;
+
+                    tris[t + 0] = v + 0;
+                    tris[t + 1] = v + 2;
+                    tris[t + 2] = v + 1;
+                    tris[t + 3] = v + 0;
+                    tris[t + 4] = v + 3;
+                    tris[t + 5] = v + 2;
+                }
+
+            mesh.SetVertices(verts);
+            mesh.SetUVs(0, uv0);
+            mesh.SetUVs(1, uv1);
+
+            mesh.SetTriangles(tris, 0);
+
+            overlay.mesh = mesh;
+        }
 
         private void SetupKernel()
         {
@@ -135,7 +209,6 @@ namespace HeatSimulation
                     grid.GetCell(x, y).Heat = newHeat[x, y];
                 }
         }
-
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
