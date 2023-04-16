@@ -57,6 +57,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Blokowisko
+  _icon: {fileID: 21300000, guid: d59c9e5b728537648b96e3077412eef2, type: 3}
   _type: {fileID: 11400000, guid: 93a9321a818d8fe4e9a7cc3b33ee63d8, type: 2}
   _fields:
   - {x: 0, y: 0}

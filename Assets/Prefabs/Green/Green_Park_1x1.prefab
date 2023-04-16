@@ -148,6 +148,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Park with Pond
+  _icon: {fileID: 21300000, guid: 839d60a54abdd164aafea4879b340b0f, type: 3}
   _type: {fileID: 11400000, guid: 730c2f2099fd11e4698892cd380bf365, type: 2}
   _fields:
   - {x: 0, y: 0}
