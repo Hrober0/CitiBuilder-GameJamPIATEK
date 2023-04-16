@@ -6,7 +6,7 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Grids;
 using GameSystems;
-
+using UnityEditor.Overlays;
 
 namespace HeatSimulation
 {
@@ -16,11 +16,11 @@ namespace HeatSimulation
 
         private HashSet<HeatGenerator> heatGenerators;
 
-    [SerializeField]
-    private MeshFilter overlay;
+        [SerializeField]
+        private MeshFilter overlay;
 
-    [SerializeField]
-    private float[] kernel;
+        [SerializeField]
+        private float[] kernel;
 
 
         protected override void InitSystem()
@@ -30,14 +30,35 @@ namespace HeatSimulation
 
             heatGenerators = new HashSet<HeatGenerator>();
 
+            _systems.Get<TurnManager>().TurnPasses += UpdateHeat;
+
             SetupKernel();
 
-            StartCoroutine(_HeatPropagatr());
+            //StartCoroutine(_HeatPropagatr());
         }
-        protected override void DeinitSystem() { }
+        protected override void DeinitSystem() 
+        {
+            _systems.Get<TurnManager>().TurnPasses += UpdateHeat;
+        }
 
+        public void RegisterGenerator(HeatGenerator generator)
+        {
+            heatGenerators.Add(generator);
+        }
 
-        public void GenerateHeat()
+        public void RemoveGenerator(HeatGenerator generator)
+        {
+            heatGenerators.Remove(generator);
+        }
+
+        private void UpdateHeat()
+        {
+            GenerateHeat();
+            PropagateHeat();
+            GenerateOverlay();
+        }
+
+        private void GenerateHeat()
         {
             foreach (var generator in heatGenerators)
             {
@@ -48,105 +69,82 @@ namespace HeatSimulation
             }
         }
 
-        public void PropagateHeat()
+        private void PropagateHeat()
         {
             ApplyKernel((x, y, i) => GetHeatAt(x + i, y));
             ApplyKernel((x, y, i) => GetHeatAt(x, y + i));
         }
 
-    public void GenerateOverlay()
-    {
-        var grid = WorldGrid.Instance;
+        private void GenerateOverlay()
+        {
+            var grid = WorldGrid.Instance;
 
-        var sizeX = grid.GridX + 1;
-        var sizeY = grid.GridX + 1;
+            var sizeX = grid.GridX + 1;
+            var sizeY = grid.GridX + 1;
 
-        Mesh mesh = new Mesh();
+            Mesh mesh = new Mesh();
 
-        var verts = new Vector3[sizeX * sizeY * 4];
-        var tris = new int[sizeX * sizeY * 6];
-        var uv0 = new Vector4[sizeX * sizeY * 4];
-        var uv1 = new Vector4[sizeX * sizeY * 4];
+            var verts = new Vector3[sizeX * sizeY * 4];
+            var tris = new int[sizeX * sizeY * 6];
+            var uv0 = new Vector4[sizeX * sizeY * 4];
+            var uv1 = new Vector4[sizeX * sizeY * 4];
 
-        for (int x = 0; x < sizeX; x++)
-            for (int y = 0; y < sizeX; y++)
+            for (int x = 0; x < sizeX; x++)
+                for (int y = 0; y < sizeX; y++)
+                {
+                    int i = sizeX * y + x;
+                    int v = i * 4;
+                    int t = i * 6;
+                    verts[v + 0] = new Vector3(x - 0.5f, 0f, y - 0.5f);
+                    verts[v + 1] = new Vector3(x + 0.5f, 0f, y - 0.5f);
+                    verts[v + 2] = new Vector3(x + 0.5f, 0f, y + 0.5f);
+                    verts[v + 3] = new Vector3(x - 0.5f, 0f, y + 0.5f);
+
+                    uv0[v + 0] = new Vector2(0, 0);
+                    uv0[v + 1] = new Vector2(1, 0);
+                    uv0[v + 2] = new Vector2(1, 1);
+                    uv0[v + 3] = new Vector2(0, 1);
+
+                    var weights = new Vector4(
+                        GetHeatAt(x, y),
+                        GetHeatAt(x, y - 1),
+                        GetHeatAt(x - 1, y - 1),
+                        GetHeatAt(x - 1, y)
+                        );
+
+                    uv1[v + 0] = weights;
+                    uv1[v + 1] = weights;
+                    uv1[v + 2] = weights;
+                    uv1[v + 3] = weights;
+
+                    tris[t + 0] = v + 0;
+                    tris[t + 1] = v + 2;
+                    tris[t + 2] = v + 1;
+                    tris[t + 3] = v + 0;
+                    tris[t + 4] = v + 3;
+                    tris[t + 5] = v + 2;
+                }
+
+            mesh.SetVertices(verts);
+            mesh.SetUVs(0, uv0);
+            mesh.SetUVs(1, uv1);
+
+            mesh.SetTriangles(tris, 0);
+
+            overlay.mesh = mesh;
+        }
+
+        private void SetupKernel()
+        {
+            var k = kernel;
+            int k2 = k.Length - 1;
+            kernel = new float[2 * k2 + 1];
+            float sum = 0;
+            for (int i = 0; i < k2 + 1; i++)
             {
-                int i = sizeX * y + x;
-                int v = i * 4;
-                int t = i * 6;
-                verts[v + 0] = new Vector3(x - 0.5f, 0f, y - 0.5f);
-                verts[v + 1] = new Vector3(x + 0.5f, 0f, y - 0.5f);
-                verts[v + 2] = new Vector3(x + 0.5f, 0f, y + 0.5f);
-                verts[v + 3] = new Vector3(x - 0.5f, 0f, y + 0.5f);
-
-                uv0[v + 0] = new Vector2(0, 0);
-                uv0[v + 1] = new Vector2(1, 0);
-                uv0[v + 2] = new Vector2(1, 1);
-                uv0[v + 3] = new Vector2(0, 1);
-
-                var weights = new Vector4(
-                    GetHeatAt(x    , y    ) / 100f,
-                    GetHeatAt(x    , y - 1) / 100f,
-                    GetHeatAt(x - 1, y - 1) / 100f,
-                    GetHeatAt(x - 1, y    ) / 100f
-                    );
-
-                uv1[v + 0] = weights;
-                uv1[v + 1] = weights;
-                uv1[v + 2] = weights;
-                uv1[v + 3] = weights;
-
-                tris[t + 0] = v + 0;
-                tris[t + 1] = v + 2;
-                tris[t + 2] = v + 1;
-                tris[t + 3] = v + 0;
-                tris[t + 4] = v + 3;
-                tris[t + 5] = v + 2;
+                sum += kernel[k2 + i] = k[i];
+                sum += kernel[k2 - i] = k[i];
             }
-
-        mesh.SetVertices(verts);
-        mesh.SetUVs(0, uv0);
-        mesh.SetUVs(1, uv1);
-
-        mesh.SetTriangles(tris, 0);
-
-        overlay.mesh = mesh;
-    }
-
-    public void RegisterGenerator(HeatGenerator generator)
-    {
-        heatGenerators.Add(generator);
-    }
-
-        public void RemoveGenerator(HeatGenerator generator)
-        {
-            heatGenerators.Remove(generator);
-        }
-
-        private IEnumerator _HeatPropagatr()
-        {
-            GenerateHeat();
-
-        while (true)
-        {
-            yield return new WaitForSeconds(1f/8f);
-            PropagateHeat();
-            GenerateHeat();
-            GenerateOverlay();
-        }
-    }
-
-    private void SetupKernel()
-    {
-        var k = kernel;
-        int k2 = k.Length - 1;
-        kernel = new float[2 * k2 + 1];
-        float sum = 0;
-        for (int i = 0; i < k2 + 1; i++)
-        {
-            sum += kernel[k2 + i] = k[i];
-            sum += kernel[k2 - i] = k[i];
-        }
 
             sum -= k[0];
 
