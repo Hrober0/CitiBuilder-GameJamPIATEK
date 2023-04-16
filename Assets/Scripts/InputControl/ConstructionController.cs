@@ -5,6 +5,7 @@ using GridObjects;
 using Grids;
 using System;
 using GameSystems;
+using UnityEngine.EventSystems;
 
 namespace InputControll
 {
@@ -67,6 +68,7 @@ namespace InputControll
             }
         }
 
+
         [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _colisionLayers;
 
@@ -80,6 +82,7 @@ namespace InputControll
         [SerializeField] private GameObject _placeIncorrectPattern;
 
 
+        private GridObject _selectedObject = null;
         private GridObject _objectVisualization = null;
         private Coroutine _constructionUpdater = null;
 
@@ -88,8 +91,7 @@ namespace InputControll
         private PlacesPool _placesIncorrect;
 
 
-        public event Action<GridObject> OnBuildingBuild;
-        public event Action<GridObject> OnBuildingSelected;
+        public event Action<(GridObject placedBuilding, GridObject objectPattern)> OnBuildingBuild;
 
         private Vector2Int? _lastUpdatePos;
 
@@ -103,10 +105,14 @@ namespace InputControll
 
         public void SetObject(GridObject selectedObject)
         {
+            _selectedObject = selectedObject;
+
             if (_objectVisualization != null)
             {
                 Destroy(_objectVisualization.gameObject);
                 _objectVisualization = null;
+
+                UpdateAvailableToBuildPlaces(null, Vector2Int.zero);
 
                 InputManager.PrimaryAction.Ended -= TryBuild;
             }
@@ -123,8 +129,6 @@ namespace InputControll
 
                 InputManager.PrimaryAction.Ended += TryBuild;
             }
-
-            OnBuildingSelected?.Invoke(selectedObject);
         }
 
         public void BuildObject(Vector2Int gridPos, GridObject objPattern, bool chack=true)
@@ -144,7 +148,7 @@ namespace InputControll
 
             newObj.Place();
 
-            OnBuildingBuild?.Invoke(newObj);
+            OnBuildingBuild?.Invoke((newObj, objPattern));
         }
         
         public bool CanBuildObjectAt(Vector2Int gridPos, GridObject obj)
@@ -185,20 +189,15 @@ namespace InputControll
 
         private void UpdateAvailableToBuildPlaces(GridObject obj, Vector2Int buildingPos)
         {
-            if (_lastUpdatePos.HasValue && _lastUpdatePos.Value == buildingPos)
-                return;
-
-            _lastUpdatePos = buildingPos;
-
             _places.HideAll();
             _placesIncorrect.HideAll();
+
 
             if (obj == null)
                 return;
 
-
             List<Vector2Int> incorrectFields = new();
-            if (!CanBuildObjectAt(buildingPos, obj))
+            if (!IsPointerOverUI && !CanBuildObjectAt(buildingPos, obj))
             {
                 foreach (var f in obj.Fields)
                 {
@@ -226,10 +225,13 @@ namespace InputControll
 
         private void TryBuild()
         {
+            if (IsPointerOverUI)
+                return;
+
             var gridPos = GetMouseGridPosition();
             if (CanBuildObjectAt(gridPos, _objectVisualization))
             {
-                var buildgToBuild = _objectVisualization;
+                var buildgToBuild = _selectedObject;
                 SetObject(null);
                 BuildObject(gridPos, buildgToBuild);
             }
@@ -241,27 +243,24 @@ namespace InputControll
 
         private IEnumerator ConstructionVisualizationUpdate()
         {
-            WorldGrid grid = WorldGrid.Instance;
             while (_objectVisualization != null)
             {
                 var gridPos = GetMouseGridPosition();
 
-                _objectVisualization.transform.position = WorldGrid.GetWorldPos(gridPos);
+                if (_lastUpdatePos == null || _lastUpdatePos.Value != gridPos)
+                {
+                    _lastUpdatePos = gridPos;
 
-                UpdateAvailableToBuildPlaces(_objectVisualization, gridPos);
+                    _objectVisualization.gameObject.SetActive(!IsPointerOverUI);
+                    _objectVisualization.transform.position = WorldGrid.GetWorldPos(gridPos);
+
+                    UpdateAvailableToBuildPlaces(_objectVisualization, gridPos);
+                } 
 
                 yield return null;
             }
 
             _constructionUpdater = null;
-
-            bool IsInGrid(Vector2Int gridPos)
-            {
-                foreach (var field in _objectVisualization.Fields)
-                    if (!grid.BelognsToGrid(gridPos + field))
-                        return false;
-                return true;
-            }
         }
 
         private Vector2Int GetMouseGridPosition()
@@ -272,5 +271,7 @@ namespace InputControll
             var worldPos = hitData.point;
             return WorldGrid.GetGridPos(worldPos);
         }
+
+        private bool IsPointerOverUI => EventSystem.current.IsPointerOverGameObject();
     }
 }

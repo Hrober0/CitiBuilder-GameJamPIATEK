@@ -22,6 +22,13 @@ namespace HeatSimulation
         [SerializeField]
         private float[] kernel;
 
+        [SerializeField]
+        private int _heatUpdateIterations;
+        
+        [SerializeField]
+        private float _heatIterationInterval;
+
+        private Action _turnEndLambda;
 
         protected override void InitSystem()
         {
@@ -30,15 +37,18 @@ namespace HeatSimulation
 
             heatGenerators = new HashSet<HeatGenerator>();
 
-            _systems.Get<TurnManager>().TurnPasses += UpdateHeat;
+            _turnEndLambda = () => StartCoroutine(UpdateHeat());
+            _systems.Get<TurnManager>().TurnPasses += _turnEndLambda;
 
             SetupKernel();
 
+            GenerateOverlay();
+            
             //StartCoroutine(_HeatPropagatr());
         }
         protected override void DeinitSystem() 
         {
-            _systems.Get<TurnManager>().TurnPasses += UpdateHeat;
+            _systems.Get<TurnManager>().TurnPasses -= _turnEndLambda;
         }
 
         public void RegisterGenerator(HeatGenerator generator)
@@ -51,11 +61,15 @@ namespace HeatSimulation
             heatGenerators.Remove(generator);
         }
 
-        private void UpdateHeat()
+        private IEnumerator UpdateHeat()
         {
-            GenerateHeat();
-            PropagateHeat();
-            GenerateOverlay();
+            for (int i = 0; i < _heatUpdateIterations; i++) 
+            {
+                GenerateHeat();
+                PropagateHeat();
+                GenerateOverlay();
+                yield return new WaitForSeconds(_heatIterationInterval);
+            }
         }
 
         private void GenerateHeat()
@@ -195,7 +209,6 @@ namespace HeatSimulation
                     grid.GetCell(x, y).Heat = newHeat[x, y];
                 }
         }
-
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
