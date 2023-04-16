@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Tri Skyscraper
+  _icon: {fileID: 21300000, guid: 5b9cc286e61c52b45b808afe4d2b8432, type: 3}
   _type: {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
   _fields:
   - {x: 0, y: 0}

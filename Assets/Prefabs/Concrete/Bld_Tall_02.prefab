@@ -48,6 +48,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _name: Tall Office
+  _icon: {fileID: 21300000, guid: cdf94a9ab3911ad439b63e625507be14, type: 3}
   _type: {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
   _fields:
   - {x: 0, y: 0}
