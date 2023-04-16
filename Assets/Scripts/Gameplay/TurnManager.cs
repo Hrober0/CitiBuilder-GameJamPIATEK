@@ -28,6 +28,8 @@ namespace GameSystems
 
 
         public event Action TurnPasses;
+        public event Action TurnEndSmimulationEnd;
+
 
         [SerializeField] private TurnCostManager _turnCost;
 
@@ -35,6 +37,8 @@ namespace GameSystems
 
 
         private ConstructionController _constructionController;
+        private TemporarryCameraSwitcherArrr _overlay;
+
 
         private int _cardsInTour = 5;
 
@@ -45,6 +49,8 @@ namespace GameSystems
 
             _constructionController = _systems.Get<ConstructionController>();
             _constructionController.OnBuildingBuild += OnBuildingBuild;
+
+            _overlay = FindObjectOfType<TemporarryCameraSwitcherArrr>();
 
             NextTurn();
         }
@@ -106,11 +112,25 @@ namespace GameSystems
             }
 
             if (_handCards.Count == 0)
-                NextTurn();
+                StartCoroutine(ShowPropagation());
         }
+
+
+        private IEnumerator ShowPropagation()
+        {
+            _overlay.SetOvelayActive(true);
+            yield return new WaitForSeconds(1);
+
+            TurnPasses?.Invoke();
+
+            yield return new WaitForSeconds(3);
+
+            TurnEndSmimulationEnd?.Invoke();
+        }
+
         public void NextTurn()
         {
-            TurnPasses?.Invoke();
+            _overlay.SetOvelayActive(false);
 
             _handCards.Clear();
             for (int i = 0; i < _cardsInTour; i++)
