@@ -15,6 +15,12 @@ public class BucketRandom<T>
     {
         if (bucket.Count == 0)
         {
+            if (defaultBucket.Length == 0)
+            {
+                Debug.LogError("defaultBucket is empty!");
+                return default;
+            }
+
             bucket.AddRange(defaultBucket);
         }
 

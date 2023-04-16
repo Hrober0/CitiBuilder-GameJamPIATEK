@@ -235,9 +235,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: f849abfe024997c468c5236839266136, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  TurnCost:
+  _turnCost:
     DefaultTurnCost: 0
-  objectsRandomiser:
+  _objectsRandomiser:
     defaultBucket:
     - {fileID: 684152050985132647, guid: fbace61987dcad849ae60f2c253f9196, type: 3}
     - {fileID: 1807560982360872111, guid: fb3db06d4ef9d3e4ba665d6e92e35506, type: 3}
@@ -250,7 +250,6 @@ MonoBehaviour:
     - {fileID: 4677385813222340934, guid: 5b5cb7f9440fbf74c900847a346bc9fb, type: 3}
     - {fileID: 8240502245038311659, guid: 197df1ac516bd35469f7938571b7ae0a, type: 3}
     - {fileID: 8010582875429379420, guid: 94d18d64ee70111418b93dcae967a5a9, type: 3}
-    - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
     - {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
@@ -559,3 +558,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roadPosition: {x: 5, y: 5}
   _roadToSpawn: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+  _uiScene: UIHUD
