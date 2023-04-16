@@ -66,6 +66,9 @@ MonoBehaviour:
   - {x: 1, y: 0}
   _reqiredObjects:
   - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
+  _deltaHot: 1
+  <IsPlaced>k__BackingField: 0
+  _pointsForPlaced: 1
 --- !u!114 &6672785431525400402
 MonoBehaviour:
   m_ObjectHideFlags: 0
