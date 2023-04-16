@@ -203,7 +203,7 @@ MonoBehaviour:
   _cancelIcon: {fileID: 21300000, guid: cfc4ddc7fada7684b826770f5c08c8d9, type: 3}
   _tempImage: {fileID: 866469641921129883}
   _hotIcon: {fileID: 21300000, guid: f82112bdd9a8e89439837ec355342cc3, type: 3}
-  _coldIcon: {fileID: 21300000, guid: 7f5fd8dde5edd9942a1de3d1a3cefd3c, type: 3}
+  _coldIcon: {fileID: 21300000, guid: 2486c6cb2716b4c4e83f691194d8b264, type: 3}
 --- !u!114 &3112046754164743777
 MonoBehaviour:
   m_ObjectHideFlags: 0
