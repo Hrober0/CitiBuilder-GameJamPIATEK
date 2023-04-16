@@ -68,7 +68,7 @@ namespace GridObjects
         private int _deltaHot = 1;
         public int DeltaHot => _deltaHot;
 
-
+        [field: SerializeField]
         public bool IsPlaced { get; private set; }
 
 

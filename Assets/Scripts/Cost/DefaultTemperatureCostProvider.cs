@@ -10,9 +10,9 @@ public class DefaultTemperatureCostProvider : MonoBehaviour, ICostProvider
         get
         {
             //https://www.desmos.com/calculator/mogrqfowxc?lang=pl
-            var heat = obj.Heat - offset;
+            var heat = Mathf.Clamp01(obj.Heat) - offset;
             heat = Mathf.Sign(heat) * Mathf.Pow(Mathf.Abs(heat), power);
-            return Mathf.Max(heat * coef, power, min);
+            return Mathf.Max(heat * coef, min);
         }
     }
 

@@ -56,6 +56,8 @@ MonoBehaviour:
   - {x: 0, y: 0}
   _reqiredObjects:
   - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
+  _deltaHot: 1
+  <IsPlaced>k__BackingField: 0
 --- !u!114 &2516579592036623437
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -81,7 +83,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: 2f603b7c65def164dad41ced59cb6af3, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  obj: {fileID: 684152050985132647, guid: fbace61987dcad849ae60f2c253f9196, type: 3}
+  obj: {fileID: 2435770758953084635}
   heatFunction: 2
 --- !u!114 &8949117575852319448
 MonoBehaviour:
@@ -99,7 +101,7 @@ MonoBehaviour:
   coef: 1.1
   offset: 0.3
   power: 2.2
-  obj: {fileID: -8998639351867308955, guid: fbace61987dcad849ae60f2c253f9196, type: 3}
+  obj: {fileID: -1132733956686139142}
 --- !u!1001 &6876404703420696422
 PrefabInstance:
   m_ObjectHideFlags: 0
