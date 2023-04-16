@@ -12,7 +12,7 @@ GameObject:
   - component: {fileID: 8452364465652455264}
   - component: {fileID: 4802183449409216414}
   m_Layer: 0
-  m_Name: Green_Park_2x2
+  m_Name: Green_Park_3x3
   m_TagString: Untagged
   m_Icon: {fileID: 0}
   m_NavMeshLayer: 0
