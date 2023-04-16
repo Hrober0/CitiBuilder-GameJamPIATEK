@@ -295,7 +295,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: -2
+  heatGeneration: -0.2
 --- !u!1 &5170676937225942996
 GameObject:
   m_ObjectHideFlags: 0
