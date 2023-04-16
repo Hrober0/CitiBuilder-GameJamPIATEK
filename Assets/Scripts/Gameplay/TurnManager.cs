@@ -1,8 +1,10 @@
 using GridObjects;
+using Grids;
 using InputControll;
 using System;
 using System.Collections;
 using System.Collections.Generic;
+using TMPro;
 using UnityEngine;
 
 namespace GameSystems
@@ -44,10 +46,11 @@ namespace GameSystems
 
 
         private float _points = 0;
+        private float _heatPenalty = 0;
         private float _pointsAtRoundStart = 0;
         public int DisplayedPoints => PointsToDisplayedPoints(_points);
-        public int PointsIncom => PointsToDisplayedPoints(_points - _pointsAtRoundStart);
-
+        public int PointsIncom => PointsToDisplayedPoints(_points - _pointsAtRoundStart + _heatPenalty);
+        public int HeatPenalty => PointsToDisplayedPoints(_heatPenalty);
 
         public event Action OnPointsChanged;
 
@@ -136,6 +139,10 @@ namespace GameSystems
 
             yield return new WaitForSeconds(3);
 
+            _heatPenalty = _turnCost.NextTurnCost(WorldGrid.Instance);
+
+            _points -= _heatPenalty;
+
             TurnEndSmimulationEnd?.Invoke();
         }
 
@@ -153,6 +160,6 @@ namespace GameSystems
         }
 
 
-        private int PointsToDisplayedPoints(float points) => Mathf.RoundToInt(_points * 100);
+        private int PointsToDisplayedPoints(float points) => Mathf.RoundToInt(points * 50);
     }
 }

@@ -41,7 +41,7 @@ namespace UI
 
             _pointsLabel.text = _turnManager.DisplayedPoints.ToString();
             _pointsIncomeLabel.text = _turnManager.PointsIncom.ToString();
-            _heatPenaltyLabel.text = "Not yet";
+            _heatPenaltyLabel.text = _turnManager.HeatPenalty.ToString();
         }
 
         private void PlayNextRound()

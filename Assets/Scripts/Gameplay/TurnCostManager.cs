@@ -65,7 +65,7 @@ namespace GameSystems
 
         public void Init(TurnManager manager, WorldGrid grid)
         {
-            manager.TurnPasses += () => HandlePointConsumption(grid);
+            //manager.TurnPasses += () => HandlePointConsumption(grid);
         }
     }
 }
