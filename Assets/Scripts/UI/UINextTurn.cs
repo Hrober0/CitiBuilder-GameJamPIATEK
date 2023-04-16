@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using TMPro;
 
 namespace UI
 {
@@ -11,6 +12,10 @@ namespace UI
         [SerializeField] private Canvas _canvas;
 
         [SerializeField] private Button _nextButton;
+
+        [SerializeField] private TextMeshProUGUI _pointsLabel;
+        [SerializeField] private TextMeshProUGUI _pointsIncomeLabel;
+        [SerializeField] private TextMeshProUGUI _heatPenaltyLabel;
 
         private TurnManager _turnManager;
 
@@ -33,6 +38,10 @@ namespace UI
         private void Open()
         {
             _canvas.enabled = true;
+
+            _pointsLabel.text = _turnManager.DisplayedPoints.ToString();
+            _pointsIncomeLabel.text = _turnManager.PointsIncom.ToString();
+            _heatPenaltyLabel.text = "Not yet";
         }
 
         private void PlayNextRound()

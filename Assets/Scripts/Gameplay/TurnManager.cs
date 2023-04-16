@@ -40,7 +40,16 @@ namespace GameSystems
         private TemporarryCameraSwitcherArrr _overlay;
 
 
-        private int _cardsInTour = 5;
+        private readonly int _cardsInTour = 5;
+
+
+        private float _points = 0;
+        private float _pointsAtRoundStart = 0;
+        public int DisplayedPoints => PointsToDisplayedPoints(_points);
+        public int PointsIncom => PointsToDisplayedPoints(_points - _pointsAtRoundStart);
+
+
+        public event Action OnPointsChanged;
 
 
         protected override void InitSystem()
@@ -111,6 +120,8 @@ namespace GameSystems
                 }
             }
 
+            _points += value.pattern.PointsForPlaced;
+
             if (_handCards.Count == 0)
                 StartCoroutine(ShowPropagation());
         }
@@ -130,6 +141,8 @@ namespace GameSystems
 
         public void NextTurn()
         {
+            _pointsAtRoundStart = _points;
+
             _overlay.SetOvelayActive(false);
 
             _handCards.Clear();
@@ -138,5 +151,8 @@ namespace GameSystems
 
             OnHandChanged?.Invoke();
         }
+
+
+        private int PointsToDisplayedPoints(float points) => Mathf.RoundToInt(_points * 100);
     }
 }
