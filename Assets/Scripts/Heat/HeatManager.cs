@@ -1,4 +1,3 @@
-using GridObjects;
 using System;
 using System.Collections;
 using System.Collections.Generic;
@@ -6,7 +5,6 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using Grids;
 using GameSystems;
-using UnityEditor.Overlays;
 
 namespace HeatSimulation
 {
