@@ -60,6 +60,11 @@ namespace GridObjects
         public IReadOnlyList<GridObjectTypeSO> ReqiredObjects => _reqiredObjects;
 
 
+        private int _deltaHot = 1;
+        public int DeltaHot => _deltaHot;
+        public Sprite Icon => null;
+
+
         public bool IsPlaced { get; private set; }
 
 

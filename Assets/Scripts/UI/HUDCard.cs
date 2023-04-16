@@ -28,17 +28,19 @@ namespace UI.HUD
 
         private void Awake()
         {
-            _mainButton.onClick.RemoveListener(() => _onClick?.Invoke());
+            _mainButton.onClick.AddListener(() => _onClick?.Invoke());
             _tempImage.gameObject.SetActive(false);
             _temperatureImages.Add(_tempImage);
         }
 
-        public void Show(string objectName, Sprite objectIcon, int hotDelta, Action onClick)
+        public void Show(string objectName, Sprite objectIcon, int hotDelta, bool isSelected, Action onClick)
         {
             _nameLabel.text = objectName;
 
             _objectIcon = objectIcon;
             _onClick = onClick;
+
+            _objectImage.sprite = isSelected ? _cancelIcon : _objectIcon;
 
             if (hotDelta != 0)
             {
@@ -59,11 +61,5 @@ namespace UI.HUD
             gameObject.SetActive(true);
         }
         public void Hide() => gameObject.SetActive(false);
-
-        public void SetSelect(bool isSelected)
-        {
-            _objectImage.sprite = isSelected ? _objectIcon : _cancelIcon;
-        }
-        public bool IsInCancelMode => _objectImage.sprite == _cancelIcon;
     }
 }

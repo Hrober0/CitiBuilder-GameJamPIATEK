@@ -4,6 +4,7 @@ using UnityEngine;
 using TMPro;
 using UnityEngine.UI;
 using GridObjects;
+using GameSystems;
 
 namespace UI.HUD
 {
@@ -17,23 +18,50 @@ namespace UI.HUD
         private readonly List<HUDCard> _displayedCards = new();
         private readonly List<HUDCard> _unusedCards = new();
 
-        private void Start()
+
+        private TurnManager _turnManager;
+
+        private void OnEnable()
         {
-            AddCard(_temptBuild);
-            AddCard(_temptBuild);
-            AddCard(_temptBuild);
-            AddCard(_temptBuild);
-            AddCard(_temptBuild);
+            _turnManager = FindObjectOfType<TurnManager>();
+            if (_turnManager == null)
+            {
+                Debug.LogWarning($"{typeof(TurnManager)} not found");
+                enabled = false;
+                return;
+            }
+
+            UpdateCards();
+            _turnManager.OnHandChanged += UpdateCards;
+        }
+        private void OnDisable()
+        {
+            if (_turnManager != null)
+                _turnManager.OnHandChanged -= UpdateCards;
         }
 
-        public void AddCard(GridObject obj)
+        private void UpdateCards()
+        {
+            for (int i = _displayedCards.Count - 1; i >= 0; i--)
+                HideCard(_displayedCards[i]);
+
+            for (int i = 0; i < _turnManager.HandCards.Count; i++)
+            {
+                var card = _turnManager.HandCards[i];
+                AddCard(card.GridObject, i, card.IsSelected);
+            } 
+        }
+
+        public void AddCard(GridObject obj, int index, bool isSelected)
         {
             if (_unusedCards.Count == 0)
                 _unusedCards.Add(Instantiate(_cardPrefab, _cardsParent));
 
             var card = _unusedCards[0];
             _unusedCards.RemoveAt(0);
-            card.Show(obj.DisplayedName, null, Random.Range(-3, 4), () => CardClick(card, obj));
+            card.transform.SetSiblingIndex(_displayedCards.Count);
+
+            card.Show(obj.DisplayedName, obj.Icon, obj.DeltaHot, isSelected, () => CardClick(index));
 
             _displayedCards.Add(card);
         }
@@ -46,18 +74,13 @@ namespace UI.HUD
             }
         }
 
-        private void CardClick(HUDCard card, GridObject obj)
+        private void CardClick(int index)
         {
-            if (card.IsInCancelMode)
-            {
-                card.SetSelect(false);
-                Debug.Log("TODO: deslect card");
-            }
-            else
-            {
-                card.SetSelect(true);
-                Debug.Log("TODO: slect card");
-            }
+            var card = _turnManager.GetCard(index);
+            if (card == null)
+                return;
+
+            _turnManager.SelectCard(index, !card.IsSelected);
         }
     }
 }
