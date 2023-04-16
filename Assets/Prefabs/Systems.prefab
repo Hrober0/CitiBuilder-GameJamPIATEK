@@ -559,3 +559,4 @@ MonoBehaviour:
   m_EditorClassIdentifier: 
   _roadPosition: {x: 5, y: 5}
   _roadToSpawn: {fileID: 5879810449989887243, guid: 276be716fca915b44a7504668766df4e, type: 3}
+  _uiScene: UIHUD

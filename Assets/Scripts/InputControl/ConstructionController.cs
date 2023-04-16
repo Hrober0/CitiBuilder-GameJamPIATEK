@@ -5,6 +5,7 @@ using GridObjects;
 using Grids;
 using System;
 using GameSystems;
+using UnityEngine.EventSystems;
 
 namespace InputControll
 {
@@ -185,17 +186,12 @@ namespace InputControll
 
         private void UpdateAvailableToBuildPlaces(GridObject obj, Vector2Int buildingPos)
         {
-            if (_lastUpdatePos.HasValue && _lastUpdatePos.Value == buildingPos)
-                return;
-
-            _lastUpdatePos = buildingPos;
-
             _places.HideAll();
             _placesIncorrect.HideAll();
 
+
             if (obj == null)
                 return;
-
 
             List<Vector2Int> incorrectFields = new();
             if (!CanBuildObjectAt(buildingPos, obj))
@@ -226,6 +222,9 @@ namespace InputControll
 
         private void TryBuild()
         {
+            if (IsPointerOverUI)
+                return;
+
             var gridPos = GetMouseGridPosition();
             if (CanBuildObjectAt(gridPos, _objectVisualization))
             {
@@ -241,27 +240,24 @@ namespace InputControll
 
         private IEnumerator ConstructionVisualizationUpdate()
         {
-            WorldGrid grid = WorldGrid.Instance;
             while (_objectVisualization != null)
             {
                 var gridPos = GetMouseGridPosition();
 
-                _objectVisualization.transform.position = WorldGrid.GetWorldPos(gridPos);
+                if (_lastUpdatePos == null || _lastUpdatePos.Value != gridPos)
+                {
+                    _lastUpdatePos = gridPos;
 
-                UpdateAvailableToBuildPlaces(_objectVisualization, gridPos);
+                    _objectVisualization.gameObject.SetActive(!IsPointerOverUI);
+                    _objectVisualization.transform.position = WorldGrid.GetWorldPos(gridPos);
+
+                    UpdateAvailableToBuildPlaces(_objectVisualization, gridPos);
+                } 
 
                 yield return null;
             }
 
             _constructionUpdater = null;
-
-            bool IsInGrid(Vector2Int gridPos)
-            {
-                foreach (var field in _objectVisualization.Fields)
-                    if (!grid.BelognsToGrid(gridPos + field))
-                        return false;
-                return true;
-            }
         }
 
         private Vector2Int GetMouseGridPosition()
@@ -272,5 +268,7 @@ namespace InputControll
             var worldPos = hitData.point;
             return WorldGrid.GetGridPos(worldPos);
         }
+
+        private bool IsPointerOverUI => EventSystem.current.IsPointerOverGameObject();
     }
 }
