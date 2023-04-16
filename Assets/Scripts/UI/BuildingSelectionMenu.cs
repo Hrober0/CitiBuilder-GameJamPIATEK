@@ -10,6 +10,7 @@ namespace UI.HUD
 {
     public class BuildingSelectionMenu : MonoBehaviour
     {
+        [SerializeField] private Canvas _canvas;
         [SerializeField] private HUDCard _cardPrefab;
         [SerializeField] private Transform _cardsParent;
 
@@ -49,7 +50,9 @@ namespace UI.HUD
             {
                 var card = _turnManager.HandCards[i];
                 AddCard(card.GridObject, i, card.IsSelected);
-            } 
+            }
+
+            _canvas.enabled = _displayedCards.Count > 0;
         }
 
         public void AddCard(GridObject obj, int index, bool isSelected)
