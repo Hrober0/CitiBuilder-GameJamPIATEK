@@ -3295,6 +3295,10 @@ PrefabInstance:
       propertyPath: m_ConstrainProportionsScale
       value: 0
       objectReference: {fileID: 0}
+    - target: {fileID: -7511558181221131132, guid: 1f2dbc6d3b25f1047990061257d558b0, type: 3}
+      propertyPath: m_Materials.Array.data[1]
+      value: 
+      objectReference: {fileID: 2100000, guid: e58cc6209cdc60243a26a604b18cb432, type: 2}
     - target: {fileID: 919132149155446097, guid: 1f2dbc6d3b25f1047990061257d558b0, type: 3}
       propertyPath: m_Name
       value: Park_2x2
