@@ -24,14 +24,9 @@ namespace Grids
 
         #endregion
 
-        public static WorldGrid Instance { get; private set; }
 
         protected override void InitSystem()
         {
-            Assert.IsNull(Instance, $"Mulitple instances {nameof(WorldGrid)}");
-
-            Instance = this;
-
             _cells = new GCell[_gridX, _gridY];
             for (int y = 0; y < _gridY; y++)
                 for (int x = 0; x < _gridX; x++)

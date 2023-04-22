@@ -43,6 +43,7 @@ namespace GameSystems
 
 
         private ConstructionController _constructionController;
+        private WorldGrid _worldGrid;
 
 
         private readonly int _cardsInTour = 5;
@@ -60,7 +61,8 @@ namespace GameSystems
 
         protected override void InitSystem()
         {
-            _turnCost.Init(this, Grids.WorldGrid.Instance);
+            _worldGrid = _systems.Get<WorldGrid>();
+            _turnCost.Init(this, _worldGrid);
 
             _constructionController = _systems.Get<ConstructionController>();
             _constructionController.OnBuildingBuild += OnBuildingBuild;
@@ -155,7 +157,7 @@ namespace GameSystems
 
             yield return new WaitForSeconds(3.5f);     // wait for heat simulation
 
-            _heatPenalty = _turnCost.NextTurnCost(WorldGrid.Instance);
+            _heatPenalty = _turnCost.NextTurnCost(_worldGrid);
 
             _points -= _heatPenalty;
 

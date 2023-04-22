@@ -10,8 +10,6 @@ namespace HeatSimulation
 {
     public class HeatManager : GameSystem
     {
-        public static HeatManager Instance { get; private set; }
-
         private HashSet<HeatGenerator> heatGenerators;
 
         [SerializeField] private float[] kernel;
@@ -27,14 +25,15 @@ namespace HeatSimulation
 
 
         private TurnManager _turnManager;
+        private WorldGrid _worldGrid;
+
         private Coroutine _overlayAcriveAnimation;
 
         protected override void InitSystem()
         {
-            Assert.IsNull(Instance, $"Mulitple instances {nameof(HeatManager)}");
-            Instance = this;
-
             heatGenerators = new HashSet<HeatGenerator>();
+
+            _worldGrid = _systems.Get<WorldGrid>();
 
             SetupKernel();
 
@@ -94,10 +93,8 @@ namespace HeatSimulation
 
         private void GenerateOverlay()
         {
-            var grid = WorldGrid.Instance;
-
-            var sizeX = grid.GridX + 1;
-            var sizeY = grid.GridX + 1;
+            var sizeX = _worldGrid.GridX + 1;
+            var sizeY = _worldGrid.GridX + 1;
 
             Mesh mesh = new Mesh();
 
@@ -180,24 +177,22 @@ namespace HeatSimulation
 
         private float GetHeatAt(int x, int y)
         {
-            var grid = WorldGrid.Instance;
-            if (x < 0 || x >= grid.GridX || y < 0 || y >= grid.GridY)
+            if (x < 0 || x >= _worldGrid.GridX || y < 0 || y >= _worldGrid.GridY)
             {
                 return 0f;
             }
-            return grid.GetCell(x, y).Heat;
+            return _worldGrid.GetCell(x, y).Heat;
         }
 
         private void ApplyKernel(Func<int, int, int, float> heatGetter)
         {
-            var grid = WorldGrid.Instance;
-            float[,] newHeat = new float[grid.GridX, grid.GridY];
+            float[,] newHeat = new float[_worldGrid.GridX, _worldGrid.GridY];
 
             int k2 = kernel.Length / 2;
 
             //Suboptimal code below
-            for (int x = 0; x < grid.GridX; x++)
-                for (int y = 0; y < grid.GridY; y++)
+            for (int x = 0; x < _worldGrid.GridX; x++)
+                for (int y = 0; y < _worldGrid.GridY; y++)
                 {
                     for (int i = 0; i < kernel.Length; i++)
                     {
@@ -206,10 +201,10 @@ namespace HeatSimulation
                     }
                 }
 
-            for (int x = 0; x < grid.GridX; x++)
-                for (int y = 0; y < grid.GridY; y++)
+            for (int x = 0; x < _worldGrid.GridX; x++)
+                for (int y = 0; y < _worldGrid.GridY; y++)
                 {
-                    grid.GetCell(x, y).Heat = newHeat[x, y];
+                    _worldGrid.GetCell(x, y).Heat = newHeat[x, y];
                 }
         }
 
@@ -237,15 +232,14 @@ namespace HeatSimulation
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            var grid = WorldGrid.Instance;
-            if (grid == null)
+            if (_worldGrid == null)
             {
                 return;
             }
             var c = Gizmos.color;
-            foreach (var pos in grid.GridSize.allPositionsWithin)
+            foreach (var pos in _worldGrid.GridSize.allPositionsWithin)
             {
-                var h = grid.GetCell(pos).Heat;
+                var h = _worldGrid.GetCell(pos).Heat;
                 //h *= h;
                 var color = new Color(
                     -Mathf.Cos(h) / 2f + 0.5f,

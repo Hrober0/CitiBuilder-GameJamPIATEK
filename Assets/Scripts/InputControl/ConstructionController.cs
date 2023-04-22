@@ -90,12 +90,17 @@ namespace InputControll
         private PlacesPool _placesIncorrect;
 
 
+        private WorldGrid _worldGrid;
+
+
         public event Action<(GridObject placedBuilding, GridObject objectPattern)> OnBuildingBuild;
 
         private Vector2Int? _lastUpdatePos;
 
         protected override void InitSystem()
         {
+            _worldGrid = _systems.Get<WorldGrid>();
+
             _places = new(_placePattern, _placesParent);
             _placesIncorrect = new(_placeIncorrectPattern, _placesParent);
         }
@@ -143,7 +148,7 @@ namespace InputControll
             newObj.name = $"{objPattern}({gridPos.x},{gridPos.y})";
 
             foreach (var field in newObj.Fields)
-                WorldGrid.Instance.GetCell(field + gridPos).GridObject = newObj;
+                _worldGrid.GetCell(field + gridPos).GridObject = newObj;
 
             newObj.Place();
 
@@ -157,7 +162,7 @@ namespace InputControll
             {
                 var currField = field + gridPos;
 
-                if (!WorldGrid.Instance.TryGetCell(currField, out var cell))
+                if (!_worldGrid.TryGetCell(currField, out var cell))
                     return false;
 
                 if (cell.GridObject != null)
@@ -177,7 +182,7 @@ namespace InputControll
             var offsets = new[] { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
             var typesList = new List<GridObjectTypeSO>(types);
             foreach (var offset in offsets)
-                if (WorldGrid.Instance.TryGetCell(gridPos + offset, out var cell)
+                if (_worldGrid.TryGetCell(gridPos + offset, out var cell)
                     && cell.GridObject != null
                     && typesList.Contains(cell.GridObject.Type))
                     return true;
@@ -207,7 +212,7 @@ namespace InputControll
             }
             
 
-            foreach (var checkedField in WorldGrid.Instance.GridSize.allPositionsWithin)
+            foreach (var checkedField in _worldGrid.GridSize.allPositionsWithin)
             {
                 if (CanBuildObjectAt(checkedField, obj))
                 {

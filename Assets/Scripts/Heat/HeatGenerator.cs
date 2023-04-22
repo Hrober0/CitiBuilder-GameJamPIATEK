@@ -1,3 +1,4 @@
+using GameSystems;
 using GridObjects;
 using System.Collections;
 using System.Collections.Generic;
@@ -15,18 +16,23 @@ namespace HeatSimulation
         private float heatGeneration;
 
 
+        private HeatManager _heatManager;
+
+
         public override void OnBuildingConstructed()
         {
             base.OnBuildingConstructed();
 
-            HeatManager.Instance.RegisterGenerator(this);
+            _heatManager = SystemsManager.Instance.Get<HeatManager>();
+            _heatManager.RegisterGenerator(this);
         }
 
         public override void OnBuildingDestroyed()
         {
             base.OnBuildingDestroyed();
 
-            HeatManager.Instance.RemoveGenerator(this);
+            if (_heatManager)
+                _heatManager.RemoveGenerator(this);
         }
     }
 }
