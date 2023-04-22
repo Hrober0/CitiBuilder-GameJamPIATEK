@@ -42,10 +42,10 @@ namespace UI.HUD
 
             _objectImage.sprite = isSelected ? _cancelIcon : _objectIcon;
 
+            int index = 0;
             if (hotDelta != 0)
             {
                 var icon = hotDelta < 0 ? _coldIcon : _hotIcon;
-                int index = 0;
                 for (; index < Math.Abs(hotDelta); index++)
                 {
                     if (index >= _temperatureImages.Count)
@@ -54,9 +54,9 @@ namespace UI.HUD
                     img.sprite = icon;
                     img.gameObject.SetActive(true);
                 }
-                for (; index < _temperatureImages.Count; index++)
-                    _temperatureImages[index].gameObject.SetActive(false);
             }
+            for (; index < _temperatureImages.Count; index++)
+                _temperatureImages[index].gameObject.SetActive(false);
 
             gameObject.SetActive(true);
         }
