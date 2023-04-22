@@ -1,6 +1,6 @@
 %YAML 1.1
 %TAG !u! tag:unity3d.com,2011:
---- !u!114 &-5792715441789018364
+--- !u!114 &-6239098186652768770
 MonoBehaviour:
   m_ObjectHideFlags: 11
   m_CorrespondingSourceObject: {fileID: 0}
@@ -20,8 +20,8 @@ Material:
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
   m_PrefabAsset: {fileID: 0}
-  m_Name: Ground_Color_Graphics
-  m_Shader: {fileID: -6465566751694194690, guid: c2d34c42a6c22b741bcca796e5e7f7fd, type: 3}
+  m_Name: Water Normal
+  m_Shader: {fileID: -6465566751694194690, guid: c5dad896f73c46a40b1910014212fb5e, type: 3}
   m_ValidKeywords: []
   m_InvalidKeywords: []
   m_LightmapFlags: 4
@@ -105,28 +105,33 @@ Material:
     - _GlossMapScale: 0
     - _Glossiness: 0
     - _GlossyReflections: 0
+    - _Metalic: 0
     - _Metallic: 0
-    - _Noise_Scale: 22.23
+    - _Normal_Scale_1: 2.5
+    - _Normal_Scale_2: 7
+    - _Normal_Strength: 0.0075
+    - _Normal_To_Power: 2
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Posterize_Steps: -3.29
-    - _Primary_Smoothness: 0.1
     - _QueueControl: 0
     - _QueueOffset: 0
     - _ReceiveShadows: 1
-    - _Secondary_Smoothness: 0.3
-    - _Smoothness: 0.5
+    - _Smoothness: 0.9
     - _SmoothnessTextureChannel: 0
     - _SpecularHighlights: 1
     - _SrcBlend: 1
     - _Surface: 0
+    - _Tiling: 30
+    - _Voronoi_Cell_Density: 87.79
+    - _Wave_Speed_1: 0.07
+    - _Wave_Speed_2: 0.05
     - _WorkflowMode: 1
     - _ZWrite: 1
     m_Colors:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
+    - _Color_1: {r: 0.32894266, g: 0.4646408, b: 0.9056604, a: 0}
+    - _Color_2: {r: 0.26326096, g: 0.35456228, b: 0.6415094, a: 0}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Primary_Color: {r: 0.333524, g: 0.5566038, b: 0.16540584, a: 0}
-    - _Secondary_Color: {r: 0.745283, g: 0.6260056, b: 0.25663045, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
