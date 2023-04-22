@@ -69,7 +69,6 @@ namespace InputControll
         }
 
 
-        [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _colisionLayers;
 
         [Header("construction")]

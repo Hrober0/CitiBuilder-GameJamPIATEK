@@ -114,15 +114,20 @@ namespace GameSystems
 
         private void OnBuildingBuild((GridObject placed, GridObject pattern) value)
         {
+            bool wasBuildingInHand = false;
             foreach (var item in _handCards)
             {
                 if (item.IsSelected && item.GridObject == value.pattern)
                 {
                     _handCards.Remove(item);
                     OnHandChanged?.Invoke();
+                    wasBuildingInHand = true;
                     break;
                 }
             }
+
+            if (!wasBuildingInHand)
+                return;
 
             if (_handCards.Count <= 3)
                 TurnReachSkippPoint?.Invoke();
@@ -133,14 +138,12 @@ namespace GameSystems
                 EndTour();
         }
 
-        public void EndTour()
+        public void EndTour() => StartCoroutine(EndTurnSequence());
+        private IEnumerator EndTurnSequence()
         {
-            StartCoroutine(ShowPropagation());
-        }
+            Debug.Log("End tour");
 
-
-        private IEnumerator ShowPropagation()
-        {
+            _constructionController.SetObject(null);
             TurnEndBuild?.Invoke();
 
             _handCards.Clear();
@@ -159,17 +162,23 @@ namespace GameSystems
             TurnEndSmimulationEnd?.Invoke();
         }
 
-        public void NextTurn()
+        public void NextTurn() => StartCoroutine(NextTurnSequence());
+        private IEnumerator NextTurnSequence()
         {
+            Debug.Log("Start tour");
+
             _pointsAtRoundStart = _points;
 
             TurnStart?.Invoke();
 
             _handCards.Clear();
-            for (int i = 0; i < _cardsInTour; i++)
-                _handCards.Add(new(_objectsRandomiser.GetRandom()));
 
-            OnHandChanged?.Invoke();
+            for (int i = 0; i < _cardsInTour; i++)
+            {
+                yield return new WaitForSeconds(0.2f);
+                _handCards.Add(new(_objectsRandomiser.GetRandom()));
+                OnHandChanged?.Invoke();
+            }
         }
 
 
