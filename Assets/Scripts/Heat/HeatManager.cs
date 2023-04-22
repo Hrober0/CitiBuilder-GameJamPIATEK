@@ -14,19 +14,20 @@ namespace HeatSimulation
 
         private HashSet<HeatGenerator> heatGenerators;
 
-        [SerializeField]
-        private MeshFilter overlay;
+        [SerializeField] private float[] kernel;
+        [SerializeField] private int _heatUpdateIterations;
+        [SerializeField] private float _heatIterationInterval;
 
-        [SerializeField]
-        private float[] kernel;
+        [SerializeField] private MeshFilter overlay;
+        [SerializeField] private MeshRenderer overlayRenderer;
 
-        [SerializeField]
-        private int _heatUpdateIterations;
-        
-        [SerializeField]
-        private float _heatIterationInterval;
 
-        private Action _turnEndLambda;
+        public Action<bool> OnOverlaySwitch;
+        public bool IsOverlayActive { get; private set; } = false;
+
+
+        private TurnManager _turnManager;
+        private Coroutine _overlayAcriveAnimation;
 
         protected override void InitSystem()
         {
@@ -35,32 +36,37 @@ namespace HeatSimulation
 
             heatGenerators = new HashSet<HeatGenerator>();
 
-            _turnEndLambda = () => StartCoroutine(UpdateHeat());
-            _systems.Get<TurnManager>().TurnPasses += _turnEndLambda;
-
             SetupKernel();
 
             GenerateOverlay();
-            
-            //StartCoroutine(_HeatPropagatr());
+
+            _turnManager = _systems.Get<TurnManager>();
+            _turnManager.TurnPasses += StartHeatUpdate;
+            _turnManager.TurnStart += DisenableOverlay;
         }
         protected override void DeinitSystem() 
         {
-            _systems.Get<TurnManager>().TurnPasses -= _turnEndLambda;
+            _turnManager.TurnPasses -= StartHeatUpdate;
+            _turnManager.TurnStart -= DisenableOverlay;
         }
+
 
         public void RegisterGenerator(HeatGenerator generator)
         {
             heatGenerators.Add(generator);
         }
-
         public void RemoveGenerator(HeatGenerator generator)
         {
             heatGenerators.Remove(generator);
         }
 
+
+        private void StartHeatUpdate() => StartCoroutine(UpdateHeat());
         private IEnumerator UpdateHeat()
         {
+            EnableOverlay(true);
+            yield return new WaitForSeconds(0.8f);
+
             for (int i = 0; i < _heatUpdateIterations; i++) 
             {
                 GenerateHeat();
@@ -80,7 +86,6 @@ namespace HeatSimulation
                 }
             }
         }
-
         private void PropagateHeat()
         {
             ApplyKernel((x, y, i) => GetHeatAt(x + i, y));
@@ -207,6 +212,27 @@ namespace HeatSimulation
                     grid.GetCell(x, y).Heat = newHeat[x, y];
                 }
         }
+
+        private void DisenableOverlay() => EnableOverlay(false);
+        public void EnableOverlay(bool active)
+        {
+            if (_overlayAcriveAnimation != null)
+                StopCoroutine(_overlayAcriveAnimation);
+            _overlayAcriveAnimation = StartCoroutine(SetOverlayActive(active));
+        }
+        private IEnumerator SetOverlayActive(bool active)
+        {
+            IsOverlayActive = active;
+            OnOverlaySwitch?.Invoke(active);
+
+            if (active)
+                yield return new WaitForSeconds(0.5f); // wait for camera movement
+
+            overlayRenderer.enabled = active;
+
+            _overlayAcriveAnimation = null;
+        }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()

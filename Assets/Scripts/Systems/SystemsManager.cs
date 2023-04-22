@@ -2,6 +2,7 @@ using System.Collections;
 using System.Collections.Generic;
 using System.Linq;
 using UnityEngine;
+using UnityEngine.Assertions;
 
 namespace GameSystems
 {
@@ -9,8 +10,13 @@ namespace GameSystems
     {
         [SerializeField] private GameSystem[] systems;
 
-        void Start()
+        public static SystemsManager Instance { get; private set; }
+
+        private void Start()
         {
+            Assert.IsNull(Instance, $"Mulitple instances {nameof(SystemsManager)}");
+            Instance = this;
+
             foreach (var system in systems)
                 system.Init(this);
         }

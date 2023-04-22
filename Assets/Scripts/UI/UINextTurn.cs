@@ -23,6 +23,7 @@ namespace UI
         {
             _turnManager = FindObjectOfType<TurnManager>();
             _turnManager.TurnEndSmimulationEnd += Open;
+            _turnManager.TurnStart += Close;
 
             _nextButton.onClick.AddListener(PlayNextRound);
         }
@@ -30,7 +31,10 @@ namespace UI
         private void OnDisable()
         {
             if (_turnManager != null)
-                _turnManager.TurnEndSmimulationEnd -= Open;
+            {
+                _turnManager.TurnEndSmimulationEnd -= Open; 
+                _turnManager.TurnStart -= Close;
+            }
 
             _nextButton.onClick.RemoveListener(PlayNextRound);
         }
@@ -43,11 +47,11 @@ namespace UI
             _pointsIncomeLabel.text = _turnManager.PointsIncom.ToString();
             _heatPenaltyLabel.text = _turnManager.HeatPenalty.ToString();
         }
-
-        private void PlayNextRound()
+        private void Close()
         {
             _canvas.enabled = false;
-            _turnManager.NextTurn();
         }
+
+        private void PlayNextRound() => _turnManager.NextTurn();
     }
 }

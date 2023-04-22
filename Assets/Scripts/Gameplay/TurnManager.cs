@@ -1,5 +1,6 @@
 using GridObjects;
 using Grids;
+using HeatSimulation;
 using InputControll;
 using System;
 using System.Collections;
@@ -33,6 +34,7 @@ namespace GameSystems
         public event Action TurnPasses;
         public event Action TurnEndSmimulationEnd;
         public event Action TurnReachSkippPoint;
+        public event Action TurnStart;
 
 
         [SerializeField] private TurnCostManager _turnCost;
@@ -41,7 +43,6 @@ namespace GameSystems
 
 
         private ConstructionController _constructionController;
-        private TemporarryCameraSwitcherArrr _overlay;
 
 
         private readonly int _cardsInTour = 5;
@@ -63,8 +64,6 @@ namespace GameSystems
 
             _constructionController = _systems.Get<ConstructionController>();
             _constructionController.OnBuildingBuild += OnBuildingBuild;
-
-            _overlay = FindObjectOfType<TemporarryCameraSwitcherArrr>();
 
             NextTurn();
         }
@@ -147,12 +146,11 @@ namespace GameSystems
             _handCards.Clear();
             OnHandChanged?.Invoke();
 
-            _overlay.SetOvelayActive(true);
             yield return new WaitForSeconds(1);
 
             TurnPasses?.Invoke();
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3.5f);     // wait for heat simulation
 
             _heatPenalty = _turnCost.NextTurnCost(WorldGrid.Instance);
 
@@ -165,7 +163,7 @@ namespace GameSystems
         {
             _pointsAtRoundStart = _points;
 
-            _overlay.SetOvelayActive(false);
+            TurnStart?.Invoke();
 
             _handCards.Clear();
             for (int i = 0; i < _cardsInTour; i++)

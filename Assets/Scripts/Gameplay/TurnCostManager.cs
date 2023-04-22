@@ -10,8 +10,6 @@ namespace GameSystems
     [Serializable]
     public class TurnCostManager
     {
-        public event Action PointEnd;
-
         public float CurrentPoints => (float)points.Time;
 
         [SerializeField]

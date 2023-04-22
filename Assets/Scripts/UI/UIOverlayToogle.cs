@@ -2,39 +2,37 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using HeatSimulation;
+using GameSystems;
 
 public class UIOverlayToogle : MonoBehaviour
 {
     [SerializeField] private Toggle _toogle;
 
-    private TemporarryCameraSwitcherArrr _overlay;
+    private HeatManager _heatManager;
 
     private void OnEnable()
     {
-        _overlay = FindObjectOfType<TemporarryCameraSwitcherArrr>();
+        _heatManager = SystemsManager.Instance.Get<HeatManager>();
+        _heatManager.OnOverlaySwitch += UpdateToggle;
 
-        if (_overlay)
-        {
-            _overlay.OnOverlayChanged += OnOverlayChanged;
-            OnOverlayChanged();
-        }
+        UpdateToggle(_heatManager.IsOverlayActive);
         _toogle.onValueChanged.AddListener(HandlSwich);
     }
     private void OnDisable()
     {
-        if (_overlay)
-            _overlay.OnOverlayChanged -= OnOverlayChanged;
+        _heatManager.OnOverlaySwitch -= UpdateToggle;
 
         _toogle.onValueChanged.RemoveListener(HandlSwich);
     }
 
     private void HandlSwich(bool active)
     {
-        if (_overlay)
-            _overlay.SetOvelayActive(active);
+        _heatManager.EnableOverlay(active);
     }
-    private void OnOverlayChanged()
+    private void UpdateToggle(bool active)
     {
-        _toogle.isOn = _overlay.IsOverlayActive;
+        if (_toogle.isOn != active)
+            _toogle.isOn = active;
     }
 }
