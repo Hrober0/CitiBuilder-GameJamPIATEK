@@ -21,7 +21,7 @@ namespace GridObjects
                 {
                     return Enumerable.Empty<Vector2Int>();
                 }
-                var gridPos = new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
+                var gridPos = GridPos;
                 return _fields.Select((cell) => gridPos + cell);
             } 
         }
@@ -61,6 +61,7 @@ namespace GridObjects
         [SerializeField] private Vector2Int[] _fields = new Vector2Int[] { Vector2Int.zero };
         public IReadOnlyList<Vector2Int> Fields => _fields;
 
+        public Vector2Int GridPos => new Vector2Int(Mathf.RoundToInt(transform.position.x), Mathf.RoundToInt(transform.position.z));
 
         [SerializeField] private GridObjectTypeSO[] _reqiredObjects = new GridObjectTypeSO[0];
         public IReadOnlyList<GridObjectTypeSO> ReqiredObjects => _reqiredObjects;
