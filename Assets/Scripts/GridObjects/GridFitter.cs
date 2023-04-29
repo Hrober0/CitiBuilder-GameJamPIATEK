@@ -62,11 +62,11 @@ namespace GridObjects
             Vector2Int gridPos = GridObject.Fields[0] + WorldGrid.GetGridPos(transform.position);
 
             int mask = IsOnOffset(Vector2Int.up) * (int)Dir.Up
-                + IsOnOffset(Vector2Int.down) * (int)Dir.Down
-                + IsOnOffset(Vector2Int.right) * (int)Dir.Right
-                + IsOnOffset(Vector2Int.left) * (int)Dir.Left;
+                + IsOnOffset(Vector2Int.down)    * (int)Dir.Down
+                + IsOnOffset(Vector2Int.right)   * (int)Dir.Right
+                + IsOnOffset(Vector2Int.left)    * (int)Dir.Left;
 
-            int maxMaskValue = ((int[])Enum.GetValues(typeof(Dir)))[^1] * 2 - 1;
+            int maxMaskValue = 1 << 4 - 1;
             if (mask == maxMaskValue)
                 mask = -1;
             Dir dir = (Dir)mask;
