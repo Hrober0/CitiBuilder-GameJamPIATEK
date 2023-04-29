@@ -184,6 +184,6 @@ namespace GameSystems
         }
 
 
-        private int PointsToDisplayedPoints(float points) => Mathf.RoundToInt(points * 50);
+        public static int PointsToDisplayedPoints(float points) => Mathf.RoundToInt(points * 50);
     }
 }

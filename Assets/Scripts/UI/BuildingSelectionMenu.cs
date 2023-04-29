@@ -11,13 +11,13 @@ namespace UI.HUD
     public class BuildingSelectionMenu : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
-        [SerializeField] private HUDCard _cardPrefab;
+        [SerializeField] private UIHUDCard _cardPrefab;
         [SerializeField] private Transform _cardsParent;
 
         [SerializeField] private GridObject _temptBuild;
 
-        private readonly List<HUDCard> _displayedCards = new();
-        private readonly List<HUDCard> _unusedCards = new();
+        private readonly List<UIHUDCard> _displayedCards = new();
+        private readonly List<UIHUDCard> _unusedCards = new();
 
 
         private TurnManager _turnManager;
@@ -68,7 +68,7 @@ namespace UI.HUD
 
             _displayedCards.Add(card);
         }
-        public void HideCard(HUDCard card)
+        public void HideCard(UIHUDCard card)
         {
             if (_displayedCards.Remove(card))
             {

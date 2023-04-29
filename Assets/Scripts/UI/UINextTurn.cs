@@ -21,13 +21,12 @@ namespace UI
 
         private void OnEnable()
         {
-            _turnManager = FindObjectOfType<TurnManager>();
+            _turnManager = SystemsManager.Instance.Get<TurnManager>();
             _turnManager.TurnEndSmimulationEnd += Open;
             _turnManager.TurnStart += Close;
 
             _nextButton.onClick.AddListener(PlayNextRound);
         }
-
         private void OnDisable()
         {
             if (_turnManager != null)

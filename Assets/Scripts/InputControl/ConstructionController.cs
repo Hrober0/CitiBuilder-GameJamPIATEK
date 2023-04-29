@@ -95,6 +95,9 @@ namespace InputControll
 
         public event Action<(GridObject placedBuilding, GridObject objectPattern)> OnBuildingBuild;
 
+        public event Action<GridObject> OnBuildingSelected;
+        public GridObject SelectedBuilding => _selectedObject;
+
         private Vector2Int? _lastUpdatePos;
 
         protected override void InitSystem()
@@ -133,6 +136,8 @@ namespace InputControll
 
                 InputManager.PrimaryAction.Ended += TryBuild;
             }
+
+            OnBuildingSelected?.Invoke(selectedObject);
         }
 
         public void BuildObject(Vector2Int gridPos, GridObject objPattern, bool chack=true)

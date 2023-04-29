@@ -3,6 +3,7 @@ using System.Collections;
 using System.Collections.Generic;
 using UnityEngine;
 using UnityEngine.UI;
+using GameSystems;
 
 namespace UI
 {
@@ -15,7 +16,7 @@ namespace UI
 
         private void OnEnable()
         {
-            _turnManager = FindObjectOfType<TurnManager>();
+            _turnManager = SystemsManager.Instance.Get<TurnManager>();
             _turnManager.TurnReachSkippPoint += Open;
             _turnManager.TurnEndBuild += Close;
 
