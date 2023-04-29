@@ -65,8 +65,8 @@ namespace GridObjects
                 + IsOnOffset(Vector2Int.down)    * (int)Dir.Down
                 + IsOnOffset(Vector2Int.right)   * (int)Dir.Right
                 + IsOnOffset(Vector2Int.left)    * (int)Dir.Left;
-
-            int maxMaskValue = 1 << 4 - 1;
+            
+            int maxMaskValue = (1 << 4) - 1;
             if (mask == maxMaskValue)
                 mask = -1;
             Dir dir = (Dir)mask;
