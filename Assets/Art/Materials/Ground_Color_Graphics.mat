@@ -106,10 +106,10 @@ Material:
     - _Glossiness: 0
     - _GlossyReflections: 0
     - _Metallic: 0
-    - _Noise_Scale: 22.23
+    - _Noise_Scale: 42.56
     - _OcclusionStrength: 1
     - _Parallax: 0.005
-    - _Posterize_Steps: -3.29
+    - _Posterize_Steps: -6.2
     - _Primary_Smoothness: 0.1
     - _QueueControl: 0
     - _QueueOffset: 0
@@ -126,7 +126,7 @@ Material:
     - _BaseColor: {r: 1, g: 1, b: 1, a: 1}
     - _Color: {r: 1, g: 1, b: 1, a: 1}
     - _EmissionColor: {r: 0, g: 0, b: 0, a: 1}
-    - _Primary_Color: {r: 0.333524, g: 0.5566038, b: 0.16540584, a: 0}
-    - _Secondary_Color: {r: 0.745283, g: 0.6260056, b: 0.25663045, a: 0}
+    - _Primary_Color: {r: 0.3004929, g: 0.50200003, b: 0.14847888, a: 0}
+    - _Secondary_Color: {r: 0.7229412, g: 0.74509805, b: 0.25490198, a: 0}
     - _SpecColor: {r: 0.19999996, g: 0.19999996, b: 0.19999996, a: 1}
   m_BuildTextureStacks: []
