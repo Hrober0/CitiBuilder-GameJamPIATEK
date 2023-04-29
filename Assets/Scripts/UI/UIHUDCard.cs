@@ -7,7 +7,7 @@ using System;
 
 namespace UI.HUD
 {
-    public class HUDCard : MonoBehaviour
+    public class UIHUDCard : MonoBehaviour
     {
         [SerializeField] private TextMeshProUGUI _nameLabel;
         [SerializeField] private Button _mainButton;
