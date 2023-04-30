@@ -5,20 +5,33 @@ using TMPro;
 using UnityEngine.UI;
 using GridObjects;
 using GameSystems;
+using DG.Tweening;
 
 namespace UI.HUD
 {
     public class BuildingSelectionMenu : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
+        [SerializeField] private RectTransform _mainPanel;
+
+        [Space(10)]
         [SerializeField] private UIHUDCard _cardPrefab;
         [SerializeField] private Transform _cardsParent;
 
         [SerializeField] private GridObject _temptBuild;
 
+        [Header("open values")]
+        [SerializeField] private float _openYPos = 10;
+        [SerializeField] private float _closeYPos = -160;
+        [SerializeField] private float _openTime = 0.3f;
+        [SerializeField] private Button _switchButton;
+        [SerializeField] private TextMeshProUGUI _switchButtonLabel;
+
+
         private readonly List<UIHUDCard> _displayedCards = new();
         private readonly List<UIHUDCard> _unusedCards = new();
 
+        private bool _isOpen = true;
 
         private TurnManager _turnManager;
 
@@ -34,11 +47,17 @@ namespace UI.HUD
 
             UpdateCards();
             _turnManager.OnHandChanged += UpdateCards;
+
+            _switchButton.onClick.AddListener(SwitchOpen);
+
+            SetOpen(_isOpen);
         }
         private void OnDisable()
         {
             if (_turnManager != null)
                 _turnManager.OnHandChanged -= UpdateCards;
+
+            _switchButton.onClick.RemoveListener(SwitchOpen);
         }
 
         private void UpdateCards()
@@ -84,6 +103,16 @@ namespace UI.HUD
                 return;
 
             _turnManager.SelectCard(index, !card.IsSelected);
+        }
+
+
+        private void SwitchOpen() => SetOpen(!_isOpen);
+        private void SetOpen(bool open)
+        {
+            _isOpen = open;
+            _switchButtonLabel.text = open ? "hide" : "show";
+            _mainPanel.DOKill();
+            _mainPanel.DOAnchorPosY(open ? _openYPos : _closeYPos, _openTime).SetEase(Ease.InQuad);
         }
     }
 }
