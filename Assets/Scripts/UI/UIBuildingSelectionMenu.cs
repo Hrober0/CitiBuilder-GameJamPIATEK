@@ -9,7 +9,7 @@ using DG.Tweening;
 
 namespace UI.HUD
 {
-    public class BuildingSelectionMenu : MonoBehaviour
+    public class UIBuildingSelectionMenu : MonoBehaviour
     {
         [SerializeField] private Canvas _canvas;
         [SerializeField] private RectTransform _mainPanel;
@@ -112,7 +112,7 @@ namespace UI.HUD
             _isOpen = open;
             _switchButtonLabel.text = open ? "hide" : "show";
             _mainPanel.DOKill();
-            _mainPanel.DOAnchorPosY(open ? _openYPos : _closeYPos, _openTime).SetEase(Ease.InQuad);
+            _mainPanel.DOAnchorPosY(open ? _openYPos : _closeYPos, _openTime).SetEase(Ease.Linear);
         }
     }
 }
