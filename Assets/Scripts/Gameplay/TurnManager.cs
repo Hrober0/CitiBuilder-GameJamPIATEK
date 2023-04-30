@@ -38,6 +38,7 @@ namespace GameSystems
 
 
         [SerializeField] private TurnCostManager _turnCost;
+        [SerializeField] private AudioSource _placeSound;
 
         [SerializeField] private BucketRandom<GridObject> _objectsRandomiser;
 
@@ -130,6 +131,8 @@ namespace GameSystems
 
             if (!wasBuildingInHand)
                 return;
+
+            _placeSound.Play();
 
             if (_handCards.Count <= 3)
                 TurnReachSkippPoint?.Invoke();
