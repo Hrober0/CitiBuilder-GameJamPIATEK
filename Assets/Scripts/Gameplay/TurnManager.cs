@@ -1,12 +1,11 @@
 using GridObjects;
 using Grids;
-using HeatSimulation;
 using InputControll;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameSystems
 {
@@ -44,6 +43,7 @@ namespace GameSystems
 
 
         private ConstructionController _constructionController;
+        private InputManager _inputManager;
         private WorldGrid _worldGrid;
 
 
@@ -68,11 +68,16 @@ namespace GameSystems
             _constructionController = _systems.Get<ConstructionController>();
             _constructionController.OnBuildingBuild += OnBuildingBuild;
 
+            _inputManager = _systems.Get<InputManager>();
+            _inputManager.GameResetAction.Ended += ResetGame;
+
             NextTurn();
         }
         protected override void DeinitSystem()
         {
             _constructionController.OnBuildingBuild -= OnBuildingBuild;
+
+            _inputManager.GameResetAction.Ended -= ResetGame;
         }
 
 
@@ -184,6 +189,12 @@ namespace GameSystems
                 _handCards.Add(new(_objectsRandomiser.GetRandom()));
                 OnHandChanged?.Invoke();
             }
+        }
+
+
+        private void ResetGame()
+        {
+            SceneManager.LoadScene("MainMenu");
         }
 
 

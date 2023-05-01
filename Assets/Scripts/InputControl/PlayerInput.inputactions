@@ -31,6 +31,15 @@
                     "processors": "",
                     "interactions": "",
                     "initialStateCheck": true
+                },
+                {
+                    "name": "GameReset",
+                    "type": "Button",
+                    "id": "eab6d7c5-5858-4752-bb7f-ff726fcd4162",
+                    "expectedControlType": "Button",
+                    "processors": "",
+                    "interactions": "",
+                    "initialStateCheck": false
                 }
             ],
             "bindings": [
@@ -64,6 +73,17 @@
                     "processors": "",
                     "groups": "",
                     "action": "MousePos",
+                    "isComposite": false,
+                    "isPartOfComposite": false
+                },
+                {
+                    "name": "",
+                    "id": "6460fe30-58d0-445c-a58e-469b6331a0b7",
+                    "path": "<Keyboard>/r",
+                    "interactions": "",
+                    "processors": "",
+                    "groups": "",
+                    "action": "GameReset",
                     "isComposite": false,
                     "isPartOfComposite": false
                 }

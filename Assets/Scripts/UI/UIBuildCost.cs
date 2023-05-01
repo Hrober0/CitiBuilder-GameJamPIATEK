@@ -22,6 +22,8 @@ namespace UI
 
 
         private ConstructionController _constructionController;
+        private InputManager _inputManager;
+
         private Coroutine _positionUpdater;
 
         
@@ -30,6 +32,8 @@ namespace UI
             _constructionController = SystemsManager.Instance.Get<ConstructionController>();
             OnBuildingSelected(_constructionController.SelectedBuilding);
             _constructionController.OnBuildingSelected += OnBuildingSelected;
+
+            _inputManager = SystemsManager.Instance.Get<InputManager>();
         }
         private void OnDisable()
         {
@@ -66,7 +70,7 @@ namespace UI
         {
             while (true)
             {
-                Vector2 mousePos = InputManager.MousePosition;
+                Vector2 mousePos = _inputManager.MousePosition;
                 Vector2 canvasPos = mousePos / _canvas.scaleFactor;
                 _mainPanel.anchoredPosition = canvasPos;
                 yield return null;

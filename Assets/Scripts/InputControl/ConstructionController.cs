@@ -91,6 +91,7 @@ namespace InputControll
 
 
         private WorldGrid _worldGrid;
+        private InputManager _inputManager;
 
 
         public event Action<(GridObject placedBuilding, GridObject objectPattern)> OnBuildingBuild;
@@ -106,6 +107,8 @@ namespace InputControll
 
             _places = new(_placePattern, _placesParent);
             _placesIncorrect = new(_placeIncorrectPattern, _placesParent);
+
+            _inputManager = _systems.Get<InputManager>();
         }
         protected override void DeinitSystem() { }
 
@@ -121,7 +124,7 @@ namespace InputControll
 
                 UpdateAvailableToBuildPlaces(null, Vector2Int.zero);
 
-                InputManager.PrimaryAction.Ended -= TryBuild;
+                _inputManager.PrimaryAction.Ended -= TryBuild;
             }
 
             if (selectedObject != null)
@@ -134,7 +137,7 @@ namespace InputControll
                 if (_constructionUpdater == null)
                     _constructionUpdater = StartCoroutine(ConstructionVisualizationUpdate());
 
-                InputManager.PrimaryAction.Ended += TryBuild;
+                _inputManager.PrimaryAction.Ended += TryBuild;
             }
 
             OnBuildingSelected?.Invoke(selectedObject);
@@ -274,7 +277,7 @@ namespace InputControll
 
         private Vector2Int GetMouseGridPosition()
         {
-            Ray ray = Camera.main.ScreenPointToRay(InputManager.MousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(_inputManager.MousePosition);
             if (!Physics.Raycast(ray, out RaycastHit hitData, 1000, _colisionLayers))
                 return -Vector2Int.one;
             var worldPos = hitData.point;

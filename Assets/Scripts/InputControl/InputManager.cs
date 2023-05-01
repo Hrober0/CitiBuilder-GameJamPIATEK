@@ -6,54 +6,56 @@ using UnityEngine;
 using UnityEngine.Assertions;
 using UnityEngine.InputSystem;
 
-public class InputManager : GameSystem
+namespace InputControll
 {
-    public static Vector2 MousePosition => instance.input.General.MousePos.ReadValue<Vector2>();
-
-    public static ButtonAction PrimaryAction { get; private set; }
-    public static ButtonAction SecondaryAction { get; private set; }
-
-    private static InputManager instance;
-
-    private PlayerInput input;
-
-    protected override void InitSystem()
+    public class InputManager : GameSystem
     {
-        Assert.IsNull(instance, $"Duplicate {nameof(InputManager)} on {this}");
+        public Vector2 MousePosition => _input.General.MousePos.ReadValue<Vector2>();
 
-        instance = this;
-        input = new PlayerInput();
+        public ButtonAction PrimaryAction { get; private set; }
+        public ButtonAction SecondaryAction { get; private set; }
 
-        PrimaryAction = new ButtonAction(input.General.Primary);
-        SecondaryAction = new ButtonAction(input.General.Secondary);
-
-        input.Enable();
-    }
-    protected override void DeinitSystem()
-    {
-        input.Disable();
-    }
+        public ButtonAction GameResetAction { get; private set; }
 
 
-    public class ButtonAction
-    {
-        public event Action Started;
-        public event Action Performed;
-        public event Action Ended;
-        public event Action<State> Combo;
+        private PlayerInput _input;
 
-        public ButtonAction(InputAction action)
+        protected override void InitSystem()
         {
-            action.started += (_) => { Started?.Invoke(); Combo?.Invoke(State.Started); };
-            action.performed += (_) => { Performed?.Invoke(); Combo?.Invoke(State.Performed); };
-            action.canceled += (_) => { Ended?.Invoke(); Combo?.Invoke(State.Ended); };
+            _input = new PlayerInput();
+
+            PrimaryAction = new ButtonAction(_input.General.Primary);
+            SecondaryAction = new ButtonAction(_input.General.Secondary);
+            GameResetAction = new ButtonAction(_input.General.GameReset);
+
+            _input.Enable();
+        }
+        protected override void DeinitSystem()
+        {
+            _input.Disable();
         }
 
-        public enum State
+
+        public class ButtonAction
         {
-            Started,
-            Performed,
-            Ended
+            public event Action Started;
+            public event Action Performed;
+            public event Action Ended;
+            public event Action<State> Combo;
+
+            public ButtonAction(InputAction action)
+            {
+                action.started += (_) => { Started?.Invoke(); Combo?.Invoke(State.Started); };
+                action.performed += (_) => { Performed?.Invoke(); Combo?.Invoke(State.Performed); };
+                action.canceled += (_) => { Ended?.Invoke(); Combo?.Invoke(State.Ended); };
+            }
+
+            public enum State
+            {
+                Started,
+                Performed,
+                Ended
+            }
         }
     }
 }
