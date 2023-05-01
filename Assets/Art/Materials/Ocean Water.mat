@@ -38,24 +38,31 @@ Material:
         m_Offset: {x: 0, y: 0}
     m_Ints: []
     m_Floats:
-    - _Metalness: 0.003
+    - _Color_Fresnel_Power: 2
+    - _Metalness: 0
+    - _Noise_1_Fresnel_Power: 1
     - _Noise_1_Power: 1
-    - _Noise_1_Scale: 50
+    - _Noise_1_Scale: 30
+    - _Noise_1_Speed: 1.5
     - _Noise_1_Strength: 0.02
     - _Noise_1_Tiling: 1
-    - _Noise_2_Power: 0.4
-    - _Noise_2_Scale: 0
+    - _Noise_2_Fresnel_Power: 3
+    - _Noise_2_Power: 0.1
+    - _Noise_2_Scale: 90
+    - _Noise_2_Speed: 0.85
     - _Noise_2_Strength: 0.02
     - _Normal_Offset: 0.5
     - _Normal_Strength: 0.02
     - _QueueControl: 0
     - _QueueOffset: 0
-    - _Smoothness: 1
+    - _Smoothness: 0.8
     - _Tiling: 0.35
     m_Colors:
     - _Color_A: {r: 0.1264685, g: 0.37111545, b: 0.5471698, a: 1}
     - _Color_B: {r: 0.24679601, g: 0.61896783, b: 0.8867924, a: 1}
+    - _Noise_1_Direction: {r: 0, g: -1, b: 0, a: 0}
     - _Noise_1_Offset: {r: 0, g: 0, b: 0, a: 0}
+    - _Noise_2_Direction: {r: 1, g: 0, b: 0, a: 0}
     - _Noise_2_Offset: {r: 0, g: 0, b: 0, a: 0}
     - _Normal_Tiling: {r: 0.5, g: 0.5, b: 0, a: 0}
   m_BuildTextureStacks: []
