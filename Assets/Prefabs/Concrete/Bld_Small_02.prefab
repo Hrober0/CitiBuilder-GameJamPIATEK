@@ -50,7 +50,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec16347c7588fe043916246b26ce83bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Corner Commerce
+  _name: FrogShop
   _icon: {fileID: 21300000, guid: 13007821385a4c947b8d6f3749968b82, type: 3}
   _type: {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
   _fields:
