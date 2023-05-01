@@ -71,7 +71,7 @@ namespace GameSystems
             _inputManager = _systems.Get<InputManager>();
             _inputManager.GameResetAction.Ended += ResetGame;
 
-            NextTurn();
+            StartCoroutine(StartFirstTour());
         }
         protected override void DeinitSystem()
         {
@@ -189,6 +189,13 @@ namespace GameSystems
                 _handCards.Add(new(_objectsRandomiser.GetRandom()));
                 OnHandChanged?.Invoke();
             }
+        }
+
+
+        private IEnumerator StartFirstTour()
+        {
+            yield return new WaitForSeconds(1);
+            NextTurn();
         }
 
 
