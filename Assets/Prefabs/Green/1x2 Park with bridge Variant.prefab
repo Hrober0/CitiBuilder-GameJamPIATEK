@@ -290,7 +290,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec16347c7588fe043916246b26ce83bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: 1x2 Park
+  _name: Slim 1x2 Lake Park
   _icon: {fileID: 21300000, guid: 2486c6cb2716b4c4e83f691194d8b264, type: 3}
   _type: {fileID: 11400000, guid: 730c2f2099fd11e4698892cd380bf365, type: 2}
   _fields:
