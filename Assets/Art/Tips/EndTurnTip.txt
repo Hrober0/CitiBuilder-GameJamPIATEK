@@ -1,0 +1,2 @@
+At the <b><color=#d98c44>end</color></b> of each turn, your income will be <b><color=#d98c44>reduced</color></b>,
+by the cost of compensation to residents for bad <b><color=#d98c44>heat</color></b> conditions in the city.

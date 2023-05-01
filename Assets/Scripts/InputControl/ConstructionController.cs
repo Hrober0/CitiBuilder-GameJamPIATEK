@@ -69,7 +69,6 @@ namespace InputControll
         }
 
 
-        [SerializeField] private Camera _camera;
         [SerializeField] private LayerMask _colisionLayers;
 
         [Header("construction")]
@@ -91,14 +90,25 @@ namespace InputControll
         private PlacesPool _placesIncorrect;
 
 
+        private WorldGrid _worldGrid;
+        private InputManager _inputManager;
+
+
         public event Action<(GridObject placedBuilding, GridObject objectPattern)> OnBuildingBuild;
+
+        public event Action<GridObject> OnBuildingSelected;
+        public GridObject SelectedBuilding => _selectedObject;
 
         private Vector2Int? _lastUpdatePos;
 
         protected override void InitSystem()
         {
+            _worldGrid = _systems.Get<WorldGrid>();
+
             _places = new(_placePattern, _placesParent);
             _placesIncorrect = new(_placeIncorrectPattern, _placesParent);
+
+            _inputManager = _systems.Get<InputManager>();
         }
         protected override void DeinitSystem() { }
 
@@ -114,7 +124,7 @@ namespace InputControll
 
                 UpdateAvailableToBuildPlaces(null, Vector2Int.zero);
 
-                InputManager.PrimaryAction.Ended -= TryBuild;
+                _inputManager.PrimaryAction.Ended -= TryBuild;
             }
 
             if (selectedObject != null)
@@ -127,8 +137,10 @@ namespace InputControll
                 if (_constructionUpdater == null)
                     _constructionUpdater = StartCoroutine(ConstructionVisualizationUpdate());
 
-                InputManager.PrimaryAction.Ended += TryBuild;
+                _inputManager.PrimaryAction.Ended += TryBuild;
             }
+
+            OnBuildingSelected?.Invoke(selectedObject);
         }
 
         public void BuildObject(Vector2Int gridPos, GridObject objPattern, bool chack=true)
@@ -144,7 +156,7 @@ namespace InputControll
             newObj.name = $"{objPattern}({gridPos.x},{gridPos.y})";
 
             foreach (var field in newObj.Fields)
-                WorldGrid.Instance.GetCell(field + gridPos).GridObject = newObj;
+                _worldGrid.GetCell(field + gridPos).GridObject = newObj;
 
             newObj.Place();
 
@@ -158,7 +170,7 @@ namespace InputControll
             {
                 var currField = field + gridPos;
 
-                if (!WorldGrid.Instance.TryGetCell(currField, out var cell))
+                if (!_worldGrid.TryGetCell(currField, out var cell))
                     return false;
 
                 if (cell.GridObject != null)
@@ -178,7 +190,7 @@ namespace InputControll
             var offsets = new[] { Vector2Int.up, Vector2Int.right, Vector2Int.down, Vector2Int.left };
             var typesList = new List<GridObjectTypeSO>(types);
             foreach (var offset in offsets)
-                if (WorldGrid.Instance.TryGetCell(gridPos + offset, out var cell)
+                if (_worldGrid.TryGetCell(gridPos + offset, out var cell)
                     && cell.GridObject != null
                     && typesList.Contains(cell.GridObject.Type))
                     return true;
@@ -208,7 +220,7 @@ namespace InputControll
             }
             
 
-            foreach (var checkedField in WorldGrid.Instance.GridSize.allPositionsWithin)
+            foreach (var checkedField in _worldGrid.GridSize.allPositionsWithin)
             {
                 if (CanBuildObjectAt(checkedField, obj))
                 {
@@ -265,7 +277,7 @@ namespace InputControll
 
         private Vector2Int GetMouseGridPosition()
         {
-            Ray ray = Camera.main.ScreenPointToRay(InputManager.MousePosition);
+            Ray ray = Camera.main.ScreenPointToRay(_inputManager.MousePosition);
             if (!Physics.Raycast(ray, out RaycastHit hitData, 1000, _colisionLayers))
                 return -Vector2Int.one;
             var worldPos = hitData.point;

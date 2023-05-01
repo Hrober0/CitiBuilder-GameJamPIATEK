@@ -1,0 +1,3 @@
+The <b><color=#d98c44>heat map</color></b> is a dedicated screen where you can see the heat of the whole city.
+
+Heat will be <b><color=#d98c44>simulated</color></b> at the end of each  <b><color=#d98c44>tour</color></b>.

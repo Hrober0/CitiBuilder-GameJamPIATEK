@@ -4,8 +4,8 @@ using InputControll;
 using System;
 using System.Collections;
 using System.Collections.Generic;
-using TMPro;
 using UnityEngine;
+using UnityEngine.SceneManagement;
 
 namespace GameSystems
 {
@@ -33,21 +33,24 @@ namespace GameSystems
         public event Action TurnPasses;
         public event Action TurnEndSmimulationEnd;
         public event Action TurnReachSkippPoint;
+        public event Action TurnStart;
 
 
         [SerializeField] private TurnCostManager _turnCost;
+        [SerializeField] private AudioSource _placeSound;
 
         [SerializeField] private BucketRandom<GridObject> _objectsRandomiser;
 
 
         private ConstructionController _constructionController;
-        private TemporarryCameraSwitcherArrr _overlay;
+        private InputManager _inputManager;
+        private WorldGrid _worldGrid;
 
 
         private readonly int _cardsInTour = 5;
 
 
-        private float _points = 0;
+        private float _points = 5;
         private float _heatPenalty = 0;
         private float _pointsAtRoundStart = 0;
         public int DisplayedPoints => PointsToDisplayedPoints(_points);
@@ -59,18 +62,22 @@ namespace GameSystems
 
         protected override void InitSystem()
         {
-            _turnCost.Init(this, Grids.WorldGrid.Instance);
+            _worldGrid = _systems.Get<WorldGrid>();
+            _turnCost.Init(this, _worldGrid);
 
             _constructionController = _systems.Get<ConstructionController>();
             _constructionController.OnBuildingBuild += OnBuildingBuild;
 
-            _overlay = FindObjectOfType<TemporarryCameraSwitcherArrr>();
+            _inputManager = _systems.Get<InputManager>();
+            _inputManager.GameResetAction.Ended += ResetGame;
 
-            NextTurn();
+            StartCoroutine(StartFirstTour());
         }
         protected override void DeinitSystem()
         {
             _constructionController.OnBuildingBuild -= OnBuildingBuild;
+
+            _inputManager.GameResetAction.Ended -= ResetGame;
         }
 
 
@@ -115,15 +122,22 @@ namespace GameSystems
 
         private void OnBuildingBuild((GridObject placed, GridObject pattern) value)
         {
+            bool wasBuildingInHand = false;
             foreach (var item in _handCards)
             {
                 if (item.IsSelected && item.GridObject == value.pattern)
                 {
                     _handCards.Remove(item);
                     OnHandChanged?.Invoke();
+                    wasBuildingInHand = true;
                     break;
                 }
             }
+
+            if (!wasBuildingInHand)
+                return;
+
+            _placeSound.Play();
 
             if (_handCards.Count <= 3)
                 TurnReachSkippPoint?.Invoke();
@@ -134,47 +148,63 @@ namespace GameSystems
                 EndTour();
         }
 
-        public void EndTour()
+        public void EndTour() => StartCoroutine(EndTurnSequence());
+        private IEnumerator EndTurnSequence()
         {
-            StartCoroutine(ShowPropagation());
-        }
+            Debug.Log("End tour");
 
-
-        private IEnumerator ShowPropagation()
-        {
+            _constructionController.SetObject(null);
             TurnEndBuild?.Invoke();
 
             _handCards.Clear();
             OnHandChanged?.Invoke();
 
-            _overlay.SetOvelayActive(true);
             yield return new WaitForSeconds(1);
 
             TurnPasses?.Invoke();
 
-            yield return new WaitForSeconds(3);
+            yield return new WaitForSeconds(3.5f);     // wait for heat simulation
 
-            _heatPenalty = _turnCost.NextTurnCost(WorldGrid.Instance);
+            _heatPenalty = _turnCost.NextTurnCost(_worldGrid);
 
             _points -= _heatPenalty;
 
             TurnEndSmimulationEnd?.Invoke();
         }
 
-        public void NextTurn()
+        public void NextTurn() => StartCoroutine(NextTurnSequence());
+        private IEnumerator NextTurnSequence()
         {
+            Debug.Log("Start tour");
+
             _pointsAtRoundStart = _points;
 
-            _overlay.SetOvelayActive(false);
+            TurnStart?.Invoke();
 
             _handCards.Clear();
-            for (int i = 0; i < _cardsInTour; i++)
-                _handCards.Add(new(_objectsRandomiser.GetRandom()));
 
-            OnHandChanged?.Invoke();
+            for (int i = 0; i < _cardsInTour; i++)
+            {
+                yield return new WaitForSeconds(0.2f);
+                _handCards.Add(new(_objectsRandomiser.GetRandom()));
+                OnHandChanged?.Invoke();
+            }
         }
 
 
-        private int PointsToDisplayedPoints(float points) => Mathf.RoundToInt(points * 50);
+        private IEnumerator StartFirstTour()
+        {
+            yield return new WaitForSeconds(1);
+            NextTurn();
+        }
+
+
+        private void ResetGame()
+        {
+            SceneManager.LoadScene("MainMenu");
+        }
+
+
+        public static int PointsToDisplayedPoints(float points) => Mathf.RoundToInt(points * 50);
     }
 }

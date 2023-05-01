@@ -5,6 +5,7 @@ using UnityEngine;
 using Grids;
 using UnityEngine.Assertions;
 using System;
+using GameSystems;
 
 namespace GridObjects
 {
@@ -29,9 +30,10 @@ namespace GridObjects
         {
             get
             {
+                var worldGrid = SystemsManager.Instance.Get<WorldGrid>();
                 foreach (var tile in OccupiedTiles)
                 {
-                    var cell = WorldGrid.Instance.GetCell(tile);
+                    var cell = worldGrid.GetCell(tile);
 
                     if(cell.GridObject != this)
                     {

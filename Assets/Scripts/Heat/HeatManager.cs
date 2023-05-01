@@ -10,57 +10,62 @@ namespace HeatSimulation
 {
     public class HeatManager : GameSystem
     {
-        public static HeatManager Instance { get; private set; }
-
         private HashSet<HeatGenerator> heatGenerators;
 
-        [SerializeField]
-        private MeshFilter overlay;
+        [SerializeField] private float[] kernel;
+        [SerializeField] private int _heatUpdateIterations;
+        [SerializeField] private float _heatIterationInterval;
 
-        [SerializeField]
-        private float[] kernel;
+        [SerializeField] private MeshFilter overlay;
+        [SerializeField] private MeshRenderer overlayRenderer;
 
-        [SerializeField]
-        private int _heatUpdateIterations;
-        
-        [SerializeField]
-        private float _heatIterationInterval;
 
-        private Action _turnEndLambda;
+        public Action<bool> OnOverlaySwitch;
+        public bool IsOverlayActive { get; private set; } = false;
+
+
+        private TurnManager _turnManager;
+        private WorldGrid _worldGrid;
+
+        private Coroutine _overlayAcriveAnimation;
 
         protected override void InitSystem()
         {
-            Assert.IsNull(Instance, $"Mulitple instances {nameof(HeatManager)}");
-            Instance = this;
-
             heatGenerators = new HashSet<HeatGenerator>();
 
-            _turnEndLambda = () => StartCoroutine(UpdateHeat());
-            _systems.Get<TurnManager>().TurnPasses += _turnEndLambda;
+            _worldGrid = _systems.Get<WorldGrid>();
 
             SetupKernel();
 
             GenerateOverlay();
-            
-            //StartCoroutine(_HeatPropagatr());
+
+            _turnManager = _systems.Get<TurnManager>();
+            _turnManager.TurnPasses += StartHeatUpdate;
+            _turnManager.TurnStart += DisenableOverlay;
         }
         protected override void DeinitSystem() 
         {
-            _systems.Get<TurnManager>().TurnPasses -= _turnEndLambda;
+            _turnManager.TurnPasses -= StartHeatUpdate;
+            _turnManager.TurnStart -= DisenableOverlay;
         }
+
 
         public void RegisterGenerator(HeatGenerator generator)
         {
             heatGenerators.Add(generator);
         }
-
         public void RemoveGenerator(HeatGenerator generator)
         {
             heatGenerators.Remove(generator);
         }
 
+
+        private void StartHeatUpdate() => StartCoroutine(UpdateHeat());
         private IEnumerator UpdateHeat()
         {
+            EnableOverlay(true);
+            yield return new WaitForSeconds(0.8f);
+
             for (int i = 0; i < _heatUpdateIterations; i++) 
             {
                 GenerateHeat();
@@ -80,7 +85,6 @@ namespace HeatSimulation
                 }
             }
         }
-
         private void PropagateHeat()
         {
             ApplyKernel((x, y, i) => GetHeatAt(x + i, y));
@@ -89,10 +93,8 @@ namespace HeatSimulation
 
         private void GenerateOverlay()
         {
-            var grid = WorldGrid.Instance;
-
-            var sizeX = grid.GridX + 1;
-            var sizeY = grid.GridX + 1;
+            var sizeX = _worldGrid.GridX + 1;
+            var sizeY = _worldGrid.GridX + 1;
 
             Mesh mesh = new Mesh();
 
@@ -175,24 +177,22 @@ namespace HeatSimulation
 
         private float GetHeatAt(int x, int y)
         {
-            var grid = WorldGrid.Instance;
-            if (x < 0 || x >= grid.GridX || y < 0 || y >= grid.GridY)
+            if (x < 0 || x >= _worldGrid.GridX || y < 0 || y >= _worldGrid.GridY)
             {
                 return 0f;
             }
-            return grid.GetCell(x, y).Heat;
+            return _worldGrid.GetCell(x, y).Heat;
         }
 
         private void ApplyKernel(Func<int, int, int, float> heatGetter)
         {
-            var grid = WorldGrid.Instance;
-            float[,] newHeat = new float[grid.GridX, grid.GridY];
+            float[,] newHeat = new float[_worldGrid.GridX, _worldGrid.GridY];
 
             int k2 = kernel.Length / 2;
 
             //Suboptimal code below
-            for (int x = 0; x < grid.GridX; x++)
-                for (int y = 0; y < grid.GridY; y++)
+            for (int x = 0; x < _worldGrid.GridX; x++)
+                for (int y = 0; y < _worldGrid.GridY; y++)
                 {
                     for (int i = 0; i < kernel.Length; i++)
                     {
@@ -201,25 +201,45 @@ namespace HeatSimulation
                     }
                 }
 
-            for (int x = 0; x < grid.GridX; x++)
-                for (int y = 0; y < grid.GridY; y++)
+            for (int x = 0; x < _worldGrid.GridX; x++)
+                for (int y = 0; y < _worldGrid.GridY; y++)
                 {
-                    grid.GetCell(x, y).Heat = newHeat[x, y];
+                    _worldGrid.GetCell(x, y).Heat = newHeat[x, y];
                 }
         }
+
+        private void DisenableOverlay() => EnableOverlay(false);
+        public void EnableOverlay(bool active)
+        {
+            if (_overlayAcriveAnimation != null)
+                StopCoroutine(_overlayAcriveAnimation);
+            _overlayAcriveAnimation = StartCoroutine(SetOverlayActive(active));
+        }
+        private IEnumerator SetOverlayActive(bool active)
+        {
+            IsOverlayActive = active;
+            OnOverlaySwitch?.Invoke(active);
+
+            if (active)
+                yield return new WaitForSeconds(0.5f); // wait for camera movement
+
+            overlayRenderer.enabled = active;
+
+            _overlayAcriveAnimation = null;
+        }
+
 
 #if UNITY_EDITOR
         private void OnDrawGizmos()
         {
-            var grid = WorldGrid.Instance;
-            if (grid == null)
+            if (_worldGrid == null)
             {
                 return;
             }
             var c = Gizmos.color;
-            foreach (var pos in grid.GridSize.allPositionsWithin)
+            foreach (var pos in _worldGrid.GridSize.allPositionsWithin)
             {
-                var h = grid.GetCell(pos).Heat;
+                var h = _worldGrid.GetCell(pos).Heat;
                 //h *= h;
                 var color = new Color(
                     -Mathf.Cos(h) / 2f + 0.5f,

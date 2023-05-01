@@ -53,6 +53,15 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""processors"": """",
                     ""interactions"": """",
                     ""initialStateCheck"": true
+                },
+                {
+                    ""name"": ""GameReset"",
+                    ""type"": ""Button"",
+                    ""id"": ""eab6d7c5-5858-4752-bb7f-ff726fcd4162"",
+                    ""expectedControlType"": ""Button"",
+                    ""processors"": """",
+                    ""interactions"": """",
+                    ""initialStateCheck"": false
                 }
             ],
             ""bindings"": [
@@ -88,6 +97,17 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
                     ""action"": ""MousePos"",
                     ""isComposite"": false,
                     ""isPartOfComposite"": false
+                },
+                {
+                    ""name"": """",
+                    ""id"": ""6460fe30-58d0-445c-a58e-469b6331a0b7"",
+                    ""path"": ""<Keyboard>/r"",
+                    ""interactions"": """",
+                    ""processors"": """",
+                    ""groups"": """",
+                    ""action"": ""GameReset"",
+                    ""isComposite"": false,
+                    ""isPartOfComposite"": false
                 }
             ]
         }
@@ -99,6 +119,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         m_General_Primary = m_General.FindAction("Primary", throwIfNotFound: true);
         m_General_Secondary = m_General.FindAction("Secondary", throwIfNotFound: true);
         m_General_MousePos = m_General.FindAction("MousePos", throwIfNotFound: true);
+        m_General_GameReset = m_General.FindAction("GameReset", throwIfNotFound: true);
     }
 
     public void Dispose()
@@ -163,6 +184,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
     private readonly InputAction m_General_Primary;
     private readonly InputAction m_General_Secondary;
     private readonly InputAction m_General_MousePos;
+    private readonly InputAction m_General_GameReset;
     public struct GeneralActions
     {
         private @PlayerInput m_Wrapper;
@@ -170,6 +192,7 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         public InputAction @Primary => m_Wrapper.m_General_Primary;
         public InputAction @Secondary => m_Wrapper.m_General_Secondary;
         public InputAction @MousePos => m_Wrapper.m_General_MousePos;
+        public InputAction @GameReset => m_Wrapper.m_General_GameReset;
         public InputActionMap Get() { return m_Wrapper.m_General; }
         public void Enable() { Get().Enable(); }
         public void Disable() { Get().Disable(); }
@@ -188,6 +211,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MousePos.started += instance.OnMousePos;
             @MousePos.performed += instance.OnMousePos;
             @MousePos.canceled += instance.OnMousePos;
+            @GameReset.started += instance.OnGameReset;
+            @GameReset.performed += instance.OnGameReset;
+            @GameReset.canceled += instance.OnGameReset;
         }
 
         private void UnregisterCallbacks(IGeneralActions instance)
@@ -201,6 +227,9 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
             @MousePos.started -= instance.OnMousePos;
             @MousePos.performed -= instance.OnMousePos;
             @MousePos.canceled -= instance.OnMousePos;
+            @GameReset.started -= instance.OnGameReset;
+            @GameReset.performed -= instance.OnGameReset;
+            @GameReset.canceled -= instance.OnGameReset;
         }
 
         public void RemoveCallbacks(IGeneralActions instance)
@@ -223,5 +252,6 @@ public partial class @PlayerInput: IInputActionCollection2, IDisposable
         void OnPrimary(InputAction.CallbackContext context);
         void OnSecondary(InputAction.CallbackContext context);
         void OnMousePos(InputAction.CallbackContext context);
+        void OnGameReset(InputAction.CallbackContext context);
     }
 }
