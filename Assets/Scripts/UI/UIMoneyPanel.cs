@@ -58,14 +58,15 @@ namespace UI
             _animationMoneyLabel.text = points.ToString("+#;-#;0");
             _animationMoneyLabel.color = points >= 0 ? _addMoneyColor : _remMoneyColor;
 
-            var worldPos = placeEvt.placedBuilding.transform.position;
-            Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos) + Vector3.up * 10;
+            var worldPos = placeEvt.placedBuilding.transform.position + Vector3.up * 1;
+            Vector3 screenPos = Camera.main.WorldToScreenPoint(worldPos);
 
             _animationSeq.Kill();
             _animationSeq = DOTween.Sequence()
-                .AppendInterval(.5f)
+                .AppendInterval(.4f)
                 .AppendCallback(Show)
-                .Append(_animationPanel.DOScale(Vector3.one, .2f).SetEase(Ease.InQuad))
+                .Append(_animationPanel.DOScale(Vector3.one, .4f).SetEase(Ease.OutBack))
+                .AppendInterval(.1f)
                 .Append(_animationPanel.DOMove(_animationTarget.position, .5f).SetEase(Ease.OutQuad))
                 .Append(_animationPanel.DOScale(Vector3.zero, .2f).SetEase(Ease.OutQuad))
                 .AppendCallback(UpdateMoneyLabel)
