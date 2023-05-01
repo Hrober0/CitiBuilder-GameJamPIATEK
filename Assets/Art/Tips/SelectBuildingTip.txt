@@ -1,0 +1,4 @@
+Select a  <b><color=#d98c44>building </color></b> in the bottom corner panel.
+
+Each building has an  <b><color=#d98c44>impact</color></b> on the environment.
+Concrete buildings like skyscrapers <b><color=#d98c44>produce heat</color></b> but green buildings like parks <b><color=#d98c44>absorb heat</color></b>.

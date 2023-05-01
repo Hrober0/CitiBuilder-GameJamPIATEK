@@ -50,7 +50,7 @@ namespace GameSystems
         private readonly int _cardsInTour = 5;
 
 
-        private float _points = 0;
+        private float _points = 5;
         private float _heatPenalty = 0;
         private float _pointsAtRoundStart = 0;
         public int DisplayedPoints => PointsToDisplayedPoints(_points);

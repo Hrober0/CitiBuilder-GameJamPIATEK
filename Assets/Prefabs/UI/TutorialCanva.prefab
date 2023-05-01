@@ -40,7 +40,7 @@ RectTransform:
   m_AnchorMin: {x: 0, y: 0}
   m_AnchorMax: {x: 0, y: 0}
   m_AnchoredPosition: {x: 0, y: 0}
-  m_SizeDelta: {x: 0, y: 84}
+  m_SizeDelta: {x: 0, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!222 &6444807279412125888
 CanvasRenderer:
@@ -159,7 +159,7 @@ RectTransform:
   m_AnchorMin: {x: 1, y: 0}
   m_AnchorMax: {x: 1, y: 0}
   m_AnchoredPosition: {x: -10, y: 156}
-  m_SizeDelta: {x: 330.5131, y: 0}
+  m_SizeDelta: {x: 360, y: 0}
   m_Pivot: {x: 1, y: 0}
 --- !u!114 &6444807279612979230
 MonoBehaviour:
@@ -183,7 +183,7 @@ MonoBehaviour:
   m_ChildForceExpandWidth: 1
   m_ChildForceExpandHeight: 0
   m_ChildControlWidth: 1
-  m_ChildControlHeight: 0
+  m_ChildControlHeight: 1
   m_ChildScaleWidth: 0
   m_ChildScaleHeight: 0
   m_ReverseArrangement: 0
@@ -451,7 +451,12 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   _templateMess: {fileID: 6444807279412125892}
-  _resetMess: 'Press <b><color=#d98c44>R</color></b> to reset '
+  _unactivityTime: 6
+  _resetTipText: {fileID: 4900000, guid: aedd5fa5c9534a74e842f363e3dabad3, type: 3}
+  _selectBuildingTipText: {fileID: 4900000, guid: 2af4b08a455d56a4c92870c95556f194, type: 3}
+  _buildTipText: {fileID: 4900000, guid: 8900275dac648e14b992091f0170b128, type: 3}
+  _endTurnTipText: {fileID: 4900000, guid: 97ff73d75f409c747a8439ebb9331a14, type: 3}
+  _heatOverlayTipText: {fileID: 4900000, guid: 87b05cb586a0dde4d8bf0204f685f149, type: 3}
 --- !u!1001 &6444807280450806674
 PrefabInstance:
   m_ObjectHideFlags: 0

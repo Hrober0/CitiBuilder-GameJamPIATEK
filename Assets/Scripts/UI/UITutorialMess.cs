@@ -38,15 +38,21 @@ namespace UI.Tutorial
             _sequence.Kill();
             _bgImage.color = Color.white;
             _sequence = DOTween.Sequence()
-                .SetLoops(3)
+                .SetLoops(-1)
                 .Append(_bgImage.DOColor(_activeColor, 1))
+                .AppendInterval(.1f)
                 .Append(_bgImage.DOColor(Color.white, 1))
-                .AppendInterval(.5f)
+                .AppendInterval(.4f)
                 ;
         }
 
         private void OnClick() => _onClick?.Invoke();
 
-        public void SetActive(bool active) => gameObject.SetActive(active);
+        public void SetActive(bool active)
+        {
+            if (!active)
+                _sequence.Kill();
+            gameObject.SetActive(active);
+        }
     }
 }
