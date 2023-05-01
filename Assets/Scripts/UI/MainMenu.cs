@@ -14,6 +14,10 @@ public class MainMenu : MonoBehaviour
     [SerializeField] private Button _creditsButton;
     [SerializeField] private Button _exitButton;
 
+    [Header("Credits")]
+    [SerializeField] private GameObject _creditsPanel;
+
+
     private void Start()
     {
         _startButton.onClick.AddListener(LoadFirstLevel);
@@ -39,16 +43,24 @@ public class MainMenu : MonoBehaviour
 
     public void OpenCredits()
     {
-        Debug.Log("Open credits");
-    }
-    public void CloseCredits()
-    {
-        Debug.Log("Close credits");
+        if (_creditsPanel.activeSelf)
+        {
+            CloseAllSubMenu();
+            return;
+        }
+
+        CloseAllSubMenu();
+        _creditsPanel.SetActive(true);
     }
 
     public void ExitGame()
     {
         Application.Quit();
         Debug.Log("Game Exit");
+    }
+
+    private void CloseAllSubMenu()
+    {
+        _creditsPanel.SetActive(false);
     }
 }
