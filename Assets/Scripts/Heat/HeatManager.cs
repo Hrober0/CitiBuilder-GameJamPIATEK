@@ -79,9 +79,9 @@ namespace HeatSimulation
         {
             foreach (var generator in heatGenerators)
             {
-                foreach (var tile in generator.GridObject.OccupiedCells)
+                foreach (var tile in generator.HeatedCells)
                 {
-                    tile.Heat = Mathf.Max(tile.Heat + generator.HeatGeneration, 0);
+                    tile.Heat = Mathf.Max(tile.Heat + (generator.HeatGeneration / generator.ZoneSize), 0);
                 }
             }
         }
@@ -230,7 +230,7 @@ namespace HeatSimulation
 
 
 #if UNITY_EDITOR
-        private void OnDrawGizmos()
+        private void OnDrawGizmosSelected()
         {
             if (_worldGrid == null)
             {
