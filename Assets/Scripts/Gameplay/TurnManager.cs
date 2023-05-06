@@ -47,7 +47,9 @@ namespace GameSystems
         private WorldGrid _worldGrid;
 
 
-        private readonly int _cardsInTour = 5;
+        private const float HEAT_PATIENT_POINTS_MULTIPLIER = 1.5f;
+
+        private const int CARD_IN_TOUR = 5;
 
 
         private float _points = 5;
@@ -140,11 +142,17 @@ namespace GameSystems
             if (_handCards.Count <= 3)
                 OnReachTurnSkippPoint?.Invoke();
 
-            _points += value.pattern.PointsForPlaced;
+            AddPointForBuilding(value.pattern);
 
             if (_handCards.Count == 0)
                 EndTour();
         }
+        private void AddPointForBuilding(GridObject building)
+        {
+            float pointsIncome = building.PointsForPlaced;
+            _points += pointsIncome;
+        }
+
 
         public void EndTour() => StartCoroutine(EndTurnSequence());
         private IEnumerator EndTurnSequence()
@@ -165,7 +173,7 @@ namespace GameSystems
 
             _heatPenalty = _turnCost.NextTurnCost(_worldGrid);
 
-            _points -= _heatPenalty;
+            _points -= _heatPenalty * HEAT_PATIENT_POINTS_MULTIPLIER;
 
             OnHeatSmimulationEnd?.Invoke();
         }
@@ -181,7 +189,7 @@ namespace GameSystems
 
             _handCards.Clear();
 
-            for (int i = 0; i < _cardsInTour; i++)
+            for (int i = 0; i < CARD_IN_TOUR; i++)
             {
                 yield return new WaitForSeconds(0.2f);
                 _handCards.Add(new(_objectsRandomiser.GetRandom()));

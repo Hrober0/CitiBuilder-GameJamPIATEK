@@ -159,7 +159,7 @@ Transform:
   m_PrefabAsset: {fileID: 0}
   m_GameObject: {fileID: 4913191169022029874}
   m_LocalRotation: {x: 0, y: -0.7071068, z: 0, w: 0.7071068}
-  m_LocalPosition: {x: 6.5013003, y: 0, z: -3.5007005}
+  m_LocalPosition: {x: 0, y: 0, z: 0}
   m_LocalScale: {x: 0.95, y: 0.95, z: 0.95}
   m_ConstrainProportionsScale: 1
   m_Children:
@@ -182,7 +182,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec16347c7588fe043916246b26ce83bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Long Park
+  _name: Huge Park
   _icon: {fileID: 21300000, guid: 839d60a54abdd164aafea4879b340b0f, type: 3}
   _type: {fileID: 11400000, guid: 730c2f2099fd11e4698892cd380bf365, type: 2}
   _fields:
@@ -203,7 +203,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
   _deltaHot: -1
   <IsPlaced>k__BackingField: 0
-  _pointsForPlaced: -7
+  _pointsForPlaced: -2.5
 --- !u!114 &5741881845187767803
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -216,7 +216,7 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: -1.2
+  heatGeneration: -0.8
   heatingZone:
   - {x: -1, y: 0}
   - {x: -1, y: 1}
@@ -232,6 +232,16 @@ MonoBehaviour:
   - {x: 1, y: 4}
   - {x: 2, y: -1}
   - {x: 2, y: 4}
+  - {x: 1, y: 5}
+  - {x: 1, y: -2}
+  - {x: 4, y: 1}
+  - {x: 4, y: 2}
+  - {x: -2, y: 2}
+  - {x: -2, y: 1}
+  - {x: -1, y: 4}
+  - {x: 3, y: 4}
+  - {x: -1, y: -1}
+  - {x: 3, y: -1}
 --- !u!1 &5593269595441610724
 GameObject:
   m_ObjectHideFlags: 0
@@ -3317,6 +3327,10 @@ PrefabInstance:
     - target: {fileID: 919132149155446097, guid: 1f2dbc6d3b25f1047990061257d558b0, type: 3}
       propertyPath: m_Name
       value: Park_2x2
+      objectReference: {fileID: 0}
+    - target: {fileID: 919132149155446097, guid: 1f2dbc6d3b25f1047990061257d558b0, type: 3}
+      propertyPath: m_IsActive
+      value: 1
       objectReference: {fileID: 0}
     m_RemovedComponents: []
   m_SourcePrefab: {fileID: 100100000, guid: 1f2dbc6d3b25f1047990061257d558b0, type: 3}

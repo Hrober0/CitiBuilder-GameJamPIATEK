@@ -64,7 +64,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
   _deltaHot: 2
   <IsPlaced>k__BackingField: 0
-  _pointsForPlaced: 1
+  _pointsForPlaced: 2
 --- !u!114 &5705436211520526156
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -78,6 +78,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   heatGeneration: 0.175
+  heatingZone: []
 --- !u!114 &-1169766875329840251
 MonoBehaviour:
   m_ObjectHideFlags: 0

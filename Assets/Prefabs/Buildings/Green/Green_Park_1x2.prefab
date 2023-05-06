@@ -115,6 +115,10 @@ PrefabInstance:
       propertyPath: m_LocalPosition.z
       value: 0.57938004
       objectReference: {fileID: 0}
+    - target: {fileID: 4999948929474417058, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
+      propertyPath: m_IsActive
+      value: 1
+      objectReference: {fileID: 0}
     - target: {fileID: 5229941734988633850, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
       propertyPath: m_LocalPosition.x
       value: 1.1255608
@@ -177,7 +181,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7373590610553611805, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
       propertyPath: m_Name
-      value: 1x2 Park with bridge Variant
+      value: Green_Park_1x2
       objectReference: {fileID: 0}
     - target: {fileID: 7576151182957876802, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
       propertyPath: m_LocalPosition.x
@@ -197,7 +201,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7863163159140662439, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
       propertyPath: m_LocalPosition.x
-      value: 1.5003
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7863163159140662439, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
       propertyPath: m_LocalPosition.y
@@ -205,7 +209,7 @@ PrefabInstance:
       objectReference: {fileID: 0}
     - target: {fileID: 7863163159140662439, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
       propertyPath: m_LocalPosition.z
-      value: -2.5006
+      value: 0
       objectReference: {fileID: 0}
     - target: {fileID: 7863163159140662439, guid: 174fa71964b615b4ebf577f5dd568f28, type: 3}
       propertyPath: m_LocalRotation.w
@@ -290,8 +294,8 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec16347c7588fe043916246b26ce83bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Slim 1x2 Lake Park
-  _icon: {fileID: 21300000, guid: 2486c6cb2716b4c4e83f691194d8b264, type: 3}
+  _name: Slim Lake Park
+  _icon: {fileID: 21300000, guid: 839d60a54abdd164aafea4879b340b0f, type: 3}
   _type: {fileID: 11400000, guid: 730c2f2099fd11e4698892cd380bf365, type: 2}
   _fields:
   - {x: 0, y: 0}
@@ -301,7 +305,7 @@ MonoBehaviour:
   - {fileID: 11400000, guid: b3be96a139ab5864c85591a00ec6205b, type: 2}
   _deltaHot: -1
   <IsPlaced>k__BackingField: 0
-  _pointsForPlaced: 0.5
+  _pointsForPlaced: -0.7
 --- !u!114 &3550140430290307129
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -314,4 +318,9 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: -0.1
+  heatGeneration: -0.4
+  heatingZone:
+  - {x: 1, y: 1}
+  - {x: 0, y: 1}
+  - {x: 1, y: -1}
+  - {x: 0, y: -1}

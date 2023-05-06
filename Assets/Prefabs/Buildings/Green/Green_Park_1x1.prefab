@@ -148,16 +148,16 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: ec16347c7588fe043916246b26ce83bb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  _name: Park with Pond
+  _name: Small Park
   _icon: {fileID: 21300000, guid: 839d60a54abdd164aafea4879b340b0f, type: 3}
   _type: {fileID: 11400000, guid: 730c2f2099fd11e4698892cd380bf365, type: 2}
   _fields:
   - {x: 0, y: 0}
   _reqiredObjects:
   - {fileID: 11400000, guid: d5be0aa869284e94e9d06f35acdd2296, type: 2}
-  _deltaHot: -2
+  _deltaHot: -1
   <IsPlaced>k__BackingField: 0
-  _pointsForPlaced: 1
+  _pointsForPlaced: -0.5
 --- !u!114 &-4977597587096474695
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -170,12 +170,10 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: dce3e7f8b030bd44298907d16bfcebdb, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
-  heatGeneration: -0.2
+  heatGeneration: -0.3
   heatingZone:
   - {x: -1, y: 0}
-  - {x: 0, y: -1}
   - {x: 1, y: 0}
-  - {x: 0, y: 1}
 --- !u!1001 &1250234907302818449
 PrefabInstance:
   m_ObjectHideFlags: 0
