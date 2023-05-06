@@ -1645,8 +1645,8 @@ MonoBehaviour:
   m_OnCullStateChanged:
     m_PersistentCalls:
       m_Calls: []
-  m_text: "<b>Programing</b>\nAleksander Stanoch\nGrzegirz Gomuli\u0144ski\n\n<b>Art</b>\nNamir
-    Strzelecki\nMateusz G\u0142owadzki"
+  m_text: "<b>Programing</b>\nAleksander Stanoch\nGrzegorz Gomuli\u0144ski\n\n<b>Art</b>\nNamir
+    Strzelecki\nMateusz G\u0142owacki"
   m_isRightToLeft: 0
   m_fontAsset: {fileID: 11400000, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
   m_sharedMaterial: {fileID: 2180264, guid: 8f586378b4e144a9851e7b34d9b748ee, type: 2}
