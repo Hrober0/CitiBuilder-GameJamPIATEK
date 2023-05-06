@@ -38,10 +38,10 @@ namespace UI.Tutorial
         private void OnEnable()
         {
             _turnManager = SystemsManager.Instance.Get<TurnManager>();
-            _turnManager.TurnStart += ShowResetTip;
+            _turnManager.OnTurnStart += ShowResetTip;
             _turnManager.OnHandChanged += ShowSelectCardTip;
             _turnManager.OnHandChanged += ShowBuildTip;
-            _turnManager.TurnEndSmimulationEnd += ShowEndTurnTip;
+            _turnManager.OnHeatSmimulationEnd += ShowEndTurnTip;
 
             _heatManager = SystemsManager.Instance.Get<HeatManager>();
             _heatManager.OnOverlaySwitch += ShowHeatOverlayTip;
@@ -50,10 +50,10 @@ namespace UI.Tutorial
         }
         private void OnDisable()
         {
-            _turnManager.TurnStart -= ShowResetTip;
+            _turnManager.OnTurnStart -= ShowResetTip;
             _turnManager.OnHandChanged -= ShowSelectCardTip;
             _turnManager.OnHandChanged -= ShowBuildTip;
-            _turnManager.TurnEndSmimulationEnd -= ShowEndTurnTip;
+            _turnManager.OnHeatSmimulationEnd -= ShowEndTurnTip;
 
             _heatManager.OnOverlaySwitch -= ShowHeatOverlayTip;
         }

@@ -40,13 +40,13 @@ namespace HeatSimulation
             GenerateOverlay();
 
             _turnManager = _systems.Get<TurnManager>();
-            _turnManager.TurnPasses += StartHeatUpdate;
-            _turnManager.TurnStart += DisenableOverlay;
+            _turnManager.OnTurnPasses += StartHeatUpdate;
+            _turnManager.OnTurnStart += DisenableOverlay;
         }
         protected override void DeinitSystem() 
         {
-            _turnManager.TurnPasses -= StartHeatUpdate;
-            _turnManager.TurnStart -= DisenableOverlay;
+            _turnManager.OnTurnPasses -= StartHeatUpdate;
+            _turnManager.OnTurnStart -= DisenableOverlay;
         }
 
 

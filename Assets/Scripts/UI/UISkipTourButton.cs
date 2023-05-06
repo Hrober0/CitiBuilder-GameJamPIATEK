@@ -16,8 +16,8 @@ namespace UI
         private void OnEnable()
         {
             _turnManager = SystemsManager.Instance.Get<TurnManager>();
-            _turnManager.TurnReachSkippPoint += Open;
-            _turnManager.TurnEndBuild += Close;
+            _turnManager.OnReachTurnSkippPoint += Open;
+            _turnManager.OnBuildingTurnEnd += Close;
 
             _button.onClick.AddListener(SkipRound);
         }
@@ -25,8 +25,8 @@ namespace UI
         {
             if (_turnManager != null)
             {
-                _turnManager.TurnReachSkippPoint -= Open;
-                _turnManager.TurnEndBuild -= Close;
+                _turnManager.OnReachTurnSkippPoint -= Open;
+                _turnManager.OnBuildingTurnEnd -= Close;
             }
 
             _button.onClick.RemoveListener(SkipRound);

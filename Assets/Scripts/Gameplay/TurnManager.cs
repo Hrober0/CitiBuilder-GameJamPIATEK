@@ -29,11 +29,11 @@ namespace GameSystems
         }
 
 
-        public event Action TurnEndBuild;
-        public event Action TurnPasses;
-        public event Action TurnEndSmimulationEnd;
-        public event Action TurnReachSkippPoint;
-        public event Action TurnStart;
+        public event Action OnTurnStart;
+        public event Action OnReachTurnSkippPoint;
+        public event Action OnBuildingTurnEnd;
+        public event Action OnTurnPasses;
+        public event Action OnHeatSmimulationEnd;
 
 
         [SerializeField] private TurnCostManager _turnCost;
@@ -56,8 +56,6 @@ namespace GameSystems
         public int DisplayedPoints => PointsToDisplayedPoints(_points);
         public int PointsIncom => PointsToDisplayedPoints(_points - _pointsAtRoundStart + _heatPenalty);
         public int HeatPenalty => PointsToDisplayedPoints(_heatPenalty);
-
-        public event Action OnPointsChanged;
 
 
         protected override void InitSystem()
@@ -140,7 +138,7 @@ namespace GameSystems
             _placeSound.Play();
 
             if (_handCards.Count <= 3)
-                TurnReachSkippPoint?.Invoke();
+                OnReachTurnSkippPoint?.Invoke();
 
             _points += value.pattern.PointsForPlaced;
 
@@ -154,14 +152,14 @@ namespace GameSystems
             Debug.Log("End tour");
 
             _constructionController.SetObject(null);
-            TurnEndBuild?.Invoke();
+            OnBuildingTurnEnd?.Invoke();
 
             _handCards.Clear();
             OnHandChanged?.Invoke();
 
             yield return new WaitForSeconds(1);
 
-            TurnPasses?.Invoke();
+            OnTurnPasses?.Invoke();
 
             yield return new WaitForSeconds(3.5f);     // wait for heat simulation
 
@@ -169,7 +167,7 @@ namespace GameSystems
 
             _points -= _heatPenalty;
 
-            TurnEndSmimulationEnd?.Invoke();
+            OnHeatSmimulationEnd?.Invoke();
         }
 
         public void NextTurn() => StartCoroutine(NextTurnSequence());
@@ -179,7 +177,7 @@ namespace GameSystems
 
             _pointsAtRoundStart = _points;
 
-            TurnStart?.Invoke();
+            OnTurnStart?.Invoke();
 
             _handCards.Clear();
 

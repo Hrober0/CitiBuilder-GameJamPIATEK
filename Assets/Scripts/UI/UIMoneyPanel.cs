@@ -35,7 +35,7 @@ namespace UI
             _constructionController.OnBuildingBuild += AnimOnBuildingBuild;
 
             _turnManager = SystemsManager.Instance.Get<TurnManager>();
-            _turnManager.TurnStart += UpdateMoneyLabel;
+            _turnManager.OnTurnStart += UpdateMoneyLabel;
             UpdateMoneyLabel();
         }
         private void OnDisable()
@@ -44,7 +44,7 @@ namespace UI
                 _constructionController.OnBuildingBuild -= AnimOnBuildingBuild;
 
             if (_turnManager != null)
-                _turnManager.TurnStart -= UpdateMoneyLabel;
+                _turnManager.OnTurnStart -= UpdateMoneyLabel;
         }
 
 

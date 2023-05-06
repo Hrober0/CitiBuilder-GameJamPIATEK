@@ -31,8 +31,8 @@ namespace UI
         private void OnEnable()
         {
             _turnManager = SystemsManager.Instance.Get<TurnManager>();
-            _turnManager.TurnEndSmimulationEnd += Open;
-            _turnManager.TurnStart += Close;
+            _turnManager.OnHeatSmimulationEnd += Open;
+            _turnManager.OnTurnStart += Close;
 
             _nextButton.onClick.AddListener(PlayNextRound);
         }
@@ -40,8 +40,8 @@ namespace UI
         {
             if (_turnManager != null)
             {
-                _turnManager.TurnEndSmimulationEnd -= Open; 
-                _turnManager.TurnStart -= Close;
+                _turnManager.OnHeatSmimulationEnd -= Open; 
+                _turnManager.OnTurnStart -= Close;
             }
 
             _nextButton.onClick.RemoveListener(PlayNextRound);
