@@ -5,6 +5,9 @@ Citi builder game with heat simulation
 Game playable in browser: https://nimus100.itch.io/sizzlin-city <br>
 The game was created in 48h for EmCliC Game Jam 2023: https://itch.io/jam/emclic
 
+![image](https://github.com/user-attachments/assets/d3fdbb17-47d4-46f0-868f-9781665ed37a)
+
+
 ## Game description
 The player's goal is to build the city whilst balancing the heat levels.
 <br><br>
